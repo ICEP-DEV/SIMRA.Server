@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2023 at 03:25 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Sep 19, 2023 at 05:58 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,12 @@ CREATE TABLE `coordinate` (
 
 INSERT INTO `coordinate` (`coorniadteId`, `longitude`, `latitude`, `samplingId`) VALUES
 (2, '-10.3565545', '-20.3656125', 7),
-(3, '-10.3565545', '-20.3656125', 7);
+(3, '-10.3565545', '-20.3656125', 7),
+(6, '28.2292712', '-25.7478676', 21),
+(7, '28.2292712', '-25.7478676', 22),
+(8, '28.2292712', '-25.7478676', 23),
+(9, '28.2292712', '-25.7478676', 24),
+(10, '28.2292712', '-25.7478676', 25);
 
 -- --------------------------------------------------------
 
@@ -60,8 +65,12 @@ CREATE TABLE `hydrogensulfide` (
 --
 
 INSERT INTO `hydrogensulfide` (`id`, `status`, `samplingId`, `risk_type`) VALUES
-(1, '0', 0, 'Negative (No Risk)'),
-(5, '0', 7, 'negative(No Risk)');
+(5, '0', 7, 'negative(No Risk)'),
+(6, '1', 16, 'positive (Risk)'),
+(7, '0', 17, 'Negative (No Risk)'),
+(8, '1', 18, 'positive (Risk)'),
+(9, '0', 19, 'Negative (No Risk)'),
+(10, '1', 20, 'positive (Risk)');
 
 -- --------------------------------------------------------
 
@@ -77,6 +86,29 @@ CREATE TABLE `microbial` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `municipality`
+--
+
+CREATE TABLE `municipality` (
+  `muni_id` int(11) NOT NULL,
+  `muni_name` varchar(100) DEFAULT NULL,
+  `province_id` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `province`
+--
+
+CREATE TABLE `province` (
+  `province_id` varchar(10) NOT NULL,
+  `province_name` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `samplingdata`
 --
 
@@ -84,28 +116,38 @@ CREATE TABLE `samplingdata` (
   `samplingId` int(11) NOT NULL,
   `userId` int(11) DEFAULT NULL,
   `weatherCondition` varchar(100) DEFAULT NULL,
-  `sampling_date_created` datetime NOT NULL
+  `sampling_date_created` datetime NOT NULL,
+  `muni_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `samplingdata`
 --
 
-INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `sampling_date_created`) VALUES
-(3, 1, 'sunny', '2023-09-13 13:18:28'),
-(4, 1, 'sunny', '2023-09-13 13:52:29'),
-(5, 1, 'Wet', '2023-09-13 21:26:08'),
-(6, 1, 'Wet', '2023-09-13 21:28:17'),
-(7, 1, 'Wet', '2023-09-13 21:29:05'),
-(8, 1, 'Windy', '2023-09-13 22:48:25'),
-(9, 1, 'Windy', '2023-09-13 22:55:19'),
-(10, 1, 'Windy', '2023-09-13 22:57:58'),
-(11, 1, 'Windy', '2023-09-13 22:59:17'),
-(12, 1, 'Windy', '2023-09-13 23:12:04'),
-(13, 1, 'Windy', '2023-09-13 23:41:18'),
-(14, 1, 'Thunder and Lightning', '2023-09-13 23:45:19'),
-(15, 1, 'Thunder and Lightning', '2023-09-18 15:21:22'),
-(16, 1, 'Thunder and Lightning', '2023-09-18 15:21:28');
+INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `sampling_date_created`, `muni_id`) VALUES
+(3, 1, 'sunny', '2023-09-13 13:18:28', NULL),
+(4, 1, 'sunny', '2023-09-13 13:52:29', NULL),
+(5, 1, 'Wet', '2023-09-13 21:26:08', NULL),
+(6, 1, 'Wet', '2023-09-13 21:28:17', NULL),
+(7, 1, 'Wet', '2023-09-13 21:29:05', NULL),
+(8, 1, 'Windy', '2023-09-13 22:48:25', NULL),
+(9, 1, 'Windy', '2023-09-13 22:55:19', NULL),
+(10, 1, 'Windy', '2023-09-13 22:57:58', NULL),
+(11, 1, 'Windy', '2023-09-13 22:59:17', NULL),
+(12, 1, 'Windy', '2023-09-13 23:12:04', NULL),
+(13, 1, 'Windy', '2023-09-13 23:41:18', NULL),
+(14, 1, 'Thunder and Lightning', '2023-09-13 23:45:19', NULL),
+(15, 1, 'cloudy', '2023-09-14 07:10:42', NULL),
+(16, 1, 'cloudy', '2023-09-14 07:12:37', NULL),
+(17, 1, 'cloudy', '2023-09-14 07:14:39', NULL),
+(18, 1, 'cloudy', '2023-09-14 07:16:12', NULL),
+(19, 1, 'cloudy', '2023-09-14 07:17:07', NULL),
+(20, 1, 'cloudy', '2023-09-14 07:29:08', NULL),
+(21, 1, 'cloudy', '2023-09-14 07:29:31', NULL),
+(22, 1, 'Windy', '2023-09-17 21:38:27', NULL),
+(23, 1, 'Windy', '2023-09-17 21:38:56', NULL),
+(24, 1, 'Windy', '2023-09-17 21:53:07', NULL),
+(25, 1, 'Windy', '2023-09-17 21:53:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -133,12 +175,17 @@ CREATE TABLE `sanitaryinpectionquestion` (
 --
 
 INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `total_avarage`) VALUES
-(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
-(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
-(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', '0'),
-(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', '0'),
-(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', '50'),
-(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', '75');
+(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 75),
+(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 75),
+(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', 0),
+(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', 0),
+(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', 50),
+(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', 75),
+(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 50),
+(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 50),
+(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0),
+(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 50),
+(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 100);
 
 -- --------------------------------------------------------
 
@@ -180,7 +227,12 @@ CREATE TABLE `watersource` (
 --
 
 INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VALUES
-(1, 'River', 'hard', 3);
+(1, 'River', 'hard', 3),
+(4, 'Household Tap Water', 'Hard', NULL),
+(5, 'Household Tap Water', 'Easy', NULL),
+(6, 'Household Tap Water', 'Easy', NULL),
+(7, 'Household Tap Water', 'Easy', NULL),
+(8, 'Household Tap Water', 'Easy', NULL);
 
 --
 -- Indexes for dumped tables
@@ -208,22 +260,45 @@ ALTER TABLE `microbial`
   ADD KEY `samplingId` (`samplingId`);
 
 --
+-- Indexes for table `municipality`
+--
+ALTER TABLE `municipality`
+  ADD PRIMARY KEY (`muni_id`),
+  ADD KEY `province_id` (`province_id`);
+
+--
+-- Indexes for table `province`
+--
+ALTER TABLE `province`
+  ADD PRIMARY KEY (`province_id`);
+
+--
 -- Indexes for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  ADD PRIMARY KEY (`samplingId`);
+  ADD PRIMARY KEY (`samplingId`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `muni_id` (`muni_id`);
 
 --
 -- Indexes for table `sanitaryinpectionquestion`
 --
 ALTER TABLE `sanitaryinpectionquestion`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sam_san` (`samplingId`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`userId`);
 
 --
 -- Indexes for table `watersource`
 --
 ALTER TABLE `watersource`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `samplingId` (`samplingId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -233,13 +308,13 @@ ALTER TABLE `watersource`
 -- AUTO_INCREMENT for table `coordinate`
 --
 ALTER TABLE `coordinate`
-  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `hydrogensulfide`
 --
 ALTER TABLE `hydrogensulfide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `microbial`
@@ -248,22 +323,81 @@ ALTER TABLE `microbial`
   MODIFY `microbialId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `municipality`
+--
+ALTER TABLE `municipality`
+  MODIFY `muni_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `sanitaryinpectionquestion`
 --
 ALTER TABLE `sanitaryinpectionquestion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `watersource`
 --
 ALTER TABLE `watersource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `coordinate`
+--
+ALTER TABLE `coordinate`
+  ADD CONSTRAINT `coordinate_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `hydrogensulfide`
+--
+ALTER TABLE `hydrogensulfide`
+  ADD CONSTRAINT `hydrogensulfide_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `microbial`
+--
+ALTER TABLE `microbial`
+  ADD CONSTRAINT `microbial_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `municipality`
+--
+ALTER TABLE `municipality`
+  ADD CONSTRAINT `municipality_ibfk_1` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`);
+
+--
+-- Constraints for table `samplingdata`
+--
+ALTER TABLE `samplingdata`
+  ADD CONSTRAINT `samplingdata_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  ADD CONSTRAINT `samplingdata_ibfk_2` FOREIGN KEY (`muni_id`) REFERENCES `municipality` (`muni_id`);
+
+--
+-- Constraints for table `sanitaryinpectionquestion`
+--
+ALTER TABLE `sanitaryinpectionquestion`
+  ADD CONSTRAINT `sam_san` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `watersource`
+--
+ALTER TABLE `watersource`
+  ADD CONSTRAINT `watersource_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
