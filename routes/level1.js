@@ -112,6 +112,7 @@ router.get('/get_provinces',(req,res)=>{
     })
 })
 
+// Get the municipalities
 router.get('/get_municipalities/:id',(req,res)=>{
     var sql = "select * from municipality where province_id = ?";
     connection.query(sql,req.params.id,(err,results)=>{
