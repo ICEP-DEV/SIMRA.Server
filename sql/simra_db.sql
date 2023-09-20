@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2023 at 05:58 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Sep 20, 2023 at 12:04 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -90,10 +90,35 @@ CREATE TABLE `microbial` (
 --
 
 CREATE TABLE `municipality` (
-  `muni_id` int(11) NOT NULL,
   `muni_name` varchar(100) DEFAULT NULL,
-  `province_id` varchar(10) DEFAULT NULL
+  `province_id` varchar(10) DEFAULT NULL,
+  `muni_id` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `municipality`
+--
+
+INSERT INTO `municipality` (`muni_name`, `province_id`, `muni_id`) VALUES
+('Greater Giyani', 'ZA-LP', 'LIM331'),
+('Greater Letaba', 'ZA-LP', 'LIM332'),
+('Greater Tzaneen', 'ZA-LP', 'LIM333'),
+('Ba-Phalaborwa', 'ZA-LP', 'LIM334'),
+('Maruleng', 'ZA-LP', 'LIM335'),
+('Musina', 'ZA-LP', 'LIM341'),
+('Thulamela', 'ZA-LP', 'LIM343'),
+('Makhado', 'ZA-LP', 'LIM344'),
+('Collins Chabane', 'ZA-LP', 'LIM345'),
+('Blouberg', 'ZA-LP', 'LIM351'),
+('Lepelle-Nkumpi', 'ZA-LP', 'LIM355'),
+('Lephalale', 'ZA-LP', 'LIM362'),
+('Bela-Bela', 'ZA-LP', 'LIM366'),
+('Mogalakwena', 'ZA-LP', 'LIM367'),
+('Modimolle–Mookgophong', 'ZA-LP', 'LIM368'),
+('Ephraim Mogale', 'ZA-LP', 'LIM471'),
+('Elias Motsoaledi', 'ZA-LP', 'LIM472'),
+('Makhuduthamaga', 'ZA-LP', 'LIM473'),
+('Fetakgomo Tubatse', 'ZA-LP', 'LIM476');
 
 -- --------------------------------------------------------
 
@@ -106,6 +131,41 @@ CREATE TABLE `province` (
   `province_name` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `province`
+--
+
+INSERT INTO `province` (`province_id`, `province_name`) VALUES
+('ZA-EC', 'Eastern Cape'),
+('ZA-FS', 'Free State'),
+('ZA-GP', 'Gauteng'),
+('ZA-KZN', 'Kwazulu-Natal'),
+('ZA-LP', 'Limpopo'),
+('ZA-MP', 'Mpumalanga'),
+('ZA-NC', 'Northern Cape'),
+('ZA-NW', 'North-West'),
+('ZA-WC', 'Western Cape');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `river`
+--
+
+CREATE TABLE `river` (
+  `riverId` int(11) NOT NULL,
+  `river_name` varchar(200) DEFAULT NULL,
+  `muni_id` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `river`
+--
+
+INSERT INTO `river` (`riverId`, `river_name`, `muni_id`) VALUES
+(1, 'GA-SELATI RIVER', 'LIM335'),
+(2, 'MAKHUTSWI RIVER', 'LIM335');
+
 -- --------------------------------------------------------
 
 --
@@ -116,38 +176,37 @@ CREATE TABLE `samplingdata` (
   `samplingId` int(11) NOT NULL,
   `userId` int(11) DEFAULT NULL,
   `weatherCondition` varchar(100) DEFAULT NULL,
-  `sampling_date_created` datetime NOT NULL,
-  `muni_id` int(11) DEFAULT NULL
+  `sampling_date_created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `samplingdata`
 --
 
-INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `sampling_date_created`, `muni_id`) VALUES
-(3, 1, 'sunny', '2023-09-13 13:18:28', NULL),
-(4, 1, 'sunny', '2023-09-13 13:52:29', NULL),
-(5, 1, 'Wet', '2023-09-13 21:26:08', NULL),
-(6, 1, 'Wet', '2023-09-13 21:28:17', NULL),
-(7, 1, 'Wet', '2023-09-13 21:29:05', NULL),
-(8, 1, 'Windy', '2023-09-13 22:48:25', NULL),
-(9, 1, 'Windy', '2023-09-13 22:55:19', NULL),
-(10, 1, 'Windy', '2023-09-13 22:57:58', NULL),
-(11, 1, 'Windy', '2023-09-13 22:59:17', NULL),
-(12, 1, 'Windy', '2023-09-13 23:12:04', NULL),
-(13, 1, 'Windy', '2023-09-13 23:41:18', NULL),
-(14, 1, 'Thunder and Lightning', '2023-09-13 23:45:19', NULL),
-(15, 1, 'cloudy', '2023-09-14 07:10:42', NULL),
-(16, 1, 'cloudy', '2023-09-14 07:12:37', NULL),
-(17, 1, 'cloudy', '2023-09-14 07:14:39', NULL),
-(18, 1, 'cloudy', '2023-09-14 07:16:12', NULL),
-(19, 1, 'cloudy', '2023-09-14 07:17:07', NULL),
-(20, 1, 'cloudy', '2023-09-14 07:29:08', NULL),
-(21, 1, 'cloudy', '2023-09-14 07:29:31', NULL),
-(22, 1, 'Windy', '2023-09-17 21:38:27', NULL),
-(23, 1, 'Windy', '2023-09-17 21:38:56', NULL),
-(24, 1, 'Windy', '2023-09-17 21:53:07', NULL),
-(25, 1, 'Windy', '2023-09-17 21:53:20', NULL);
+INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `sampling_date_created`) VALUES
+(3, 1, 'sunny', '2023-09-13 13:18:28'),
+(4, 1, 'sunny', '2023-09-13 13:52:29'),
+(5, 1, 'Wet', '2023-09-13 21:26:08'),
+(6, 1, 'Wet', '2023-09-13 21:28:17'),
+(7, 1, 'Wet', '2023-09-13 21:29:05'),
+(8, 1, 'Windy', '2023-09-13 22:48:25'),
+(9, 1, 'Windy', '2023-09-13 22:55:19'),
+(10, 1, 'Windy', '2023-09-13 22:57:58'),
+(11, 1, 'Windy', '2023-09-13 22:59:17'),
+(12, 1, 'Windy', '2023-09-13 23:12:04'),
+(13, 1, 'Windy', '2023-09-13 23:41:18'),
+(14, 1, 'Thunder and Lightning', '2023-09-13 23:45:19'),
+(15, 1, 'cloudy', '2023-09-14 07:10:42'),
+(16, 1, 'cloudy', '2023-09-14 07:12:37'),
+(17, 1, 'cloudy', '2023-09-14 07:14:39'),
+(18, 1, 'cloudy', '2023-09-14 07:16:12'),
+(19, 1, 'cloudy', '2023-09-14 07:17:07'),
+(20, 1, 'cloudy', '2023-09-14 07:29:08'),
+(21, 1, 'cloudy', '2023-09-14 07:29:31'),
+(22, 1, 'Windy', '2023-09-17 21:38:27'),
+(23, 1, 'Windy', '2023-09-17 21:38:56'),
+(24, 1, 'Windy', '2023-09-17 21:53:07'),
+(25, 1, 'Windy', '2023-09-17 21:53:20');
 
 -- --------------------------------------------------------
 
@@ -175,17 +234,17 @@ CREATE TABLE `sanitaryinpectionquestion` (
 --
 
 INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `total_avarage`) VALUES
-(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 75),
-(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 75),
-(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', 0),
-(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', 0),
-(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', 50),
-(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', 75),
-(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 50),
-(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 50),
-(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0),
-(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 50),
-(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 100);
+(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
+(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
+(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', '0'),
+(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', '0'),
+(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', '50'),
+(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', '75'),
+(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', '50'),
+(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', '50'),
+(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', '0'),
+(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', '50'),
+(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', '100');
 
 -- --------------------------------------------------------
 
@@ -273,12 +332,18 @@ ALTER TABLE `province`
   ADD PRIMARY KEY (`province_id`);
 
 --
+-- Indexes for table `river`
+--
+ALTER TABLE `river`
+  ADD PRIMARY KEY (`riverId`),
+  ADD KEY `muni_id` (`muni_id`);
+
+--
 -- Indexes for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
   ADD PRIMARY KEY (`samplingId`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `muni_id` (`muni_id`);
+  ADD KEY `userId` (`userId`);
 
 --
 -- Indexes for table `sanitaryinpectionquestion`
@@ -323,10 +388,10 @@ ALTER TABLE `microbial`
   MODIFY `microbialId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `municipality`
+-- AUTO_INCREMENT for table `river`
 --
-ALTER TABLE `municipality`
-  MODIFY `muni_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `river`
+  MODIFY `riverId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `samplingdata`
@@ -381,11 +446,16 @@ ALTER TABLE `municipality`
   ADD CONSTRAINT `municipality_ibfk_1` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`);
 
 --
+-- Constraints for table `river`
+--
+ALTER TABLE `river`
+  ADD CONSTRAINT `river_ibfk_1` FOREIGN KEY (`muni_id`) REFERENCES `municipality` (`muni_id`);
+
+--
 -- Constraints for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  ADD CONSTRAINT `samplingdata_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
-  ADD CONSTRAINT `samplingdata_ibfk_2` FOREIGN KEY (`muni_id`) REFERENCES `municipality` (`muni_id`);
+  ADD CONSTRAINT `samplingdata_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
 
 --
 -- Constraints for table `sanitaryinpectionquestion`

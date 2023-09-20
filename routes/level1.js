@@ -2,7 +2,7 @@ const express = require('express');
 const connection = require("../config/config");
 const router = express.Router();
 
-
+// Sampling data
 router.post('/sampling_data', (req, res) => {
     var sql = `insert into samplingdata(userId,weatherCondition, sampling_date_created)
     values(?, ?,?)`
@@ -16,20 +16,6 @@ router.post('/sampling_data', (req, res) => {
             var insertedId = result.insertId
             res.send({ success: true, message: "sampling data recoded...", insertedId })
             console.log({ success: true, message: "sampling data recoded...", insertedId })
-            /*var waterSourceSql = `insert into watersource(type, waterAccessability, samplingId)
-            values(?,?,?)`
-            var waterSourceBody = [req.body.type, req.body.waterAccessability, result.insertId]
-            connection.query(waterSourceSql, waterSourceBody, (error, rows) => {
-                if (error) throw err
-                console.log("waterSourceBody", rows)
-            })
-
-            var h2sSql = `insert into hydrogensulfide(status,risk_type, samplingId)
-            values(?,?,?);`
-            var h2sBody = [req.body.status, req.body.risk_type, result.insertId]
-            connection.query(h2sSql, h2sBody, (error, rows) => {
-
-            })*/
         }
         else {
             res.send({ success: false, message: "unable to record sampling data..." })
@@ -37,6 +23,7 @@ router.post('/sampling_data', (req, res) => {
     })
 })
 
+// Watersource
 router.post("/watersource", (req, res) => {
     var watersourceSql = `insert into watersource(type,waterAccessability, samplingId)
     values(?,?,?)`
@@ -48,6 +35,7 @@ router.post("/watersource", (req, res) => {
     })
 })
 
+// Coordinates
 router.post("/coordinates", (req, res) => {
     var coordinateSql = `insert into coordinate(longitude,latitude, samplingId)
     values(?,?,?)`
@@ -59,6 +47,7 @@ router.post("/coordinates", (req, res) => {
     })
 })
 
+// hydrogensulfide (H2S)
 router.post("/hydrogensulfide", (req, res) => {
     var risk_type=""
     if(req.body.status == false){risk_type = "Negative (No Risk)"}
@@ -74,6 +63,7 @@ router.post("/hydrogensulfide", (req, res) => {
     })
 })
 
+// Sanitary Inspection Survey
 router.post('/sanitary_inspection_survey', (req, res) => {
     var total_avarage = 0
     var risk_type = ""
@@ -110,6 +100,34 @@ router.post('/sanitary_inspection_survey', (req, res) => {
 
         }
     });
+})
+
+//
+router.get('/get_provinces',(req,res)=>{
+    var sql = "select * from province";
+    connection.query(sql,(err,results)=>{
+        if(err) throw err
+
+        res.send({success:true, results})
+    })
+})
+
+router.get('/get_municipalities/:id',(req,res)=>{
+    var sql = "select * from municipality where province_id = ?";
+    connection.query(sql,req.params.id,(err,results)=>{
+        if(err) throw err
+
+        res.send({success:true, results})
+    })
+})
+
+router.get('/get_river/:id',(req,res)=>{
+    var sql = "select * from river where muni_id = ?";
+    connection.query(sql,req.params.id,(err,results)=>{
+        if(err) throw err
+
+        res.send({success:true, results})
+    })
 })
 
 
