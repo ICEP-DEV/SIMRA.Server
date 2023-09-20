@@ -120,7 +120,7 @@ router.get('/get_municipalities/:id',(req,res)=>{
         res.send({success:true, results})
     })
 })
-
+ 
 router.get('/get_river/:id',(req,res)=>{
     var sql = "select * from river where muni_id = ?";
     connection.query(sql,req.params.id,(err,results)=>{
