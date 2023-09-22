@@ -7,7 +7,6 @@ router.post('/login', (req,res)=>{
     var sql = `SELECT * FROM USER WHERE mobileNo =?`   //"0123456789"
     connection.query(sql, [mobileNo],(err, results)=>{
         if(err) console(err)
-        console.log(results.length);
         if(results.length > 0){
             if(results[0].password == req.body.password){
                 res.json({message:'Successfully', success:true, results})

@@ -4,9 +4,9 @@ const router = express.Router();
 
 // Sampling data
 router.post('/sampling_data', (req, res) => {
-    var sql = `insert into samplingdata(userId,weatherCondition, sampling_date_created)
-    values(?, ?,?)`
-    var bodyParams = [req.body.userId, req.body.weatherCondition, new Date()]
+    var sql = `insert into samplingdata(userId,weatherCondition, sampling_date_created, muni_id)
+    values(?,?,?,?)`
+    var bodyParams = [req.body.userId, req.body.weatherCondition, new Date(), req.body.muni_id]
 
     connection.query(sql, bodyParams, (err, result) => {
         if (err) throw err;
