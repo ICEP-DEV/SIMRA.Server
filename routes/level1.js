@@ -42,7 +42,6 @@ router.post("/coordinates", (req, res) => {
     var coordinateBody = [req.body.longitude, req.body.latitude, req.body.samplingId]
     connection.query(coordinateSql, coordinateBody, (err, rows) => {
         if (err) throw err
-        console.log("coordinateBody", rows)
         res.send({ message: "adedd coordinates", rows })
     })
 })
@@ -58,7 +57,6 @@ router.post("/hydrogensulfide", (req, res) => {
     connection.query(h2sSql, h2sBody, (err, rows) => {
         if (err) throw err
         var status = req.body.status
-        console.log("hydrogensulfide", status, risk_type)
         res.send({ message: "adedd hydrogensulfide", status, risk_type, success: true })
     })
 })
@@ -66,6 +64,7 @@ router.post("/hydrogensulfide", (req, res) => {
 // Sanitary Inspection Survey
 router.post('/sanitary_inspection_survey', (req, res) => {
     var total_avarage = 0
+    var totalYes = 0
     var risk_type = ""
     if (req.body.pitLatrine == true) { total_avarage = total_avarage + 1 }
     if (req.body.domesticAnimal == true) { total_avarage = total_avarage + 1 }
@@ -75,7 +74,7 @@ router.post('/sanitary_inspection_survey', (req, res) => {
     if (req.body.unprotectedWaterSource == true) { total_avarage = total_avarage + 1 }
     if (req.body.agriculturalActivity == true) { total_avarage = total_avarage + 1 }
     if (req.body.observerLaundryActivity == true) { total_avarage = total_avarage + 1 }
-
+    totalYes = total_avarage
     total_avarage = (total_avarage / 8) * 100
 
     if (total_avarage < 26) { risk_type = "low risk" }
@@ -84,15 +83,14 @@ router.post('/sanitary_inspection_survey', (req, res) => {
     else { risk_type = "very high risk" }
 
     var sql = `insert into sanitaryinpectionquestion(pitLatrine,domesticAnimal,diaperDisposal,wasteWaterRelease,openDefaction,
-        unprotectedWaterSource,agriculturalActivity,observerLaundryActivity,samplingId,risk_type,total_avarage)
-        VALUES(?,?,?,?,?,?,?,?,?,?,?)`
+        unprotectedWaterSource,agriculturalActivity,observerLaundryActivity,samplingId,risk_type,totalYes,total_avarage)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`
     var sanitaryRequests = [req.body.pitLatrine, req.body.domesticAnimal, req.body.diaperDisposal, req.body.wasteWaterRelease,
     req.body.openDefaction, req.body.unprotectedWaterSource, req.body.agriculturalActivity, req.body.observerLaundryActivity,
-    req.body.samplingId, risk_type, total_avarage]
+    req.body.samplingId, risk_type, totalYes, total_avarage]
     connection.query(sql, sanitaryRequests, (err, results) => {
         if (err) throw err
         if (results.affectedRows != 0) {
-            console.log("sanitary survey", results)
             res.send({ message: "adedd sanitary survey", total_avarage, risk_type, success: true })
         }
         else {
@@ -122,7 +120,7 @@ router.get('/get_municipalities/:id', (req, res) => {
     })
 })
 
-router.get('/get_monthly_reports', (req, res) => {
+router.post('/get_monthly_reports', (req, res) => {
     
     var get_monthly_reports_body = [req.body.date,req.body.province_id]
     var sql = `select type, risk_type, total_avarage, muni_name
