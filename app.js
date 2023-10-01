@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', require('./routes/user'))
 app.use('/api', require('./routes/level1'))
+app.use('/api', require('./routes/UserRegistration'))
 
 app.use('/', (req, res) =>{
     res.send('Endpoint')
 })
-
 
 app.listen(process.env.PORT, () => {
     console.log('Server started at port ' + process.env.PORT)
