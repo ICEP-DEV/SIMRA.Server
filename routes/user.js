@@ -23,14 +23,16 @@ router.post('/login', (req,res)=>{
                           "mobileNo": row.mobileNo,
                           "firstname": row.firstname,
                           "lastame": row.lastname,
+                          "password":row.password,
                           "level": row.level,
                            "role": row.role
                       }
 
                       console.log(req.session,user);
+                      let users= req.session ;
                       
                       //code to display on postman
-                      return res.status(200).json({message:'Successfully', success:true,results,user ,token:accessToken});
+                      return res.status(200).json({message:'Successfully', success:true,results,users ,token:accessToken});
              
                   }); 
                 // res.json({message:'Successfully', success:true, results})
