@@ -121,27 +121,67 @@ router.get('/get_municipalities/:id', (req, res) => {
 })
 
 router.post('/get_monthly_reports', (req, res) => {
-    
-    var get_monthly_reports_body = [req.body.date,req.body.province_id]
-    var sql = `select type, risk_type, total_avarage, muni_name
+
+    var get_monthly_reports_body = [req.body.date, req.body.province_id]
+    var sql = `select type, risk_type, total_avarage, muni_name,totalYes
     from samplingdata sam, watersource wat, municipality mun, sanitaryinpectionquestion san
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
     and sam.samplingId = san.samplingId
     and DATE_FORMAT(sampling_date_created, "%b/%Y") = ?
     and province_id = ?`
-    connection.query(sql,get_monthly_reports_body, (err, results) => {
+    connection.query(sql, get_monthly_reports_body, (err, results) => {
         if (err) throw err
-        if(results.length > 0){
-             res.send({ success: true, results })
+        if (results.length > 0) {
+            res.send({ success: true, results })
         }
-        else{
-            res.send({success:false, message:"There are no report"})
+        else {
+            res.send({ success: false, message: "There are no report" })
         }
-       
+
     })
 })
 
+router.get('/report_summary/:province_id/:date', (req, res) => {
+    var sql = `select SUM(openDefaction) as openDefaction, SUM(pitLatrine) as pitLatrine, SUM(diaperDisposal) as diaperDisposal, SUM(wasteWaterRelease) as wasteWaterRelease, SUM(unprotectedWaterSource) as unprotectedWaterSource, SUM(observerLaundryActivity) as observerLaundryActivity, SUM(agriculturalActivity) as agriculturalActivity, SUM(domesticAnimal) as domesticAnimal
+    from sanitaryinpectionquestion san, samplingdata sam, municipality mun
+    WHERE san.samplingId = sam.samplingId
+    and sam.muni_id = mun.muni_id
+    and province_id = ?
+    and DATE_FORMAT(sampling_date_created, "%b-%Y") = ?;`
+    var summary_body = [req.params.province_id, req.params.date]
+    console.log(summary_body)
+
+    connection.query(sql, summary_body, (err, rows) => {
+        if (err) throw err;
+        if (rows.length > 0) {
+            if (rows[0].agriculturalActivity != null) {
+               var objSurvay={}
+               var results =[]
+               var resultsArray = Object.values(rows[0])
+                var survayQuestions = ["Open Defaction", "Pit-Latrine", "Diaper Disposal", "Waste Water Release", "Unprotected Water Source", "Observer Laundry Activity", "Agricultural Activity", "Domestic Animal"]
+                var surveyColours=["Yelllow", "pink","purple", "red", "blue", "green", "orange", "brown"]
+                for(var k = 0; k < 8; k++){
+                    objSurvay={
+                        question: survayQuestions[k],
+                        colour:surveyColours[k],
+                        points: resultsArray[k]
+                    }
+                    results.push(objSurvay)
+                }
+                res.send({ results, success: true })
+            }
+            else {
+                res.send({ message: "No data", success: false })
+            }
+        }
+        else {
+            res.send({ message: "No data", success: false })
+        }
+
+    })
+
+})
 
 
 
