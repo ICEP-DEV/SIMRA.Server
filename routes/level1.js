@@ -121,24 +121,63 @@ router.get('/get_municipalities/:id', (req, res) => {
 })
 
 router.post('/get_monthly_reports', (req, res) => {
-    
-    var get_monthly_reports_body = [req.body.date,req.body.province_id]
-    var sql = `select type, risk_type, total_avarage, muni_name
+
+    var get_monthly_reports_body = [req.body.date, req.body.province_id]
+    var sql = `select type, risk_type, total_avarage, muni_name,totalYes
     from samplingdata sam, watersource wat, municipality mun, sanitaryinpectionquestion san
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
     and sam.samplingId = san.samplingId
     and DATE_FORMAT(sampling_date_created, "%b/%Y") = ?
     and province_id = ?`
-    connection.query(sql,get_monthly_reports_body, (err, results) => {
+    connection.query(sql, get_monthly_reports_body, (err, results) => {
         if (err) throw err
-        if(results.length > 0){
-             res.send({ success: true, results })
+        if (results.length > 0) {
+            res.send({ success: true, results })
         }
-        else{
-            res.send({success:false, message:"There are no report"})
+        else {
+            res.send({ success: false, message: "There are no report" })
         }
-       
+    })
+})
+
+router.get('/get_summary_report/:province_id/:date', (req, res) => {
+    var sql = `select count(risk_type) as count_risk, risk_type
+    from sanitaryinpectionquestion san, samplingdata sam, municipality mun
+    where san.samplingId = sam.samplingId
+    and sam.muni_id = mun.muni_id
+    and province_id = ?
+    and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
+    GROUP By risk_type;`
+    var summary_params = [req.params.province_id, req.params.date]
+
+    connection.query(sql, summary_params, (err, rows) => {
+        if (rows.length > 0) {
+            res.send({ rows, success: true })
+        }
+        else {
+            res.send({ message: "No data found", success: false })
+        }
+
+    })
+
+})
+
+router.get('/get_all_summary_h2s', (req, res) => {
+    var sql = `select status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, longitude, latitude, muni_name, type, sam.samplingId
+    from hydrogensulfide hyd, samplingdata sam, coordinate coo, municipality mun, watersource wat
+    where hyd.samplingId = sam.samplingId
+    and sam.samplingId = coo.samplingId
+    and mun.muni_id = sam.muni_id
+    and sam.samplingId = wat.samplingId;`
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+        if (rows.length > 0) {
+            res.send({ success: true, rows })
+        }
+        else {
+            res.send({ message: "xannot find data", success: false })
+        }
     })
 })
 
