@@ -208,7 +208,7 @@ router.get('/get_userhistory_sanitory/:id', (req, res) => {
 // get user h2s history by id
 router.get('/get_userhistory_h2s/:id', (req, res) => {
     var sql = `select weatherCondition, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, status, muni_name,  waterAccessability, type, province_name
-    from samplingdata sam, hydrogensulfide hyd, municipality mun, watersource wat
+    from samplingdata sam, hydrogensulfide hyd, municipality mun, watersource wat, province pro
     WHERE sam.samplingId = hyd.samplingId
     and sam.muni_id = mun.muni_id
     and mun.province_id = pro.province_id
