@@ -144,7 +144,7 @@ router.post('/get_monthly_reports', (req, res) => {
 })
 
 // get summary report
-router.get('/get_summary_report/:province_id/:date', (req, res) => {
+router.get('/get_survey_summary_report/:province_id/:date', async (req, res) => {
     var sql = `select count(risk_type) as count_risk, risk_type
     from sanitaryinpectionquestion san, samplingdata sam, municipality mun
     where san.samplingId = sam.samplingId
@@ -154,9 +154,66 @@ router.get('/get_summary_report/:province_id/:date', (req, res) => {
     GROUP By risk_type;`
     var summary_params = [req.params.province_id, req.params.date]
 
-    connection.query(sql, summary_params, (err, rows) => {
+    await connection.query(sql, summary_params, (err, rows) => {
         if (rows.length > 0) {
-            res.send({ rows, success: true })
+            let isFoundLowRisk = false;
+            let isFoundMediumRisk = false;
+            let isFoundHighRisk = false;
+            let isFoundVeryHighRisk = false;
+
+            var colours = []
+            var countValues = []
+            var risk_type = []
+            for (var k = 0; k < rows.length; k++) {
+                console.log(rows[k].risk_type.toLowerCase())
+                if (rows[k].risk_type.toLowerCase() === "medium risk") {
+                    isFoundMediumRisk = true;
+                    colours.push("rgba(255, 255, 0, 0.733)")
+                    countValues.push(rows[k].count_risk)
+                    risk_type.push("Medium Risk")
+                }
+                if (rows[k].risk_type.toLowerCase() === "low risk") {
+                    isFoundLowRisk = true;
+                    colours.push('rgba(0, 128, 0, 0.719)')
+                    countValues.push(rows[k].count_risk)
+                    risk_type.push("Low Risk")
+                }
+                if (rows[k].risk_type.toLowerCase() === "high risk") {
+                    isFoundHighRisk = true;
+                    colours.push('rgb(201, 199, 105)')
+                    countValues.push(rows[k].count_risk)
+                    risk_type.push('High Risk')
+                }
+                if (rows[k].risk_type.toLowerCase() === "very high risk") {
+                    isFoundVeryHighRisk = true;
+                    colours.push('rgba(216, 0, 0, 0.986)')
+                    countValues.push(rows[k].count_risk)
+                    risk_type.push('Very High Risk')
+                }
+            }
+            console.log(isFoundLowRisk)
+            if (isFoundMediumRisk == false) {
+                risk_type.push('Medium Risk')
+                countValues.push(0)
+                colours.push("rgba(255, 255, 0, 0.733)")
+            }
+            if (isFoundLowRisk == false) {
+                risk_type.push('Low Risk')
+                countValues.push(0)
+                colours.push('rgba(0, 128, 0, 0.719)')
+            }
+            if (isFoundHighRisk == false) {
+                risk_type.push('High Risk')
+                countValues.push(0)
+                colours.push('rgb(201, 199, 105)')
+            }
+            if (isFoundVeryHighRisk == false) {
+                risk_type.push('Very High Risk')
+                countValues.push(0)
+                colours.push('rgba(216, 0, 0, 0.986)')
+            }
+
+            res.send({ colours, countValues, risk_type, success: true })
         }
         else {
             res.send({ message: "No data found", success: false })
@@ -200,7 +257,7 @@ router.get('/get_userhistory_sanitory/:id', (req, res) => {
             res.send({ success: true, result })
         }
         else {
-            res.send({ success: false, message:"no history data" })
+            res.send({ success: false, message: "no history data" })
         }
     })
 })
@@ -220,7 +277,7 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
             res.send({ success: true, result })
         }
         else {
-            res.send({ success: false, message:"no history data" })
+            res.send({ success: false, message: "no history data" })
         }
     })
 })
