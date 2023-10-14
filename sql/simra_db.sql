@@ -486,6 +486,18 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 (7, 'Household Tap Water', 'Easy', 8),
 (8, 'Household Tap Water', 'Easy', 23);
 
+--Level 2
+--Table for storing calculations
+
+CREATE TABLE `fibData` (
+  `id` int(11) NOT NULL,
+  `referencePath` varchar(255) DEFAULT NULL,
+  `userCount` int(11) DEFAULT NULL,
+  `estimatedCount` decimal(10,0) DEFAULT NULL,
+  `roundedEstimatedCount` int(11) DEFAULT NULL,
+  `timestamp` datetime NOT NULL
+);ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
