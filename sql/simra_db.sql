@@ -459,7 +459,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`userId`, `mobileNo`, `password`, `firstname`, `lastname`, `level`, `role`) VALUES
 (1, '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
-(3, '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal');
+(3, '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal'),
+(4,'0789456123','123zxc','Paul','Tselana',2,'user');
 
 -- --------------------------------------------------------
 
@@ -485,6 +486,18 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 (6, 'Household Tap Water', 'Easy', 21),
 (7, 'Household Tap Water', 'Easy', 8),
 (8, 'Household Tap Water', 'Easy', 23);
+
+--Level 2
+--Table for storing calculations
+
+CREATE TABLE `fibData` (
+  `id` int(11) NOT NULL,
+  `referencePath` varchar(255) DEFAULT NULL,
+  `userCount` int(11) DEFAULT NULL,
+  `estimatedCount` decimal(10,0) DEFAULT NULL,
+  `roundedEstimatedCount` int(11) DEFAULT NULL,
+  `timestamp` datetime NOT NULL
+);ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
