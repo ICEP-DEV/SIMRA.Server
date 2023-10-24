@@ -49,9 +49,9 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/registration', (req, res) => {
-    var email = req.body.mobileNo
+    var email = req.body.email
     var isFound = false;
-    var sql_check = "select * from user where mobileNo =?"
+    var sql_check = "select * from user where email =?"
     connection.query(sql_check, email, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -59,9 +59,9 @@ router.post('/registration', (req, res) => {
         }
         else {
             var role = 'user'
-            var sql_register = `insert into user(mobileNo, password, firstname, lastname, level, role)
-            values(?, ?, ?, ?, ?, ? )`
-            var registerBody = [req.body.mobileNo, req.body.password, req.body.firstname, req.body.lastname,
+            var sql_register = `insert into user(email, mobileNo, password, firstname, lastname, level, role)
+            values(?, ?, ?, ?, ?, ?, ? )`
+            var registerBody = [req.body.email, req.body.mobileNo, req.body.password, req.body.firstname, req.body.lastname,
             req.body.level, role]
             connection.query(sql_register, registerBody, (err, rows) => {
                 if (err) throw err;

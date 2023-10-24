@@ -98,4 +98,30 @@ router.post('/QMRA', (req, res) => {
 
 
 })
+
+router.get('/qmra_group', (req, res)=>{
+    var sql = 'select count(samplingId), samplingId count_per_sample from  qmra group by samplingId;'
+    connection.query(sql, (err, results)=>{
+        if(err) throw err;
+        if(results.length > 0){
+            res.send({success: true, results})
+        }
+        else{
+            res.send({success:false, message:"cannot find data"})
+        }
+    })
+})
+
+router.get('/qmra_results', (req, res)=>{
+    var sql = 'select * from  qmra '
+    connection.query(sql, (err, results)=>{
+        if(err) throw err;
+        if(results.length > 0){
+            res.send({success: true, results})
+        }
+        else{
+            res.send({success:false, message:"cannot find data"})
+        }
+    })
+})
 module.exports = router
