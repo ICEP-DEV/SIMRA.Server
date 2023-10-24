@@ -18,7 +18,7 @@ const calculateExponentialForGiardia = (k, count) => {
 
 function calculateBetaPoisson(alpha, beta, count) {
     // Perform the Beta-Poisson calculation here
-    const calculatedResult =(1 - (1 + (count / beta)) ** - alpha);
+    const calculatedResult = (1 - (1 + (count / beta)) ** - alpha);
     // console.log(calculatedResult)
     return calculatedResult;
 };
@@ -40,7 +40,7 @@ const calculateProbabiltyInfection = (probInfect, numofExposure) => {
     return calculatedResult;
 };
 
-router.post('/QMRA', (req, res) => {
+router.post('/qmra', (req, res) => {
 
     let organism = req.body.organism;
     let fib = req.body.fib;
@@ -76,8 +76,8 @@ router.post('/QMRA', (req, res) => {
 
     var date = new Date()
     var durationType = req.body.durationType;
-    var probability = (1 -(1-totalQmra)) ** (-durationType)
-    var samplingId = 18
+    var probability = (1 - (1 - totalQmra)) ** (-durationType)
+    var samplingId = req.body.durationType
     var qmraBody = [totalQmra, date, samplingId]
     var sql = `INSERT INTO qmra(pi,dateCreated,samplingId)
             VALUES(?,?,?)`;
@@ -87,15 +87,49 @@ router.post('/QMRA', (req, res) => {
         }
         else {
             if (results.affectedRows > 0) {
-                res.status(200).json({ totalQmra,probability, organism, success:true });
+                res.status(200).json({ totalQmra, probability, organism, success: true });
             }
             else {
-                res.status(200).json({ success:false, message:"Something went wrong try again later" });
+                res.status(200).json({ success: false, message: "Something went wrong try again later" });
             }
 
         }
     });
 
+
+})
+
+router.get('/qmra_group_results', (req, res) => {
+    var group_sql = `select *
+    from qmra
+    group by samplingId`
+
+    connection.query(group_sql, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ results, success: true })
+        }
+        else {
+            res.send({ message: "No data found", success: false })
+        }
+
+    })
+})
+
+router.get('/qmra_results', (req, res) => {
+
+    var select_all_sql = 'select * from qmra'
+
+    connection.query(select_all_sql, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ results, success: true })
+        }
+        else {
+            res.send({ message: "No data found", success: false })
+        }
+
+    })
 
 })
 module.exports = router
