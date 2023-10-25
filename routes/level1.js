@@ -130,7 +130,7 @@ router.post('/get_monthly_reports', (req, res) => {
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
     and sam.samplingId = san.samplingId
-    and DATE_FORMAT(sampling_date_created, "%b/%Y") = ?
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%Y") = ?
     and province_id = ?`
     connection.query(sql, get_monthly_reports_body, (err, results) => {
         if (err) throw err
@@ -224,7 +224,7 @@ router.get('/get_survey_summary_report/:province_id/:date', async (req, res) => 
 })
 
 // get summary report of h2s with visual
-router.get('/get_h2s_report/:province_id/:date', async(req, res) => {
+router.get('/get_h2s_report/:province_id/:date', async (req, res) => {
     var sql = `select count(risk_type) as count_risk, risk_type, status
     from hydrogensulfide hyd, samplingdata sam, municipality mun
     where hyd.samplingId = sam.samplingId
@@ -234,8 +234,8 @@ router.get('/get_h2s_report/:province_id/:date', async(req, res) => {
     GROUP By risk_type;`
     var summary_params = [req.params.province_id, req.params.date]
 
-    await connection.query(sql, summary_params,(err, rows) => {
-        if(err) throw err
+    await connection.query(sql, summary_params, (err, rows) => {
+        if (err) throw err
         if (rows.length > 0) {
             let isNegative = false;
             let isPositive = false;
@@ -244,7 +244,7 @@ router.get('/get_h2s_report/:province_id/:date', async(req, res) => {
             var countValues = []
             var risk_type = []
             for (var k = 0; k < rows.length; k++) {
-                
+
                 if (Number(rows[k].status) === 0) {
                     isNegative = true;
                     colours.push("rgba(0, 128, 0, 0.719)")
@@ -345,6 +345,30 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
     and sam.samplingId = wat.samplingId
     and sam.userId = ?;`
     connection.query(sql, req.params.id, (err, result) => {
+        if (err) { throw err }
+        if (result.length > 0) {
+            res.send({ success: true, result })
+        }
+        else {
+            res.send({ success: false, message: "no history data" })
+        }
+    })
+})
+
+// province stats sanitary survey
+router.get('/get_survey_stats/:start/:end', (req, res) => {
+    var startDate = req.params.start
+    var endDate = req.params.end
+    var currentdate = new Date()
+ 
+    const dateParams = [startDate, endDate]
+    var sql = `select type, risk_type, total_avarage, muni_name,totalYes, DATE_FORMAT(sampling_date_created, "%Y-%m-%d") as created_date, province_id, mun.muni_id
+    from samplingdata sam, watersource wat, municipality mun, sanitaryinpectionquestion san
+    where sam.muni_id = mun.muni_id
+    and sam.samplingId = wat.samplingId
+    and sam.samplingId = san.samplingId
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+    connection.query(sql, dateParams, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {
             res.send({ success: true, result })
