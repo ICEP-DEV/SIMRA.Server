@@ -28,7 +28,6 @@ router.post('/login', (req, res) => {
                         "level": row.level,
                         "role": row.role
                     }
-
                     console.log(req.session, user);
                     let users = req.session;
 

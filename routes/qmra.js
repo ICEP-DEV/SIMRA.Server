@@ -49,6 +49,8 @@ router.post('/qmra', (req, res) => {
     let alpha = req.body.alpha;
     let beta = req.body.beta;
     let totalQmra = 0
+    var samplingId = req.body.samplingId
+
 
     switch (organism.toLocaleLowerCase()) {
         case 'Campylobacter jejuni'.toLocaleLowerCase():
@@ -73,11 +75,10 @@ router.post('/qmra', (req, res) => {
             totalQmra = calculateExponentialForGiardia(constant, fib)
             break;
     }
-
     var date = new Date()
+
     var durationType = req.body.durationType;
     var probability = (1 - (1 - totalQmra)) ** (-durationType)
-    var samplingId = req.body.durationType
     var qmraBody = [totalQmra, date, samplingId]
     var sql = `INSERT INTO qmra(pi,dateCreated,samplingId)
             VALUES(?,?,?)`;
@@ -133,28 +134,28 @@ router.get('/qmra_results', (req, res) => {
 
 })
 
-router.get('/qmra_group', (req, res)=>{
+router.get('/qmra_group', (req, res) => {
     var sql = 'select count(samplingId), samplingId count_per_sample from  qmra group by samplingId;'
-    connection.query(sql, (err, results)=>{
-        if(err) throw err;
-        if(results.length > 0){
-            res.send({success: true, results})
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
         }
-        else{
-            res.send({success:false, message:"cannot find data"})
+        else {
+            res.send({ success: false, message: "cannot find data" })
         }
     })
 })
 
-router.get('/qmra_results', (req, res)=>{
+router.get('/qmra_results', (req, res) => {
     var sql = 'select * from  qmra '
-    connection.query(sql, (err, results)=>{
-        if(err) throw err;
-        if(results.length > 0){
-            res.send({success: true, results})
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
         }
-        else{
-            res.send({success:false, message:"cannot find data"})
+        else {
+            res.send({ success: false, message: "cannot find data" })
         }
     })
 })
