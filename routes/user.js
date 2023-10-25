@@ -11,7 +11,9 @@ router.post('/login', (req, res) => {
         if (err) console(err)
         if (results.length > 0) {
             if (results[0].password == req.body.password) {
-                Object.keys(results).forEach(function (key) {
+                return res.status(200).json({ message: 'Successfully', success: true, results });
+
+                /*Object.keys(results).forEach(function (key) {
                     var row = results[key];
                     const user = {
                         userId: row.userId, mobileNo: row.mobileNo,
@@ -34,7 +36,7 @@ router.post('/login', (req, res) => {
                     //code to display on postman
                     return res.status(200).json({ message: 'Successfully', success: true, results, users, token: accessToken });
 
-                });
+                });*/
                 // res.json({message:'Successfully', success:true, results})
             }
             else {
