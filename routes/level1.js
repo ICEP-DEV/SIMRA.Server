@@ -121,6 +121,7 @@ router.get('/get_municipalities/:id', (req, res) => {
     })
 })
 
+
 // Get monthly reports
 router.post('/get_monthly_reports', (req, res) => {
 
@@ -297,7 +298,6 @@ router.get('/get_all_summary_h2s', (req, res) => {
     })
 })
 
-
 router.get('/get_all_summary_survey', (req, res) => {
     var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, longitude, latitude, muni_name, type, sam.samplingId, totalYes, risk_type, total_avarage
     from sanitaryinpectionquestion san, samplingdata sam, coordinate coo, municipality mun, watersource wat
@@ -315,6 +315,7 @@ router.get('/get_all_summary_survey', (req, res) => {
         }
     })
 })
+
 // get user sanitory survey history by id
 router.get('/get_userhistory_sanitory/:id', (req, res) => {
     var sql = `select weatherCondition, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, totalYes, total_avarage, muni_name, province_name
@@ -359,7 +360,6 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
 router.get('/get_survey_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
     var endDate = req.params.end
-    var currentdate = new Date()
  
     const dateParams = [startDate, endDate]
     var sql = `select type, risk_type, total_avarage, muni_name,totalYes, DATE_FORMAT(sampling_date_created, "%Y-%m-%d") as created_date, province_id, mun.muni_id
@@ -379,5 +379,27 @@ router.get('/get_survey_stats/:start/:end', (req, res) => {
     })
 })
 
+// province stats h2s survey
+router.get('/get_h2s_stats/:start/:end', (req, res) => {
+    var startDate = req.params.start
+    var endDate = req.params.end
+ 
+    const dateParams = [startDate, endDate]
+    var sql = `select risk_type, muni_name,status, DATE_FORMAT(sampling_date_created, "%Y-%m-%d") as created_date, province_id, mun.muni_id
+    from samplingdata sam, watersource wat, municipality mun, hydrogensulfide hyd
+    where sam.muni_id = mun.muni_id
+    and sam.samplingId = wat.samplingId
+    and sam.samplingId = hyd.samplingId
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+    connection.query(sql, dateParams, (err, result) => {
+        if (err) { throw err }
+        if (result.length > 0) {
+            res.send({ success: true, result })
+        }
+        else {
+            res.send({ success: false, message: "no history data" })
+        }
+    })
+})
 
 module.exports = router
