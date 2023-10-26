@@ -280,6 +280,7 @@ router.get('/get_h2s_report/:province_id/:date', async (req, res) => {
 
 })
 
+// get all _summary h2s
 router.get('/get_all_summary_h2s', (req, res) => {
     var sql = `select status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, longitude, latitude, muni_name, type, sam.samplingId
     from hydrogensulfide hyd, samplingdata sam, coordinate coo, municipality mun, watersource wat
@@ -318,7 +319,7 @@ router.get('/get_all_summary_survey', (req, res) => {
 
 // get user sanitory survey history by id
 router.get('/get_userhistory_sanitory/:id', (req, res) => {
-    var sql = `select weatherCondition, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, totalYes, total_avarage, muni_name, province_name
+    var sql = `select pro.province_id, type, weatherCondition,DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, totalYes, total_avarage, muni_name, province_name, mun.muni_id
     from samplingdata sam, watersource wat, sanitaryinpectionquestion san, municipality mun, province pro
     WHERE sam.samplingId = wat.samplingId
     and sam.samplingId = san.samplingId
@@ -338,7 +339,7 @@ router.get('/get_userhistory_sanitory/:id', (req, res) => {
 
 // get user h2s history by id
 router.get('/get_userhistory_h2s/:id', (req, res) => {
-    var sql = `select weatherCondition, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, status, muni_name,  waterAccessability, type, province_name
+    var sql = `select pro.province_id, weatherCondition, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date,DATE_FORMAT(sampling_date_created,'%W')  as weekday, risk_type, status, muni_name,  waterAccessability, type, province_name, mun.muni_id
     from samplingdata sam, hydrogensulfide hyd, municipality mun, watersource wat, province pro
     WHERE sam.samplingId = hyd.samplingId
     and sam.muni_id = mun.muni_id
@@ -360,9 +361,9 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
 router.get('/get_survey_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
     var endDate = req.params.end
- 
+
     const dateParams = [startDate, endDate]
-    var sql = `select type, risk_type, total_avarage, muni_name,totalYes, DATE_FORMAT(sampling_date_created, "%Y-%m-%d") as created_date, province_id, mun.muni_id
+    var sql = `select province_id, type, risk_type, total_avarage, muni_name,totalYes, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
     from samplingdata sam, watersource wat, municipality mun, sanitaryinpectionquestion san
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
@@ -383,9 +384,9 @@ router.get('/get_survey_stats/:start/:end', (req, res) => {
 router.get('/get_h2s_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
     var endDate = req.params.end
- 
+
     const dateParams = [startDate, endDate]
-    var sql = `select risk_type, muni_name,status, DATE_FORMAT(sampling_date_created, "%Y-%m-%d") as created_date, province_id, mun.muni_id
+    var sql = `select risk_type, muni_name,status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
     from samplingdata sam, watersource wat, municipality mun, hydrogensulfide hyd
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
