@@ -47,6 +47,16 @@ router.post('/login', (req,res)=>{
     } )
 })
 
+router.get('/logout',(req, res)=>{
+    req.session.destroy(function(err){
+       if(err){
+        return res.status(400).send(err);
+       }else{
+        return res.status(200).send("logged out \n"+JSON.stringify(req.session));
+       }
+    });
+});
+
 
  
 
