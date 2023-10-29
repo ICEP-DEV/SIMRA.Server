@@ -42,7 +42,7 @@ const calculateProbabiltyInfection = (probInfect, numofExposure) => {
 
 router.post('/add_indicator_qmra', (req, res) => {
     let is_customize_Pathogen = req.body.is_customize_Pathogen;
-    let pathogen = req.body.organism;
+    let pathogen = req.body.pathogen;
     let n50 = req.body.n50;
     let constant = req.body.constant;
     let alpha = req.body.alpha;
@@ -55,7 +55,7 @@ router.post('/add_indicator_qmra', (req, res) => {
     let ratio = req.body.ratio;
     let count_indicator = req.body.count_indicator;
     let estimated_count = req.body.estimated_count;
-    let is_customized = req.body.is_customizedIndicator;
+    let is_customized = req.body.is_customized_indicator;
 
     switch (pathogen.toLocaleLowerCase()) {
         case 'Campylobacter jejuni'.toLocaleLowerCase():
@@ -94,7 +94,6 @@ router.post('/add_indicator_qmra', (req, res) => {
             return res.status(200).send("Failed to load data!" + err);
         }
         else {
-            console.log(results)
             if (results.affectedRows > 0) {
                 var indicator_id = results.insertId
                 // Prepare insertion of QMRA
@@ -102,16 +101,12 @@ router.post('/add_indicator_qmra', (req, res) => {
                 var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customized,indicator_id)
                                 VALUES(?,?,?,?,?,?,?,?,?,?,?)`
                 connection.query(qmra_sql, qmra_body, (error, row) => {
-                    console.log('third test')
-
                     if (error) {
                         console.log(error)
                         throw err
                     };
-                    console.log('fifth test')
 
                     if (row.affectedRows > 0) {
-                        console.log('fourth test')
 
                         var qmra_id = row.insertId
                         res.send({ success: true, totalQmra, qmra_id })
@@ -133,7 +128,7 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     var probability_of_infection = req.body.probability_of_infection
     var duration_number = 0;
     if(duration_type.toLocaleLowerCase() === 'daily'){
-        duration_number = 31
+        duration_number = 365
     }
     else if(duration_type.toLocaleLowerCase() === 'wekkly'){
         duration_number = 54
@@ -147,7 +142,7 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     else {
         duration_number = 1
     }
-    var likelihood_of_infection = (1 - (1 - probability_of_infection)) ** (-duration_number)
+    var likelihood_of_infection = parseFloat(1 - (1 - probability_of_infection)) ** (-duration_number).toFixed(10)
     var likelihood_body = [likelihood_of_infection, req.params.qmra_id]
     var sql = `UPDATE qmra
                 SET likelihood_of_infection = ?
