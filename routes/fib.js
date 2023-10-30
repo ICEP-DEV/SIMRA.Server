@@ -29,4 +29,18 @@ router.get('/reference_pathogens', (req, res)=>{
     res.send({message:"List of Indicators", success:true, reference_pathogens})
 })
 
+router.get('/maker_genes', (req, res)=>{
+    var makers = [
+        // {pathogen:"Cryptosridium Parvum", best_fit_model:"exponential", parameter:[{radius:0.059}]},
+        {maker:'Cow', ratio: 0.66},
+        {maker:"Human", ratio: 1},
+        {maker:"Dog", ratio: 0.01},
+        {maker:"Pig",  ratio: 0.8},
+        {maker:"Chicken",  ratio: 0.01},
+    ]
+
+    res.send({message:"List of maker genes", success:true, makers})
+})
+
+
 module.exports = router

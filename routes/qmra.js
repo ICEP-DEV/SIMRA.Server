@@ -143,7 +143,6 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
         duration_number = 365
     }
     var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
-    console.log(likelihood_of_infection)
     //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
     var likelihood_body = [likelihood_of_infection, req.params.qmra_id]
     var sql = `UPDATE qmra
