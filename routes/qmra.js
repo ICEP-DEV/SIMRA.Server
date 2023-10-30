@@ -127,39 +127,41 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     var duration_type = req.body.duration_type;
     var probability_of_infection = req.body.probability_of_infection
     var duration_number = 0;
-    if(duration_type.toLocaleLowerCase() === 'daily'){
-        duration_number = 365
-    }
-    else if(duration_type.toLocaleLowerCase() === 'wekkly'){
-        duration_number = 54
-    }
-    else if(duration_type.toLocaleLowerCase() === 'monthly'){
-        duration_number = 12
-    }
-    else if(duration_type.toLocaleLowerCase() === 'quartely'){
-        duration_number = 4
-    }
-    else {
+    if (duration_type.toLocaleLowerCase() === 'daily') {
         duration_number = 1
     }
-    var likelihood_of_infection = parseFloat(1 - (1 - probability_of_infection)) ** (-duration_number).toFixed(10)
+    else if (duration_type.toLocaleLowerCase() === 'wekkly') {
+        duration_number = 7
+    }
+    else if (duration_type.toLocaleLowerCase() === 'monthly') {
+        duration_number = 31
+    }
+    else if (duration_type.toLocaleLowerCase() === 'quartely') {
+        duration_number = 90
+    }
+    else {
+        duration_number = 365
+    }
+    var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
+    console.log(likelihood_of_infection)
+    //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
     var likelihood_body = [likelihood_of_infection, req.params.qmra_id]
     var sql = `UPDATE qmra
                 SET likelihood_of_infection = ?
                 WHERE qmra_id = ?;`
-    connection.query(sql, likelihood_body, (err, results)=>{
-        if(err) throw err;
-        if(results.affectedRows > 0){
-            res.send({success:true, likelihood_of_infection})
+    connection.query(sql, likelihood_body, (err, results) => {
+        if (err) throw err;
+        if (results.affectedRows > 0) {
+            res.send({ success: true, likelihood_of_infection })
         }
-        else{
-            res.send({success:false, message:"could not perform likelihood of infection"})
+        else {
+            res.send({ success: false, message: "could not perform likelihood of infection" })
         }
     })
 })
 
-router.post('/mst', (req, res)=>{
-    
+router.post('/mst', (req, res) => {
+
 })
 
 router.get('/qmra_group_results', (req, res) => {
@@ -209,9 +211,39 @@ router.get('/qmra_group', (req, res) => {
     })
 })
 
+// all qmra results
 router.get('/qmra_results', (req, res) => {
-    var sql = 'select * from  qmra '
+    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, fib.is_customized as is_customized_fib, 
+                pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type, qmr.is_customized as is_customized_qmra, type, 
+                waterAccessability, mun.muni_id, muni_name
+                from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
+                where mun.muni_id = sam.muni_id
+                and wat.samplingId = sam.samplingId
+                and sam.samplingId = fib.samplingId
+                and qmr.indicator_id = fib.indicator_id;`
     connection.query(sql, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "cannot find data" })
+        }
+    })
+})
+
+// specic user qmra results
+router.get('/user_qmra_results/:user_id', (req, res) => {
+    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, fib.is_customized as is_customized_fib, 
+                pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type, qmr.is_customized as is_customized_qmra, type, 
+                waterAccessability, mun.muni_id, muni_name
+                from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
+                where mun.muni_id = sam.muni_id
+                and wat.samplingId = sam.samplingId
+                and sam.samplingId = fib.samplingId
+                and qmr.indicator_id = fib.indicator_id
+    and userId =?`
+    connection.query(sql, req.params.user_id, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
             res.send({ success: true, results })
