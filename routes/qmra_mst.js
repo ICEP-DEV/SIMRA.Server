@@ -55,7 +55,7 @@ router.post('/add_indicator_qmra', (req, res) => {
     let ratio = req.body.ratio;
     let count_indicator = req.body.count_indicator;
     let estimated_count = req.body.estimated_count;
-    let is_customized = req.body.is_customized_indicator;
+    let is_customized_indicator = req.body.is_customized_indicator;
 
     switch (pathogen.toLocaleLowerCase()) {
         case 'Campylobacter jejuni'.toLocaleLowerCase():
@@ -85,30 +85,32 @@ router.post('/add_indicator_qmra', (req, res) => {
     //var probability = (1 - (1 - totalQmra)) ** (-durationType)
     var likeliOfInfection = null
     // prepare insetion of FIB indicatore
-    var fibIndicatorBody = [indicator, ratio, count_indicator, estimated_count, is_customized, samplingId]
-    var fib_sql = `INSERT INTO fib_indicator(indicator,ratio,count_indicator,estimated_count,is_customized,samplingId)
-                VALUES(?,?,?,?,?,?)`;
+    var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, samplingId]
+    var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
+                                VALUES(?,?,?,?,?,?,?,?,?,?,?)`
 
-    connection.query(fib_sql, fibIndicatorBody, (err, results) => {
+
+    connection.query(qmra_sql, qmra_body, (err, results) => {
         if (err) {
             return res.status(200).send("Failed to load data!" + err);
         }
         else {
             if (results.affectedRows > 0) {
-                var indicator_id = results.insertId
+                var qmra_id = results.insertId
+                console.log(results)
+                console.log(qmra_id)
                 // Prepare insertion of QMRA
-                var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, indicator_id]
-                var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customized,indicator_id)
-                                VALUES(?,?,?,?,?,?,?,?,?,?,?)`
-                connection.query(qmra_sql, qmra_body, (error, row) => {
+                var fibIndicatorBody = [indicator, ratio, count_indicator, estimated_count, is_customized_indicator, qmra_id]
+                var fib_sql = `INSERT INTO fib_indicator(indicator,ratio,count_indicator,estimated_count,is_customized_indicator,qmra_id)
+                VALUES(?,?,?,?,?,?)`;
+                connection.query(fib_sql, fibIndicatorBody, (error, row) => {
                     if (error) {
                         console.log(error)
                         throw err
                     };
 
                     if (row.affectedRows > 0) {
-
-                        var qmra_id = row.insertId
+                        console.log(qmra_id)
                         res.send({ success: true, totalQmra, qmra_id })
                     }
                 })
@@ -144,9 +146,10 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     }
     var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
     //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
-    var likelihood_body = [likelihood_of_infection, req.params.qmra_id]
+    var likelihood_body = [likelihood_of_infection, duration_type, req.params.qmra_id]
+    console.log(likelihood_of_infection, duration_type, req.params.qmra_id)
     var sql = `UPDATE qmra
-                SET likelihood_of_infection = ?
+                SET likelihood_of_infection = ?, duration_type =?
                 WHERE qmra_id = ?;`
     connection.query(sql, likelihood_body, (err, results) => {
         if (err) throw err;
@@ -160,6 +163,40 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
 })
 
 router.post('/mst', (req, res) => {
+    let is_customize_Pathogen = req.body.is_customize_Pathogen;
+    let pathogen = req.body.pathogen;
+    let n50 = req.body.n50;
+    let constant = req.body.constant;
+    let alpha = req.body.alpha;
+    let beta = req.body.beta;
+    let totalQmra = 0;
+    var samplingId = req.body.samplingId;
+    let best_fit_model = req.body.best_fit_model
+
+    switch (pathogen.toLocaleLowerCase()) {
+        case 'Campylobacter jejuni'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'E.coli 0157:H7'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'Salmonella typhi'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'S.Flexneri'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'Vibrio Cholera'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'Entamoeba coli'.toLocaleLowerCase():
+            totalQmra = calculateEntamoebaColi(alpha, n50, count_indicator)
+            break;
+        case 'Giardia lambia'.toLocaleLowerCase():
+            totalQmra = calculateExponentialForGiardia(constant, count_indicator)
+            break;
+    }
+
 
 })
 
@@ -212,14 +249,12 @@ router.get('/qmra_group', (req, res) => {
 
 // all qmra results
 router.get('/qmra_results', (req, res) => {
-    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, fib.is_customized as is_customized_fib, 
-                pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type, qmr.is_customized as is_customized_qmra, type, 
-                waterAccessability, mun.muni_id, muni_name
+    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
                 from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
-                and sam.samplingId = fib.samplingId
-                and qmr.indicator_id = fib.indicator_id;`
+                and sam.samplingId = qmr.samplingId
+                and fib.qmra_id = qmr.qmra_id;`
     connection.query(sql, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
@@ -233,15 +268,13 @@ router.get('/qmra_results', (req, res) => {
 
 // specic user qmra results
 router.get('/user_qmra_results/:user_id', (req, res) => {
-    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, fib.is_customized as is_customized_fib, 
-                pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type, qmr.is_customized as is_customized_qmra, type, 
-                waterAccessability, mun.muni_id, muni_name
+    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
                 from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
-                and sam.samplingId = fib.samplingId
-                and qmr.indicator_id = fib.indicator_id
-    and userId =?`
+                and sam.samplingId = qmr.samplingId
+                and fib.qmra_id = qmr.qmra_id
+                and userId =?`
     connection.query(sql, req.params.user_id, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
