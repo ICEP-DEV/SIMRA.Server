@@ -12,10 +12,8 @@ router.post('/sampling_data', (req, res) => {
         if (err) throw err;
 
         if (result.affectedRows != 0) {
-            console.log(result.insertId)
             var insertedId = result.insertId
             res.send({ success: true, message: "sampling data recoded...", insertedId })
-            console.log({ success: true, message: "sampling data recoded...", insertedId })
         }
         else {
             res.send({ success: false, message: "unable to record sampling data..." })
@@ -30,7 +28,6 @@ router.post("/watersource", (req, res) => {
     var watersourceBody = [req.body.type, req.body.waterAccessability, req.body.samplingId]
     connection.query(watersourceSql, watersourceBody, (err, rows) => {
         if (err) throw err
-        console.log("watersource", rows)
         res.send({ message: "adedd watersource", rows })
     })
 })
@@ -54,7 +51,6 @@ router.post("/hydrogensulfide", (req, res) => {
     var h2sSql = `insert into hydrogensulfide(status,risk_type, samplingId)
             values(?,?,?);`
     var h2sBody = [req.body.status, risk_type, req.body.samplingId]
-    console.log(req.body)
     connection.query(h2sSql, h2sBody, (err, rows) => {
         if (err) throw err
         var status = req.body.status
@@ -166,7 +162,6 @@ router.get('/get_survey_summary_report/:province_id/:date', async (req, res) => 
             var countValues = []
             var risk_type = []
             for (var k = 0; k < rows.length; k++) {
-                console.log(rows[k].risk_type.toLowerCase())
                 if (rows[k].risk_type.toLowerCase() === "medium risk") {
                     isFoundMediumRisk = true;
                     colours.push("rgba(255, 255, 0, 0.733)")
@@ -192,7 +187,6 @@ router.get('/get_survey_summary_report/:province_id/:date', async (req, res) => 
                     risk_type.push('Very High Risk')
                 }
             }
-            console.log(isFoundLowRisk)
             if (isFoundMediumRisk == false) {
                 risk_type.push('Medium Risk')
                 countValues.push(0)
@@ -361,13 +355,14 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
 router.get('/get_survey_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
     var endDate = req.params.end
-
+    var userId = req.params.id
     const dateParams = [startDate, endDate]
-    var sql = `select province_id, type, risk_type, total_avarage, muni_name,totalYes, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
-    from samplingdata sam, watersource wat, municipality mun, sanitaryinpectionquestion san
-    where sam.muni_id = mun.muni_id
-    and sam.samplingId = wat.samplingId
+    var sql = `select pro.province_id, type, weatherCondition,DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, totalYes, total_avarage, muni_name, province_name, mun.muni_id
+    from samplingdata sam, watersource wat, sanitaryinpectionquestion san, municipality mun, province pro
+    WHERE sam.samplingId = wat.samplingId
     and sam.samplingId = san.samplingId
+    and sam.muni_id = mun.muni_id
+    and mun.province_id = pro.province_id
     and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
     connection.query(sql, dateParams, (err, result) => {
         if (err) { throw err }
@@ -384,8 +379,8 @@ router.get('/get_survey_stats/:start/:end', (req, res) => {
 router.get('/get_h2s_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
     var endDate = req.params.end
-
     const dateParams = [startDate, endDate]
+
     var sql = `select risk_type, muni_name,status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
     from samplingdata sam, watersource wat, municipality mun, hydrogensulfide hyd
     where sam.muni_id = mun.muni_id

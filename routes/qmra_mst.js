@@ -56,7 +56,7 @@ router.post('/add_indicator_qmra', (req, res) => {
     let count_indicator = req.body.count_indicator;
     let estimated_count = req.body.estimated_count;
     let is_customized_indicator = req.body.is_customized_indicator;
-
+    console.log(pathogen)
     switch (pathogen.toLocaleLowerCase()) {
         case 'Campylobacter jejuni'.toLocaleLowerCase():
             totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
@@ -82,13 +82,13 @@ router.post('/add_indicator_qmra', (req, res) => {
     }
 
     var duration_type = req.body.duration_type;
-    //var probability = (1 - (1 - totalQmra)) ** (-durationType)
     var likeliOfInfection = null
-    // prepare insetion of FIB indicatore
     var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, samplingId]
     var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
                                 VALUES(?,?,?,?,?,?,?,?,?,?,?)`
 
+    console.log('pathogen', pathogen)
+    console.log('qmtotalQmrara', totalQmra)
 
     connection.query(qmra_sql, qmra_body, (err, results) => {
         if (err) {
@@ -173,31 +173,67 @@ router.post('/mst', (req, res) => {
     var samplingId = req.body.samplingId;
     let best_fit_model = req.body.best_fit_model
 
+    let estimated_count = req.body.estimated_count
+    let count = req.body.count
+    let is_customized_mst = req.body.is_customized_mst
+    let ratio = req.body.ratio
+    let maker = req.body.maker
+
     switch (pathogen.toLocaleLowerCase()) {
         case 'Campylobacter jejuni'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
             break;
         case 'E.coli 0157:H7'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
             break;
         case 'Salmonella typhi'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
             break;
         case 'S.Flexneri'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
             break;
         case 'Vibrio Cholera'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
             break;
         case 'Entamoeba coli'.toLocaleLowerCase():
-            totalQmra = calculateEntamoebaColi(alpha, n50, count_indicator)
+            totalQmra = calculateEntamoebaColi(alpha, n50, estimated_count)
             break;
         case 'Giardia lambia'.toLocaleLowerCase():
-            totalQmra = calculateExponentialForGiardia(constant, count_indicator)
+            totalQmra = calculateExponentialForGiardia(constant, estimated_count)
             break;
     }
 
+    var duration_type = req.body.duration_type;
+    var likeliOfInfection = null
+    var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, samplingId]
+    var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
+                                VALUES(?,?,?,?,?,?,?,?,?,?,?)`
+    connection.query(qmra_sql, qmra_body, (err, results) => {
+        if (err) {
+            return res.status(200).send("Failed to load data!" + err);
+        }
+        else {
+            if (results.affectedRows > 0) {
+                var qmra_id = results.insertId
+                var fibIndicatorBody = [count, ratio, estimated_count, maker, is_customized_mst, qmra_id]
+                var fib_sql = `INSERT INTO mst(count,ratio,estimated_count,maker,is_customized_mst,qmra_id)
+                VALUES(?,?,?,?,?,?)`;
+                connection.query(fib_sql, fibIndicatorBody, (error, row) => {
+                    if (error) {
+                        console.log(error)
+                        throw err
+                    };
+                    if (row.affectedRows > 0) {
+                        res.send({ success: true, totalQmra, qmra_id })
+                    }
+                })
+            }
+            else {
+                res.status(200).json({ success: false, message: "Something went wrong try again later" });
+            }
 
+        }
+    });
 })
 
 router.get('/qmra_group_results', (req, res) => {
@@ -268,7 +304,7 @@ router.get('/qmra_results', (req, res) => {
 
 // specic user qmra results
 router.get('/user_qmra_results/:user_id', (req, res) => {
-    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
                 from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
@@ -276,6 +312,91 @@ router.get('/user_qmra_results/:user_id', (req, res) => {
                 and fib.qmra_id = qmr.qmra_id
                 and userId =?`
     connection.query(sql, req.params.user_id, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "cannot find data" })
+        }
+    })
+})
+
+router.get('/user_qmra_results/:start/:end/:user_id', (req, res) => {
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+                from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
+                where mun.muni_id = sam.muni_id
+                and wat.samplingId = sam.samplingId
+                and sam.samplingId = qmr.samplingId
+                and fib.qmra_id = qmr.qmra_id
+                and userId =?
+                and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+    var mst_results = [req.params.user_id, req.params.start, req.params.end]
+
+    connection.query(sql, mst_results, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "cannot find data" })
+        }
+    })
+})
+
+// all mst qmra results
+router.get('/mst_results', (req, res) => {
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    from samplingdata sam, mst ms, qmra qmr, watersource wat, municipality mun
+    where mun.muni_id = sam.muni_id
+    and wat.samplingId = sam.samplingId
+    and sam.samplingId = qmr.samplingId
+    and ms.qmra_id = qmr.qmra_id`
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "cannot find data" })
+        }
+    })
+})
+
+// specific mst qmra results
+router.get('/mst_results/:user_id', (req, res) => {
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    from samplingdata sam, mst ms, qmra qmr, watersource wat, municipality mun
+    where mun.muni_id = sam.muni_id
+    and wat.samplingId = sam.samplingId
+    and sam.samplingId = qmr.samplingId
+    and ms.qmra_id = qmr.qmra_id
+    and userId = ?`
+    connection.query(sql, req.params.user_id, (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "cannot find data" })
+        }
+    })
+})
+
+// get results by specific dates
+router.get('/mst_results/:start/:end/:user_id', (req, res) => {
+
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday,DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    from samplingdata sam, mst ms, qmra qmr, watersource wat, municipality mun
+    where mun.muni_id = sam.muni_id
+    and wat.samplingId = sam.samplingId
+    and sam.samplingId = qmr.samplingId
+    and ms.qmra_id = qmr.qmra_id
+    and userId = ?
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+
+    var mst_results = [req.params.user_id, req.params.start, req.params.end]
+    connection.query(sql, mst_results, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
             res.send({ success: true, results })

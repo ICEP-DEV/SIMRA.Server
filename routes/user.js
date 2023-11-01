@@ -5,9 +5,9 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res) => {
-    var mobileNo = req.body.username
-    var sql = `SELECT * FROM USER WHERE mobileNo =?`   //"0123456789"
-    connection.query(sql, [mobileNo], (err, results) => {
+    var email = req.body.username
+    var sql = `SELECT * FROM USER WHERE email =?`   //"0123456789"
+    connection.query(sql, [email], (err, results) => {
         if (err) console(err)
         if (results.length > 0) {
             if (results[0].password == req.body.password) {
