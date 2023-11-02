@@ -24,9 +24,9 @@ router.put('/updateProfile',jwtMiddleware,(req, res)=>{
    
      
        
-        let firstname = req.body.firstname;
-        let lastname =req.body.lastname;
-        let mobileNo =req.body.mobileNo;
+        let firstname = req.body.user_firstname;
+        let lastname =req.body.user_lastname;
+        let mobileNo =req.body.user_mobileNo;
        
 
 
