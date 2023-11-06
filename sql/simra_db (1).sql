@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2023 at 05:26 AM
+-- Generation Time: Nov 06, 2023 at 10:35 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -123,7 +123,72 @@ INSERT INTO `coordinate` (`coorniadteId`, `longitude`, `latitude`, `samplingId`)
 (87, '28.2292712', '-25.7478676', 101),
 (88, '28.2292712', '-25.7478676', 102),
 (89, '28.2292712', '-25.7478676', 103),
-(90, '28.2292712', '-25.7478676', 104);
+(90, '28.2292712', '-25.7478676', 104),
+(91, '28.2292712', '-25.7478676', 105),
+(92, '28.2292712', '-25.7478676', 106),
+(93, '28.2292712', '-25.7478676', 107),
+(94, '28.2292712', '-25.7478676', 108),
+(95, '28.2292712', '-25.7478676', 109),
+(96, '28.2292712', '-25.7478676', 110),
+(97, '28.2292712', '-25.7478676', 111),
+(98, '28.2292712', '-25.7478676', 112),
+(99, '28.2292712', '-25.7478676', 113),
+(100, '28.2292712', '-25.7478676', 114),
+(101, '28.2292712', '-25.7478676', 115),
+(102, '28.2292712', '-25.7478676', 116),
+(103, '28.2292712', '-25.7478676', 117),
+(104, '28.2292712', '-25.7478676', 118),
+(105, '28.2292712', '-25.7478676', 119),
+(106, '28.2292712', '-25.7478676', 120),
+(107, '28.2292712', '-25.7478676', 121),
+(108, '28.2292712', '-25.7478676', 123),
+(109, '28.2292712', '-25.7478676', 124),
+(110, '28.2292712', '-25.7478676', 125),
+(111, '28.2292712', '-25.7478676', 126),
+(112, '28.2292712', '-25.7478676', 127),
+(113, '28.2292712', '-25.7478676', 128),
+(114, '28.2292712', '-25.7478676', 129),
+(115, '28.2292712', '-25.7478676', 130),
+(116, '28.2292712', '-25.7478676', 131),
+(117, '28.2292712', '-25.7478676', 132),
+(118, '28.2292712', '-25.7478676', 133),
+(119, '28.2292712', '-25.7478676', 134),
+(120, '28.2292712', '-25.7478676', 135),
+(121, '28.2292712', '-25.7478676', 136),
+(122, '28.2292712', '-25.7478676', 137),
+(123, '28.2292712', '-25.7478676', 138),
+(124, '28.2292712', '-25.7478676', 139),
+(125, '28.2292712', '-25.7478676', 140),
+(126, '28.2292712', '-25.7478676', 141),
+(127, '28.2292712', '-25.7478676', 142),
+(128, '28.2292712', '-25.7478676', 143),
+(129, '28.2292712', '-25.7478676', 144),
+(130, '28.2292712', '-25.7478676', 145),
+(131, '28.2292712', '-25.7478676', 146),
+(132, '28.2292712', '-25.7478676', 147),
+(133, '28.2292712', '-25.7478676', 148),
+(134, '28.2292712', '-25.7478676', 149),
+(135, '28.2292712', '-25.7478676', 150),
+(136, '28.2292712', '-25.7478676', 151),
+(137, '28.2292712', '-25.7478676', 152),
+(138, '28.2292712', '-25.7478676', 153),
+(139, '28.2292712', '-25.7478676', 154),
+(140, '28.2292712', '-25.7478676', 155),
+(141, '28.2292712', '-25.7478676', 156),
+(142, '28.2292712', '-25.7478676', 157),
+(143, '28.2292712', '-25.7478676', 158),
+(144, '28.2292712', '-25.7478676', 159),
+(145, '28.2292712', '-25.7478676', 160),
+(146, '28.2292712', '-25.7478676', 161),
+(147, '28.2292712', '-25.7478676', 162),
+(148, '28.2292712', '-25.7478676', 163),
+(149, '28.2292712', '-25.7478676', 164),
+(150, '28.2292712', '-25.7478676', 165),
+(151, '28.2292712', '-25.7478676', 166),
+(152, '', '', 167),
+(153, '', '', 168),
+(154, '', '', 169),
+(155, '28.2292712', '-25.7478676', 170);
 
 -- --------------------------------------------------------
 
@@ -175,7 +240,21 @@ INSERT INTO `fib_indicator` (`indicator_id`, `indicator`, `ratio`, `count_indica
 (31, 'Giardia', 0.80, 200, 160.00, NULL, 25),
 (32, 'Giardia', 0.80, 200, 160.00, NULL, 26),
 (33, 'Giardia', 0.80, 200, 160.00, NULL, 27),
-(34, 'Giardia', 0.80, 14, 11.00, NULL, 28);
+(34, 'Giardia', 0.80, 14, 11.00, NULL, 28),
+(35, 'Giardia', 0.80, 10, 8.00, NULL, 52),
+(36, 'Giardia', 0.80, 10, 8.00, NULL, 53),
+(37, 'Giardia', 0.80, 10, 8.00, NULL, 54),
+(38, 'Giardia', 0.80, 10, 8.00, NULL, 55),
+(39, 'Giardia', 0.80, 10, 8.00, NULL, 56),
+(40, 'Giardia', 0.80, 10, 8.00, NULL, 57),
+(41, 'Giardia', 0.80, 10, 8.00, NULL, 58),
+(42, 'Giardia', 0.80, 10, 8.00, NULL, 59),
+(43, 'Giardia', 0.80, 10, 8.00, NULL, 60),
+(44, 'Cryptosporidium', 1.00, 100, 100.00, NULL, 61),
+(45, 'Cryptosporidium', 1.00, 10, 10.00, NULL, 63),
+(46, 'Cryptosporidium', 1.00, 10, 10.00, NULL, 64),
+(47, 'Giardia', 0.80, 5, 4.00, NULL, 67),
+(48, 'Coliforms', 1.00, 12, 4.80, NULL, 70);
 
 -- --------------------------------------------------------
 
@@ -215,7 +294,18 @@ INSERT INTO `hydrogensulfide` (`id`, `status`, `samplingId`, `risk_type`) VALUES
 (25, '1', 65, 'Positive (Risk)'),
 (26, '1', 66, 'Positive (Risk)'),
 (27, '1', 67, 'Positive (Risk)'),
-(28, '0', 68, 'Negative (No Risk)');
+(28, '0', 68, 'Negative (No Risk)'),
+(29, '0', 144, 'Negative (No Risk)'),
+(30, '1', 145, 'Positive (Risk)'),
+(31, '1', 146, 'Positive (Risk)'),
+(32, '1', 147, 'Positive (Risk)'),
+(33, '1', 148, 'Positive (Risk)'),
+(34, '1', 149, 'Positive (Risk)'),
+(35, '1', 150, 'Positive (Risk)'),
+(36, '1', 152, 'Positive (Risk)'),
+(37, '1', 156, 'Positive (Risk)'),
+(38, '0', 157, 'Negative (No Risk)'),
+(39, '0', 164, 'Negative (No Risk)');
 
 -- --------------------------------------------------------
 
@@ -238,9 +328,42 @@ CREATE TABLE `mst` (
   `mst_id` int(11) NOT NULL,
   `count` int(11) DEFAULT NULL,
   `ratio` decimal(3,2) DEFAULT NULL,
+  `estimated_count` decimal(10,2) NOT NULL,
   `maker` varchar(100) DEFAULT NULL,
+  `is_customized_mst` tinyint(1) NOT NULL,
   `qmra_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mst`
+--
+
+INSERT INTO `mst` (`mst_id`, `count`, `ratio`, `estimated_count`, `maker`, `is_customized_mst`, `qmra_id`) VALUES
+(1, 200, 0.00, 132.00, 'Cow', 0, 31),
+(2, 5, 0.01, 0.05, 'Chicken', 0, 32),
+(3, 10, 0.36, 3.60, 'cat', 1, 33),
+(4, 100, 0.01, 1.00, 'Chicken', 0, 34),
+(5, 100, 0.01, 1.00, 'Chicken', 0, 35),
+(6, 100, 0.01, 1.00, 'Chicken', 0, 36),
+(7, 100, 0.01, 1.00, 'Chicken', 0, 37),
+(8, 5, 0.66, 3.30, 'Cow', 0, 38),
+(9, 5, 0.66, 3.30, 'Cow', 0, 40),
+(10, 5, 0.66, 3.30, 'Cow', 0, 41),
+(11, 5, 0.66, 3.30, 'Cow', 0, 42),
+(12, 5, 0.66, 3.30, 'Cow', 0, 43),
+(13, 5, 0.66, 3.30, 'Cow', 0, 44),
+(14, 5, 0.66, 3.30, 'Cow', 0, 45),
+(15, 100, 0.66, 66.00, 'Cow', 0, 46),
+(16, 100, 0.66, 66.00, 'Cow', 0, 47),
+(17, 100, 0.66, 66.00, 'Cow', 0, 48),
+(18, 100, 0.66, 66.00, 'Cow', 0, 49),
+(19, 100, 0.66, 66.00, 'Cow', 0, 50),
+(20, 100, 0.66, 66.00, 'Cow', 0, 51),
+(21, 100, 0.66, 66.00, 'Cow', 0, 62),
+(22, 10, 0.66, 6.60, 'Cow', 0, 65),
+(23, 3, 0.01, 0.03, 'Chicken', 0, 66),
+(24, 5, 0.66, 3.30, 'Cow', 0, 68),
+(25, 256, 1.00, 2.56, 'Pig-2-Bac', 0, 69);
 
 -- --------------------------------------------------------
 
@@ -548,7 +671,49 @@ INSERT INTO `qmra` (`qmra_id`, `pathogen`, `best_fit_model`, `alpha`, `beta`, `c
 (25, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.01396, NULL, NULL, 0, 101),
 (26, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.01396, -38.00000, 'weekly', 0, 102),
 (27, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -560.16522, 1.00000, 'yearly', 0, 103),
-(28, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00102, 0.00000, 'quartely', 0, 104);
+(28, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00102, 0.00000, 'quartely', 0, 104),
+(29, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 111),
+(30, '1', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.00000, NULL, NULL, 0, 112),
+(31, '2', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.00000, NULL, NULL, 0, 113),
+(32, '1', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.00000, NULL, NULL, 0, 114),
+(33, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 115),
+(34, '6', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, 0.00000, NULL, NULL, 0, 116),
+(35, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 117),
+(36, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 118),
+(37, '2', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.00000, NULL, NULL, 0, 119),
+(38, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 120),
+(39, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 121),
+(40, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 121),
+(41, 'Salmonella typhi', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.01339, NULL, NULL, 0, 123),
+(42, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.02739, NULL, NULL, 0, 124),
+(43, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -9.24273, NULL, NULL, 0, 125),
+(44, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -9.24273, NULL, NULL, 0, 126),
+(45, 'Giardia lambia', 'exponential', 0.10100, NULL, 0.01990, 341.00000, 0.06356, NULL, NULL, 0, 127),
+(46, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.27749, NULL, NULL, 0, 128),
+(47, 'Salmonella typhi', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.16244, NULL, NULL, 0, 129),
+(48, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.29985, NULL, NULL, 0, 130),
+(49, 'S.Flexneri', 'beta-poisson', 0.26500, 1480.00000, NULL, NULL, 0.01150, NULL, NULL, 0, 131),
+(50, 'Vibrio Cholera', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00476, NULL, NULL, 0, 132),
+(51, 'Giardia lambia', 'exponential', 0.16900, 2305.00000, 0.01990, NULL, 0.73110, -99999.99999, 'monthly', 0, 133),
+(52, '1', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.00000, NULL, NULL, 0, 134),
+(53, '2', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.00000, NULL, NULL, 0, 135),
+(54, '5', 'exponential', 0.21000, 49.78000, 0.01990, NULL, 0.00000, NULL, NULL, 0, 136),
+(55, '2', 'beta-poisson', 0.21000, 49.78000, 0.01990, NULL, 0.00000, NULL, NULL, 0, 137),
+(56, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 138),
+(57, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 138),
+(58, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 139),
+(59, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -28.00826, NULL, NULL, 0, 140),
+(60, 'Giardia lambia', 'exponential', 0.10100, NULL, 0.01990, 341.00000, 0.18045, -469.00000, 'monthly', 0, 141),
+(61, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.31609, -99999.99999, 'monthly', 0, 153),
+(62, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.27749, -99999.99999, '', 0, 154),
+(63, 'Vibrio Cholera', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00073, NULL, NULL, 0, 159),
+(64, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -28.00826, 1.00000, 'yearly', 0, 160),
+(65, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.08468, -99999.99999, 'weekly', 0, 161),
+(66, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -0.08402, 1.00000, 'monthly', 0, 162),
+(67, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.06897, -8.00000, 'monthly', 0, 165),
+(68, 'Giardia lambia', 'exponential', NULL, NULL, 0.01990, NULL, 0.06356, -99999.99999, 'weekly', 0, 166),
+(69, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.02148, -1593.00000, 'weekly', 0, 167),
+(70, 'Salmonella typhi', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.04434, -38.00000, 'quartely', 0, 170);
 
 -- --------------------------------------------------------
 
@@ -680,7 +845,73 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (101, 15, 'Rainy', '2023-10-31 06:05:35', 'MAN'),
 (102, 15, 'Rainy', '2023-10-31 06:07:02', 'MAN'),
 (103, 15, 'Rainy', '2023-10-31 06:07:57', 'MAN'),
-(104, 15, 'Rainy', '2023-10-31 06:17:30', 'MAN');
+(104, 15, 'Rainy', '2023-10-31 06:17:30', 'MAN'),
+(105, 15, 'Rainy', '2023-10-31 22:07:48', 'MAN'),
+(106, 15, 'Rainy', '2023-10-31 22:08:13', 'MAN'),
+(107, 15, 'Rainy', '2023-10-31 22:09:56', 'MAN'),
+(108, 15, 'Rainy', '2023-10-31 22:11:28', 'MAN'),
+(109, 15, 'Rainy', '2023-10-31 22:12:24', 'MAN'),
+(110, 15, 'Rainy', '2023-10-31 22:12:37', 'MAN'),
+(111, 15, 'Rainy', '2023-10-31 22:15:09', 'MAN'),
+(112, 15, 'Rainy', '2023-10-31 22:16:37', 'MAN'),
+(113, 15, 'Rainy', '2023-10-31 22:19:48', 'MAN'),
+(114, 15, 'Rainy', '2023-10-31 22:25:48', 'MAN'),
+(115, 15, 'Rainy', '2023-10-31 22:27:42', 'MAN'),
+(116, 15, 'Rainy', '2023-10-31 22:31:16', 'MAN'),
+(117, 15, 'Rainy', '2023-10-31 22:35:27', 'MAN'),
+(118, 15, 'Rainy', '2023-10-31 22:36:34', 'MAN'),
+(119, 15, 'Rainy', '2023-10-31 22:37:35', 'MAN'),
+(120, 15, 'Rainy', '2023-10-31 22:39:14', 'MAN'),
+(121, 15, 'Rainy', '2023-10-31 22:40:26', 'MAN'),
+(122, 15, 'Rainy', '2023-10-31 22:45:41', 'MAN'),
+(123, 15, 'Rainy', '2023-10-31 22:45:41', 'MAN'),
+(124, 15, 'Rainy', '2023-10-31 22:45:55', 'MAN'),
+(125, 15, 'Rainy', '2023-10-31 22:46:01', 'MAN'),
+(126, 15, 'Rainy', '2023-10-31 22:51:44', 'MAN'),
+(127, 15, 'Rainy', '2023-10-31 22:51:53', 'MAN'),
+(128, 15, 'Rainy', '2023-10-31 22:52:11', 'MAN'),
+(129, 15, 'Rainy', '2023-10-31 22:52:16', 'MAN'),
+(130, 15, 'Rainy', '2023-10-31 22:52:21', 'MAN'),
+(131, 15, 'Rainy', '2023-10-31 22:52:25', 'MAN'),
+(132, 15, 'Rainy', '2023-10-31 22:52:30', 'MAN'),
+(133, 15, 'Rainy', '2023-10-31 22:52:36', 'MAN'),
+(134, 15, 'Rainy', '2023-10-31 23:03:46', 'MAN'),
+(135, 15, 'Rainy', '2023-10-31 23:03:59', 'MAN'),
+(136, 15, 'Rainy', '2023-10-31 23:04:08', 'MAN'),
+(137, 15, 'Rainy', '2023-10-31 23:09:48', 'MAN'),
+(138, 15, 'Rainy', '2023-10-31 23:11:24', 'MAN'),
+(139, 15, 'Rainy', '2023-10-31 23:14:40', 'MAN'),
+(140, 15, 'Rainy', '2023-10-31 23:15:32', 'MAN'),
+(141, 15, 'Rainy', '2023-10-31 23:15:51', 'MAN'),
+(142, 15, 'Dry', '2023-10-31 23:26:53', 'FS203'),
+(143, 15, 'Dry', '2023-10-31 23:27:06', 'FS203'),
+(144, 15, 'Dry', '2023-10-31 23:27:16', 'FS203'),
+(145, 15, 'Dry', '2023-10-31 23:27:22', 'FS203'),
+(146, 15, 'Dry', '2023-10-31 23:27:27', 'FS203'),
+(147, 15, 'Dry', '2023-10-31 23:27:30', 'FS203'),
+(148, 15, 'Dry', '2023-10-31 23:27:32', 'FS203'),
+(149, 15, 'Dry', '2023-10-31 23:27:32', 'FS203'),
+(150, 15, 'Dry', '2023-10-31 23:27:37', 'FS203'),
+(151, 16, 'Dry', '2023-10-31 23:53:07', 'EC138'),
+(152, 16, 'Dry', '2023-10-31 23:53:19', 'EC138'),
+(153, 16, 'Dry', '2023-10-31 23:53:33', 'EC138'),
+(154, 16, 'Dry', '2023-10-31 23:54:02', 'EC138'),
+(155, 1, 'Dry', '2023-11-01 00:26:14', 'NW375'),
+(156, 1, 'Dry', '2023-11-01 00:26:32', 'NW375'),
+(157, 1, 'Dry', '2023-11-01 00:26:41', 'NW375'),
+(158, 1, 'Dry', '2023-11-01 00:30:22', 'NW375'),
+(159, 14, 'Dry', '2023-11-01 00:34:41', 'FS196'),
+(160, 14, 'Dry', '2023-11-01 00:34:53', 'FS196'),
+(161, 15, 'Dry', '2023-11-01 00:37:05', 'EC101'),
+(162, 15, 'Dry', '2023-11-01 01:11:36', 'EC101'),
+(163, 16, 'Windy', '2023-11-01 08:41:16', 'FS194'),
+(164, 16, 'Windy', '2023-11-01 08:41:52', 'FS194'),
+(165, 16, 'Windy', '2023-11-01 08:44:09', 'FS194'),
+(166, 16, 'Windy', '2023-11-01 08:46:02', 'FS194'),
+(167, 16, 'Wet', '2023-11-06 23:19:55', 'WC025'),
+(168, 16, 'Wet', '2023-11-06 23:22:17', 'WC025'),
+(169, 16, 'Wet', '2023-11-06 23:22:59', 'WC025'),
+(170, 16, 'Wet', '2023-11-06 23:30:53', 'WC025');
 
 -- --------------------------------------------------------
 
@@ -724,7 +955,13 @@ INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `
 (24, 1, 0, 1, 0, 0, 0, 1, 1, 33, 'medium risk', 4, 50),
 (25, 1, 0, 1, 0, 1, 0, 1, 0, 62, 'medium risk', 4, 50),
 (26, 1, 1, 1, 1, 1, 1, 1, 1, 63, 'very high risk', 8, 100),
-(27, 1, 1, 0, 0, 1, 0, 1, 1, 69, 'high risk', 5, 63);
+(27, 1, 1, 0, 0, 1, 0, 1, 1, 69, 'high risk', 5, 63),
+(28, 1, 1, 1, 1, 1, 0, 0, 0, 142, 'high risk', 5, 63),
+(29, 1, 1, 0, 0, 0, 0, 0, 1, 143, 'medium risk', 3, 38),
+(30, 1, 1, 1, 1, 1, 1, 0, 1, 151, 'very high risk', 7, 88),
+(31, 0, 0, 0, 0, 0, 0, 0, 0, 155, 'low risk', 0, 0),
+(32, 1, 0, 1, 0, 1, 0, 0, 1, 158, 'medium risk', 4, 50),
+(33, 1, 0, 1, 0, 1, 0, 1, 0, 163, 'medium risk', 4, 50);
 
 -- --------------------------------------------------------
 
@@ -748,11 +985,13 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `email`, `mobileNo`, `password`, `firstname`, `lastname`, `level`, `role`) VALUES
-(1, '', '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
-(3, '', '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal'),
+(1, 'mukwevho@gmail.com', '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
+(3, 'mashaba@gmail.com', '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal'),
 (13, 'nathi@gmail.com', '0147852369', 'Nathi@123', 'James', 'Nathi', 2, 'user'),
 (14, 'manasoedj@gmail.com', '0147852399', 'Manasoedj@12', 'Joel', 'Manasoe', 2, 'user'),
-(15, 'lamola@gmail.com', '0123698745', 'Lamola123@', 'Lethabo', 'Lamola', 3, 'user');
+(15, 'lamola@gmail.com', '0123698745', 'Lamola123@', 'Lethabo', 'Lamola', 3, 'user'),
+(16, 'ledwaba@gmail.com', '0725569740', 'Ledwaba123@', 'Jack', 'Ledwaba', 3, 'user'),
+(17, 'mathiba@gmail.com', '0159874563', 'Mathiba@123', 'Zakes', 'Mathiba', 3, 'user');
 
 -- --------------------------------------------------------
 
@@ -851,7 +1090,72 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 (83, 'River', 'Hard', 101),
 (84, 'River', 'Hard', 102),
 (85, 'River', 'Hard', 103),
-(86, 'River', 'Hard', 104);
+(86, 'River', 'Hard', 104),
+(87, 'River', 'Hard', 105),
+(88, 'River', 'Hard', 106),
+(89, 'River', 'Hard', 107),
+(90, 'River', 'Hard', 108),
+(91, 'River', 'Hard', 109),
+(92, 'River', 'Hard', 110),
+(93, 'River', 'Hard', 111),
+(94, 'River', 'Hard', 112),
+(95, 'River', 'Hard', 113),
+(96, 'River', 'Hard', 114),
+(97, 'River', 'Hard', 115),
+(98, 'River', 'Hard', 116),
+(99, 'River', 'Hard', 117),
+(100, 'River', 'Hard', 118),
+(101, 'River', 'Hard', 119),
+(102, 'River', 'Hard', 120),
+(103, 'River', 'Hard', 121),
+(104, 'River', 'Hard', 123),
+(105, 'River', 'Hard', 124),
+(106, 'River', 'Hard', 125),
+(107, 'River', 'Hard', 126),
+(108, 'River', 'Hard', 127),
+(109, 'River', 'Hard', 128),
+(110, 'River', 'Hard', 129),
+(111, 'River', 'Hard', 130),
+(112, 'River', 'Hard', 131),
+(113, 'River', 'Hard', 132),
+(114, 'River', 'Hard', 133),
+(115, 'River', 'Hard', 134),
+(116, 'River', 'Hard', 135),
+(117, 'River', 'Hard', 136),
+(118, 'River', 'Hard', 137),
+(119, 'River', 'Hard', 138),
+(120, 'River', 'Hard', 139),
+(121, 'River', 'Hard', 140),
+(122, 'River', 'Hard', 141),
+(123, 'Dam', 'Hard', 142),
+(124, 'Dam', 'Hard', 143),
+(125, 'Dam', 'Hard', 144),
+(126, 'Dam', 'Hard', 145),
+(127, 'Dam', 'Hard', 146),
+(128, 'Dam', 'Hard', 147),
+(129, 'Dam', 'Hard', 148),
+(130, 'Dam', 'Hard', 149),
+(131, 'Dam', 'Hard', 150),
+(132, 'Dam', 'Hard', 151),
+(133, 'Dam', 'Hard', 152),
+(134, 'Dam', 'Hard', 153),
+(135, 'Dam', 'Hard', 154),
+(136, 'Dam', 'Easy', 155),
+(137, 'Dam', 'Easy', 156),
+(138, 'Dam', 'Easy', 157),
+(139, 'Dam', 'Easy', 158),
+(140, 'Spring', 'Hard', 159),
+(141, 'Spring', 'Hard', 160),
+(142, 'River', 'Hard', 161),
+(143, 'River', 'Hard', 162),
+(144, 'River', 'Easy', 163),
+(145, 'River', 'Easy', 164),
+(146, 'River', 'Easy', 165),
+(147, 'River', 'Easy', 166),
+(148, 'Household Tap Water', 'Hard', 167),
+(149, 'Household Tap Water', 'Hard', 168),
+(150, 'Household Tap Water', 'Hard', 169),
+(151, 'Household Tap Water', 'Hard', 170);
 
 --
 -- Indexes for dumped tables
@@ -955,19 +1259,19 @@ ALTER TABLE `watersource`
 -- AUTO_INCREMENT for table `coordinate`
 --
 ALTER TABLE `coordinate`
-  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `fib_indicator`
 --
 ALTER TABLE `fib_indicator`
-  MODIFY `indicator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `indicator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `hydrogensulfide`
 --
 ALTER TABLE `hydrogensulfide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `microbial`
@@ -979,13 +1283,13 @@ ALTER TABLE `microbial`
 -- AUTO_INCREMENT for table `mst`
 --
 ALTER TABLE `mst`
-  MODIFY `mst_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `qmra`
 --
 ALTER TABLE `qmra`
-  MODIFY `qmra_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `qmra_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `river`
@@ -997,25 +1301,25 @@ ALTER TABLE `river`
 -- AUTO_INCREMENT for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT for table `sanitaryinpectionquestion`
 --
 ALTER TABLE `sanitaryinpectionquestion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `watersource`
 --
 ALTER TABLE `watersource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- Constraints for dumped tables

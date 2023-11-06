@@ -10,17 +10,17 @@ router.get('/indicators', (req, res) => {
         { indicator: "Clostridium", ratio: 0.8 },
         { indicator: "other", ratio: 0 }*/
 
-        {indicator: "E. coli", pathogen:[{path_name:'E. coli O157', ratio:'1:0.05'},
+        {indicator: "E.coli", pathogen:[{path_name:'E.coli 0157', ratio:'1:0.05'},
                                         {path_name:'Salmonella', ratio:'1:0.5'},
                                         {path_name:'Campylobacter', ratio:'1:0.03'},
                                         {path_name:'Vibrio Cholerae', ratio:'1:0.3'},]},
 
-        {indicator: "Coliforms", pathogen:[{path_name:'E. coli O157', ratio:'1:0.4'},
+        {indicator: "Coliforms", pathogen:[{path_name:'E.coli 0157', ratio:'1:0.4'},
                                         {path_name:'Salmonella', ratio:'1:0.4'},
                                         {path_name:'Campylobacter', ratio:'1:0.03'},
                                         {path_name:'Vibrio Cholerae', ratio:'1:0.2'},]},
 
-        {indicator: "Enterococcus", pathogen:[{path_name:'E. coli O157', ratio:'1:0.1'},
+        {indicator: "Enterococcus", pathogen:[{path_name:'E.coli 0157', ratio:'1:0.1'},
                                         {path_name:'Salmonella', ratio:'1.1:1'},
                                         {path_name:'Campylobacter', ratio:'1:0.1'},
                                         {path_name:'Vibrio Cholerae', ratio:'1:0.5'},]},
@@ -28,7 +28,7 @@ router.get('/indicators', (req, res) => {
         {indicator: "Clostridium", pathogen:[{path_name:'Cryptosporidium', ratio:'1:0.6'},
                                         {path_name:'Giardia', ratio:'1:0.8'},]},
 
-        {indicator: "Other", pathogen:[{path_name:'', ratio:''}]},
+        // {indicator: "Other", pathogen:[{path_name:'', ratio:''}]},
     ]
 
     res.send({ message: "List of Indicators", success: true, indicators })
@@ -36,7 +36,7 @@ router.get('/indicators', (req, res) => {
 
 router.get('/reference_pathogens', (req, res) => {
     var reference_pathogens = [
-        // {pathogen:"Cryptosridium Parvum", best_fit_model:"exponential", parameter:[{radius:0.059}]},
+         {pathogen:"Cryptosporidium Parvum", best_fit_model:"exponential", parameter:[{constant: 0.0199, n50: null }]},
         { pathogen: "E.coli 0157:H7", best_fit_model: "beta-poisson", parameter: [{ alpha: 0.4, beta: 45.9 }] },
         { pathogen: "Campylobacter jejuni", best_fit_model: "beta-poisson", parameter: [{ alpha: 0.145, beta: 7.85 }] },
         { pathogen: "Salmonella typhi", best_fit_model: "beta-poisson", parameter: [{ alpha: 0.21, beta: 49.78 }] },
@@ -58,41 +58,41 @@ router.get('/maker_genes', (req, res) => {
         { maker: "Pig", ratio: 0.8 },
         { maker: "Chicken", ratio: 0.01 },
         { maker: "other", ratio: 0 },*/
-        { maker: "BacHum", pathogen:[{path_name:'E. coli O157:H7', ratio:'1:0.02'},
+        { maker: "BacHum", pathogen:[{path_name:'E.coli 0157:H7', ratio:'1:0.02'},
                                         {path_name:'Salmonella', ratio:'1:0.6'},
                                         {path_name:'Campylobacter jejuni', ratio:'1:0.1'},
                                         {path_name:'Cryptosporidium', ratio:'1:0.3'},
                                         {path_name:'Giardia', ratio:'1:1.5'},]},
         
-        { maker: "BacCow", pathogen:[{path_name:'E. coli O157:H7', ratio:'1:0.04'},
+        { maker: "BacCow", pathogen:[{path_name:'E.coli 0157:H7', ratio:'1:0.04'},
                                         {path_name:'Salmonella', ratio:'1:1.3'},
                                         {path_name:'Campylobacter jejuni', ratio:'1:0.2'},
                                         {path_name:'Cryptosporidium', ratio:'1:0.4'},
                                         {path_name:'Giardia', ratio:'1:2.2'},]},
 
 
-        { maker: "Pig-2-Bac",pathogen:[{path_name:'E. coli O157:H7', ratio:'1:0.01'},
+        { maker: "Pig-2-Bac",pathogen:[{path_name:'E.coli 0157:H7', ratio:'1:0.01'},
                                         {path_name:'Salmonella', ratio:'1:0.4'},
                                         {path_name:'Campylobacter jejuni', ratio:'1:0.1'},
                                         {path_name:'Cryptosporidium', ratio:'1:0.3'},
                                         {path_name:'Giardia', ratio:'1:1.6'},]},
 
 
-        { maker: "BacCan", pathogen:[{path_name:'E. coli O157:H7', ratio:'1:0.01'},
+        { maker: "BacCan", pathogen:[{path_name:'E.coli 0157:H7', ratio:'1:0.01'},
                                         {path_name:'Salmonella', ratio:'1:0.4'},
                                         {path_name:'Campylobacter jejuni', ratio:'1:0.1'},
                                         {path_name:'Cryptosporidium', ratio:'1:0.02'},
                                         {path_name:'Giardia', ratio:'1:0.1'},]},
 
 
-        { maker: "CyTB", pathogen:[{path_name:'E. coli O157:H7', ratio:'1:0.02'},
+        { maker: "CyTB", pathogen:[{path_name:'E.coli 0157:H7', ratio:'1:0.02'},
                                         {path_name:'Salmonella', ratio:'1:0.8'},
                                         {path_name:'Campylobacter jejuni', ratio:'1:0.1'},
                                         {path_name:'Cryptosporidium', ratio:'1:0.5'},
                                         {path_name:'Giardia', ratio:'1:3'},]},
 
 
-        { maker: "Others", pathogen: 0 },
+        // { maker: "Others", pathogen:[{path_name:'', ratio:''}]}
 
 
     ]
