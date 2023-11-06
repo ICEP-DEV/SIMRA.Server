@@ -398,4 +398,55 @@ router.get('/get_h2s_stats/:start/:end', (req, res) => {
     })
 })
 
+
+// user sanitary logs filter by start and end dates with user id
+router.get('/get_user_survey_stats/:start/:end/:id', (req, res) => {
+    var startDate = req.params.start
+    var endDate = req.params.end
+    var userId = req.params.id
+    const dateParams = [userId, startDate, endDate]
+    var sql = `select pro.province_id, type, weatherCondition,DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, risk_type, totalYes, total_avarage, muni_name, province_name, mun.muni_id
+    from samplingdata sam, watersource wat, sanitaryinpectionquestion san, municipality mun, province pro
+    WHERE sam.samplingId = wat.samplingId
+    and sam.samplingId = san.samplingId
+    and sam.muni_id = mun.muni_id
+    and mun.province_id = pro.province_id
+    and userId = ?
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+    connection.query(sql, dateParams, (err, result) => {
+        if (err) { throw err }
+        if (result.length > 0) {
+            res.send({ success: true, result })
+        }
+        else {
+            res.send({ success: false, message: "no history data" })
+        }
+    })
+})
+
+// get user h2s history by id
+router.get('/get_user_h2s_stats/:start/:end/:id', (req, res) => {
+    var startDate = req.params.start
+    var endDate = req.params.end
+    var userId = req.params.id
+    const dateParams = [userId, startDate, endDate]
+    var sql = `select pro.province_id, weatherCondition, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date,DATE_FORMAT(sampling_date_created,'%W')  as weekday, risk_type, status, muni_name,  waterAccessability, type, province_name, mun.muni_id
+    from samplingdata sam, hydrogensulfide hyd, municipality mun, watersource wat, province pro
+    WHERE sam.samplingId = hyd.samplingId
+    and sam.muni_id = mun.muni_id
+    and mun.province_id = pro.province_id
+    and sam.samplingId = wat.samplingId
+    and userId = ?
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+    connection.query(sql, dateParams, (err, result) => {
+        if (err) { throw err }
+        if (result.length > 0) {
+            res.send({ success: true, result })
+        }
+        else {
+            res.send({ success: false, message: "no history data" })
+        }
+    })
+})
+
 module.exports = router
