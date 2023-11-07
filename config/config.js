@@ -8,11 +8,13 @@ var connection = mysql.createConnection({
 });
 */
 var connection = mysql.createConnection({
-    host: 'simra-db.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
-    user: 'arinao',
-    password: 'arinao.simra.tut.ac.za',
+    host: 'simra.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
+    user: 'admin',
+    password: 'simra2023',
     database: 'simra',
-    port:3306
+    port: 3306,
+    connectionLimit: 10,
+    acquireTimeout: 100000
 });
 
 connection.connect((err) => {
@@ -22,4 +24,4 @@ connection.connect((err) => {
         console.log('Connection Failed!' + JSON.stringify(err, undefined, 2));
 });
 
-module.exports=connection;
+module.exports = connection;
