@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     host: 'simra-db.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
     user: 'arinao',
     password: 'arinao.simra.tut.ac.za',
-    database: 'simra-db',
+    database: 'simra',
     port:3306
 });
 
