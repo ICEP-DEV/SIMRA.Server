@@ -8,13 +8,11 @@ var connection = mysql.createConnection({
 });
 */
 var connection = mysql.createConnection({
-    host: 'simra.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
+    host: 'simra-db.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
     user: 'admin',
-    password: 'simra2023',
-    database: 'simra',
-    port: 3306,
-    connectionLimit: 10,
-    acquireTimeout: 100000
+    password: 'simra.tut.ac.za',
+    database: 'simra_db',
+    port: 3306
 });
 
 connection.connect((err) => {
