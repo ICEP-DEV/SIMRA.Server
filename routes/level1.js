@@ -141,17 +141,22 @@ router.post('/get_monthly_reports', (req, res) => {
 })
 
 // get summary report of survey with visual
-router.get('/get_survey_summary_report/:province_id/:date', async (req, res) => {
-    var sql = `select count(risk_type) as count_risk, risk_type
+router.get('/get_survey_summary_report', async (req, res) => {
+    /*var sql = `select count(risk_type) as count_risk, risk_type
     from sanitaryinpectionquestion san, samplingdata sam, municipality mun
     where san.samplingId = sam.samplingId
     and sam.muni_id = mun.muni_id
     and province_id = ?
     and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
+    GROUP By risk_type;`*/
+    var sql = `select count(risk_type) as count_risk, risk_type
+    from sanitaryinpectionquestion san, samplingdata sam, municipality mun
+    where san.samplingId = sam.samplingId
+    and sam.muni_id = mun.muni_id
     GROUP By risk_type;`
-    var summary_params = [req.params.province_id, req.params.date]
+    //var summary_params = [req.params.province_id, req.params.date]
 
-    await connection.query(sql, summary_params, (err, rows) => {
+    await connection.query(sql,(err, rows) => {
         if (rows.length > 0) {
             let isFoundLowRisk = false;
             let isFoundMediumRisk = false;
@@ -219,17 +224,22 @@ router.get('/get_survey_summary_report/:province_id/:date', async (req, res) => 
 })
 
 // get summary report of h2s with visual
-router.get('/get_h2s_report/:province_id/:date', async (req, res) => {
-    var sql = `select count(risk_type) as count_risk, risk_type, status
+router.get('/get_h2s_report', async (req, res) => {
+    /*var sql = `select count(risk_type) as count_risk, risk_type, status
     from hydrogensulfide hyd, samplingdata sam, municipality mun
     where hyd.samplingId = sam.samplingId
     and sam.muni_id = mun.muni_id
     and province_id = ?
     and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
+    GROUP By risk_type;`*/
+    var sql = `select count(risk_type) as count_risk, risk_type, status
+    from hydrogensulfide hyd, samplingdata sam, municipality mun
+    where hyd.samplingId = sam.samplingId
+    and sam.muni_id = mun.muni_id
     GROUP By risk_type;`
-    var summary_params = [req.params.province_id, req.params.date]
+    //var summary_params = [req.params.province_id, req.params.date]
 
-    await connection.query(sql, summary_params, (err, rows) => {
+    await connection.query(sql, (err, rows) => {
         if (err) throw err
         if (rows.length > 0) {
             let isNegative = false;
@@ -381,7 +391,7 @@ router.get('/get_h2s_stats/:start/:end', (req, res) => {
     var endDate = req.params.end
     const dateParams = [startDate, endDate]
 
-    var sql = `select risk_type, muni_name,status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
+    var sql = `select risk_type, muni_name,status, type, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
     from samplingdata sam, watersource wat, municipality mun, hydrogensulfide hyd
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
