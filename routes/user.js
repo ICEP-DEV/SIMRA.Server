@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res) => {
     var email = req.body.username
-    var sql = `SELECT * FROM user WHERE email =?`   //"0123456789"
+    var sql = `SELECT * FROM user WHERE email =?`
     connection.query(sql, [email], (err, results) => {
         if (err){ console.log(err)
             throw err;
