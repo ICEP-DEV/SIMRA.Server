@@ -2,7 +2,6 @@ const express = require('express');
 const connection = require("../config/config");
 const router = express.Router();
 
-
 const calculateExponentialForCryptosporidium = (r, count) => {
     // Implement the exponential calculation for Cryptosporidium parvum
 
@@ -146,8 +145,11 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     }
     var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
     //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
+    
+    if (likelihood_of_infection === Infinity || likelihood_of_infection === Number.NEGATIVE_INFINITY) {
+        likelihood_of_infection = 0
+    }
     var likelihood_body = [likelihood_of_infection, duration_type, req.params.qmra_id]
-    console.log(likelihood_of_infection, duration_type, req.params.qmra_id)
     var sql = `UPDATE qmra
                 SET likelihood_of_infection = ?, duration_type =?
                 WHERE qmra_id = ?;`
@@ -405,5 +407,26 @@ router.get('/mst_results/:start/:end/:user_id', (req, res) => {
             res.send({ success: false, message: "cannot find data" })
         }
     })
+})
+
+// test infinite results
+router.get('/infinite', (req, res) => {
+    var maxNumber = Math.pow(10, 1000);
+    var probability_of_infection = 0.99
+    var duration_number = 365
+    console.log(probability_of_infection)
+    console.log(duration_number)
+    //var maxNumber = 1000
+    ///var maxNumber = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
+    message = ''
+    if (maxNumber === Infinity) {
+        message = "Let's call it Infinity!";
+        console.log(maxNumber)
+    }
+    else {
+        message = "Let's call it not Infinity!";
+    }
+    console.log(maxNumber)
+    res.send({ maxNumber, message })
 })
 module.exports = router
