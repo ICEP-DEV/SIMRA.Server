@@ -381,7 +381,7 @@ router.get('/get_h2s_stats/:start/:end', (req, res) => {
     var endDate = req.params.end
     const dateParams = [startDate, endDate]
 
-    var sql = `select risk_type, muni_name,status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
+    var sql = `select risk_type, type, muni_name,status, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, province_id, mun.muni_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday
     from samplingdata sam, watersource wat, municipality mun, hydrogensulfide hyd
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
