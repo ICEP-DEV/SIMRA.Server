@@ -35,6 +35,9 @@ app.use('/api', require('./routes/level1'));
 app.use('/api', require('./routes/updatePassword'));
 app.use('/api', require('./routes/updateProfile'));
 app.use('/api', require('./routes/register'));
+app.use('/api', require('./routes/municipality'));
+app.use('/api', require('./routes/file'));
+
 
 app.use('/', (req, res) =>{
     res.send('Endpoint')
