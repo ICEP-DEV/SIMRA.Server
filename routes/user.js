@@ -6,38 +6,15 @@ const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res) => {
     var email = req.body.username
-    var sql = `SELECT * FROM USER WHERE email =?`   //"0123456789"
+    var sql = `SELECT * FROM user WHERE email =?`
     connection.query(sql, [email], (err, results) => {
-        if (err) console(err)
+        if (err){ console.log(err)
+            throw err;
+        }
         if (results.length > 0) {
             if (results[0].password == req.body.password) {
                 return res.status(200).json({ message: 'Successfully', success: true, results });
 
-                /*Object.keys(results).forEach(function (key) {
-                    var row = results[key];
-                    const user = {
-                        userId: row.userId, mobileNo: row.mobileNo,
-                        firstname: row.firstname, lastname: row.lastname, password: row.password, level: row.level, role: row.role
-                    }
-                    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-
-                    req.session.Users = {
-                        "UserId": row.userId,
-                        "mobileNo": row.mobileNo,
-                        "firstname": row.firstname,
-                        "lastame": row.lastname,
-                        "password": row.password,
-                        "level": row.level,
-                        "role": row.role
-                    }
-                    console.log(req.session, user);
-                    let users = req.session;
-
-                    //code to display on postman
-                    return res.status(200).json({ message: 'Successfully', success: true, results, users, token: accessToken });
-
-                });*/
-                // res.json({message:'Successfully', success:true, results})
             }
             else {
                 res.json({ message: 'wrong username or password', success: false })
