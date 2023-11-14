@@ -31,18 +31,18 @@ router.post('/addEvents',upload.single('image'),(req, res)=>{
     const description=req.body.description;
     const date=req.body.date;
     const venue=req.body.venue;
-    let imageUrl="";
+    let image="";
     if (req.file) {
-         imageUrl = `http://localhost:${process.env.PORT}/api/uploads/${req.file.filename}`;
+         image = `http://localhost:${process.env.PORT}/api/uploads/${req.file.filename}`;
         // http://localhost:${process.env.PORT}/uploads/${req.file.filename}
-         
-      }else{
-        return res.status(400).send('No file uploaded.');
-      }
+    }
+      // }else{
+      //   return res.status(400).send('No file uploaded.');
+      // }
     
     //
-    let sql=`INSERT INTO EVENTS(title,description,date,venue,imageURL)
-    VALUES('${title}','${description}','${date}','${venue}','${imageUrl}')`
+    let sql=`INSERT INTO EVENTS(title,description,date,venue,image)
+    VALUES('${title}','${description}','${date}','${venue}','${image}')`
     
     connection.query(sql,(err, results)=>{
         if(err){
