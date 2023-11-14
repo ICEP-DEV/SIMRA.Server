@@ -86,9 +86,6 @@ router.post('/add_indicator_qmra', (req, res) => {
     var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
                                 VALUES(?,?,?,?,?,?,?,?,?,?,?)`
 
-    console.log('pathogen', pathogen)
-    console.log('qmtotalQmrara', totalQmra)
-
     connection.query(qmra_sql, qmra_body, (err, results) => {
         if (err) {
             return res.status(200).send("Failed to load data!" + err);
@@ -124,6 +121,89 @@ router.post('/add_indicator_qmra', (req, res) => {
 
 })
 
+router.post('/reference_pathofen', (req, res) => {
+    let is_customize_Pathogen = req.body.is_customize_Pathogen;
+    let pathogen = req.body.pathogen;
+    let n50 = req.body.n50;
+    let constant = req.body.constant;
+    let alpha = req.body.alpha;
+    let beta = req.body.beta;
+    let totalQmra = 0;
+    var samplingId = req.body.samplingId;
+    let best_fit_model = req.body.best_fit_model
+    let count_indicator = Number(req.body.count);
+    console.log(req.body)
+    switch (pathogen.toLocaleLowerCase()) {
+        case 'Campylobacter jejuni'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'E.coli 0157:H7'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'Salmonella typhi'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'S.Flexneri'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'Vibrio Cholera'.toLocaleLowerCase():
+            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
+            break;
+        case 'Entamoeba coli'.toLocaleLowerCase():
+            totalQmra = calculateEntamoebaColi(alpha, n50, count_indicator)
+            break;
+        case 'Giardia lambia'.toLocaleLowerCase():
+            totalQmra = calculateExponentialForGiardia(constant, count_indicator)
+            break;
+    }
+
+    var duration_type = req.body.duration_type;
+    var likeliOfInfection = null
+    var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, samplingId]
+    var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
+                                VALUES(?,?,?,?,?,?,?,?,?,?,?)`
+
+    connection.query(qmra_sql, qmra_body, (err, results) => {
+        
+        if (err) {
+            console.log(err)
+            return res.status(200).send("Failed to load data!" + err);
+        }
+        else {
+            console.log(results)
+
+            if (results.affectedRows > 0) {
+                console.log('two')
+
+                var qmra_id = results.insertId
+                console.log(results)
+                console.log(qmra_id)
+                // Prepare insertion of QMRA
+                var fibIndicatorBody = [count_indicator, qmra_id]
+                var fib_sql = `INSERT INTO reference_path(count_indicator,qmra_id)
+                VALUES(?,?)`;
+                connection.query(fib_sql, fibIndicatorBody, (error, row) => {
+                    if (error) {
+                        console.log(error)
+                        throw err
+                    };
+
+                    if (row.affectedRows > 0) {
+                        console.log(qmra_id)
+                        res.send({ success: true, totalQmra, qmra_id })
+                    }
+                })
+
+            }
+            else {
+                res.status(200).json({ success: false, message: "Something went wrong try again later" });
+            }
+
+        }
+
+    })
+})
+
 router.put('/likelihood_test/:qmra_id', (req, res) => {
     var duration_type = req.body.duration_type;
     var probability_of_infection = req.body.probability_of_infection
@@ -145,7 +225,7 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     }
     var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
     //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
-    
+
     if (likelihood_of_infection === Infinity || likelihood_of_infection === Number.NEGATIVE_INFINITY) {
         likelihood_of_infection = 0
     }
@@ -292,7 +372,8 @@ router.get('/qmra_results', (req, res) => {
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
                 and sam.samplingId = qmr.samplingId
-                and fib.qmra_id = qmr.qmra_id;`
+                and fib.qmra_id = qmr.qmra_id
+                order by sampling_date_created desc;`
     connection.query(sql, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
@@ -312,7 +393,8 @@ router.get('/user_qmra_results/:user_id', (req, res) => {
                 and wat.samplingId = sam.samplingId
                 and sam.samplingId = qmr.samplingId
                 and fib.qmra_id = qmr.qmra_id
-                and userId =?`
+                and userId =?
+                order by sampling_date_created desc`
     connection.query(sql, req.params.user_id, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
@@ -332,7 +414,8 @@ router.get('/user_qmra_results/:start/:end/:user_id', (req, res) => {
                 and sam.samplingId = qmr.samplingId
                 and fib.qmra_id = qmr.qmra_id
                 and userId =?
-                and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+                and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?
+                order by sampling_date_created desc`
     var mst_results = [req.params.user_id, req.params.start, req.params.end]
 
     connection.query(sql, mst_results, (err, results) => {
@@ -353,7 +436,8 @@ router.get('/mst_results', (req, res) => {
     where mun.muni_id = sam.muni_id
     and wat.samplingId = sam.samplingId
     and sam.samplingId = qmr.samplingId
-    and ms.qmra_id = qmr.qmra_id`
+    and ms.qmra_id = qmr.qmra_id
+    order by sampling_date_created desc`
     connection.query(sql, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
@@ -373,7 +457,8 @@ router.get('/mst_results/:user_id', (req, res) => {
     and wat.samplingId = sam.samplingId
     and sam.samplingId = qmr.samplingId
     and ms.qmra_id = qmr.qmra_id
-    and userId = ?`
+    and userId = ?
+    order by sampling_date_created desc`
     connection.query(sql, req.params.user_id, (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
@@ -395,7 +480,8 @@ router.get('/mst_results/:start/:end/:user_id', (req, res) => {
     and sam.samplingId = qmr.samplingId
     and ms.qmra_id = qmr.qmra_id
     and userId = ?
-    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?
+    order by sampling_date_created desc`
 
     var mst_results = [req.params.user_id, req.params.start, req.params.end]
     connection.query(sql, mst_results, (err, results) => {
