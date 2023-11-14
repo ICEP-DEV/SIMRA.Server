@@ -27,13 +27,14 @@ router.use('/uploads', express.static('uploads'));
 
 
 router.post('/addEvents',upload.single('image'),(req, res)=>{
-    const title = req.body.tile;
+    const title = req.body.title;
     const description=req.body.description;
     const date=req.body.date;
     const venue=req.body.venue;
     let imageUrl="";
     if (req.file) {
-         imageUrl = `http://localhost:${process.env.PORT}/uploads/${req.file.filename}`;
+         imageUrl = `http://localhost:${process.env.PORT}/api/uploads/${req.file.filename}`;
+        // http://localhost:${process.env.PORT}/uploads/${req.file.filename}
          
       }else{
         return res.status(400).send('No file uploaded.');
@@ -45,7 +46,7 @@ router.post('/addEvents',upload.single('image'),(req, res)=>{
     
     connection.query(sql,(err, results)=>{
         if(err){
-            return res.status(400).send("Failed to to add events!"+err);
+            return res.status(400).send("Failed to  add events!"+err);
         }
         else{
                 return res.status(200).send("Events added succesfully");
@@ -57,5 +58,28 @@ router.post('/addEvents',upload.single('image'),(req, res)=>{
 
 
 })
+//get all events
+router.get('/getEvents',(req,res)=>{
+  let sql=`select * FROM EVENTS`
+  connection.query(sql,(err, results)=>{
+    if(err){
+        return res.status(400).send("Failed to retrieve events!"+err);
+    }
+    else{
+            return res.status(200).send(results)
+
+        }
+  });
+
+})
+
+
+// Handle GET request to retrieve an image only by filename
+router.get('/uploads/:filename', (req, res) => {
+  const { filename } = req.params;
+
+  res.sendFile(path.join(__dirname, 'uploads', filename));
+  
+});
 
 module.exports = router;
