@@ -54,5 +54,5 @@ router.post('/registration', (req, res) => {
         }
     })
 })
-
+ 
 module.exports = router
