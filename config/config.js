@@ -14,8 +14,8 @@ var connection = mysql.createConnection({
     password: 'simra.tut.ac.za',
     database: 'simra_db',
     port: 3306
-});*/
-
+});
+*/
 connection.connect((err) => {
     if (!err)
         console.log('Connection Established Successfully');

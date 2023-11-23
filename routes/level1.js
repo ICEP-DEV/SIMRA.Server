@@ -142,6 +142,13 @@ router.post('/get_monthly_reports', (req, res) => {
 
 // get summary report of survey with visual
 router.get('/get_survey_summary_report', async (req, res) => {
+    /*var sql = `select count(risk_type) as count_risk, risk_type
+    from sanitaryinpectionquestion san, samplingdata sam, municipality mun
+    where san.samplingId = sam.samplingId
+    and sam.muni_id = mun.muni_id
+    and province_id = ?
+    and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
+    GROUP By risk_type;`*/
     var sql = `select count(risk_type) as count_risk, risk_type
     from sanitaryinpectionquestion san, samplingdata sam, municipality mun
     where san.samplingId = sam.samplingId
@@ -218,6 +225,13 @@ router.get('/get_survey_summary_report', async (req, res) => {
 
 // get summary report of h2s with visual
 router.get('/get_h2s_report', async (req, res) => {
+    /*var sql = `select count(risk_type) as count_risk, risk_type, status
+    from hydrogensulfide hyd, samplingdata sam, municipality mun
+    where hyd.samplingId = sam.samplingId
+    and sam.muni_id = mun.muni_id
+    and province_id = ?
+    and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
+    GROUP By risk_type;`*/
     var sql = `select count(risk_type) as count_risk, risk_type, status
     from hydrogensulfide hyd, samplingdata sam, municipality mun
     where hyd.samplingId = sam.samplingId
@@ -277,8 +291,7 @@ router.get('/get_all_summary_h2s', (req, res) => {
     where hyd.samplingId = sam.samplingId
     and sam.samplingId = coo.samplingId
     and mun.muni_id = sam.muni_id
-    and sam.samplingId = wat.samplingId
-    order by sampling_date_created desc;`
+    and sam.samplingId = wat.samplingId;`
     connection.query(sql, (err, rows) => {
         if (err) throw err;
         if (rows.length > 0) {
@@ -296,8 +309,7 @@ router.get('/get_all_summary_survey', (req, res) => {
     where san.samplingId = sam.samplingId
     and sam.samplingId = coo.samplingId
     and mun.muni_id = sam.muni_id
-    and sam.samplingId = wat.samplingId
-    order by sampling_date_created desc`
+    and sam.samplingId = wat.samplingId`
     connection.query(sql, (err, rows) => {
         if (err) throw err;
         if (rows.length > 0) {
@@ -317,8 +329,7 @@ router.get('/get_userhistory_sanitory/:id', (req, res) => {
     and sam.samplingId = san.samplingId
     and sam.muni_id = mun.muni_id
     and mun.province_id = pro.province_id
-    and sam.userId = ?
-    order by sampling_date_created desc;`
+    and sam.userId = ?;`
     connection.query(sql, req.params.id, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {
@@ -338,8 +349,7 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
     and sam.muni_id = mun.muni_id
     and mun.province_id = pro.province_id
     and sam.samplingId = wat.samplingId
-    and sam.userId = ?
-    order by sampling_date_created desc;`
+    and sam.userId = ?;`
     connection.query(sql, req.params.id, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {
@@ -363,8 +373,7 @@ router.get('/get_survey_stats/:start/:end', (req, res) => {
     and sam.samplingId = san.samplingId
     and sam.muni_id = mun.muni_id
     and mun.province_id = pro.province_id
-    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?
-    order by sampling_date_created desc`
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
     connection.query(sql, dateParams, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {
@@ -387,8 +396,7 @@ router.get('/get_h2s_stats/:start/:end', (req, res) => {
     where sam.muni_id = mun.muni_id
     and sam.samplingId = wat.samplingId
     and sam.samplingId = hyd.samplingId
-    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?
-    order by sampling_date_created desc`
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
     connection.query(sql, dateParams, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {
@@ -414,8 +422,7 @@ router.get('/get_user_survey_stats/:start/:end/:id', (req, res) => {
     and sam.muni_id = mun.muni_id
     and mun.province_id = pro.province_id
     and userId = ?
-    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?
-    order by sampling_date_created desc`
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
     connection.query(sql, dateParams, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {
@@ -440,8 +447,7 @@ router.get('/get_user_h2s_stats/:start/:end/:id', (req, res) => {
     and mun.province_id = pro.province_id
     and sam.samplingId = wat.samplingId
     and userId = ?
-    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?
-    order by sampling_date_created desc`
+    and DATE_FORMAT(sampling_date_created, "%Y-%m-%d") BETWEEN ? AND ?`
     connection.query(sql, dateParams, (err, result) => {
         if (err) { throw err }
         if (result.length > 0) {

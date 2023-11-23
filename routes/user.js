@@ -1,8 +1,6 @@
 const express = require('express');
 const connection = require("../config/config");
 const router = express.Router();
-require("dotenv").config();
-const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res) => {
     var email = req.body.username
@@ -54,5 +52,5 @@ router.post('/registration', (req, res) => {
         }
     })
 })
-
+ 
 module.exports = router

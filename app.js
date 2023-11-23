@@ -17,7 +17,6 @@ app.use(express.json());
 app.use(bodyParser.json()); 
 
 app.use(bodyParser.urlencoded({ extended: false }));
-/*
 app.use(cookieParser());
 
 
@@ -30,7 +29,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: oneDay }
 }));
-*/
+
 app.use('/api', require('./routes/user'));
 app.use('/api', require('./routes/level1'));
 app.use('/api', require('./routes/fib'));
