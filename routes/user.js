@@ -1,11 +1,15 @@
 const express = require('express');
-const connection = require("../config/config");
+//const connection = require('../config/config');
+const pool = require("../config/config");
 const router = express.Router();
 
 router.post('/login', (req, res) => {
+
     var email = req.body.username
     var sql = `SELECT * FROM user WHERE email =?`
-    connection.query(sql, [email], (err, results) => {
+    pool.getConnection((err, connection)=>{
+        console.log('connected as id',connection.threadId)
+       connection.query(sql, [email], (err, results) => {
         if (err){ console.log(err)
             throw err;
         }
@@ -21,7 +25,9 @@ router.post('/login', (req, res) => {
         else {
             res.json({ message: 'wrong username or password', success: false })
         }
+    })  
     })
+   
 })
 
 router.post('/registration', (req, res) => {
