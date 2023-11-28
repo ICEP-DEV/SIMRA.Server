@@ -53,4 +53,13 @@ router.post('/registration', (req, res) => {
     })
 })
  
+// Get the users
+router.get('/get_users', (req, res) => {
+    var sql = "select * from user";
+    connection.query(sql, req.params.id, (err, results) => {
+        if (err) throw err
+
+        res.send({ success: true, results })
+    })
+})
 module.exports = router
