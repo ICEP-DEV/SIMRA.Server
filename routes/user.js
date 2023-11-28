@@ -7,27 +7,29 @@ router.post('/login', (req, res) => {
 
     var email = req.body.username
     var sql = `SELECT * FROM user WHERE email =?`
-    pool.getConnection((err, connection)=>{
-        console.log('connected as id',connection.threadId)
-       connection.query(sql, [email], (err, results) => {
-        if (err){ console.log(err)
-            throw err;
-        }
-        if (results.length > 0) {
-            if (results[0].password == req.body.password) {
-                return res.status(200).json({ message: 'Successfully', success: true, results });
+    pool.getConnection((err, connection) => {
+        console.log('connected as id', connection.threadId)
+        connection.query(sql, [email], (err, results) => {
+            if (err) {
+                console.log(err)
+                throw err;
+            }
+            if (results.length > 0) {
+                if (results[0].password == req.body.password) {
+                    return res.status(200).json({ message: 'Successfully', success: true, results });
 
+                }
+                else {
+                    res.json({ message: 'wrong username or password', success: false })
+                }
             }
             else {
                 res.json({ message: 'wrong username or password', success: false })
             }
-        }
-        else {
-            res.json({ message: 'wrong username or password', success: false })
-        }
-    })  
+            connection.release()
+        })
     })
-   
+
 })
 
 router.post('/registration', (req, res) => {
@@ -49,14 +51,14 @@ router.post('/registration', (req, res) => {
                 if (err) throw err;
                 console.log(rows)
                 if (results.affectedRows != 0) {
-                     res.send({ success: true, message: "Successfully added user" })
+                    res.send({ success: true, message: "Successfully added user" })
                 }
                 else {
-                     res.send({ success: false, message: "Something went wronng try again later" })
+                    res.send({ success: false, message: "Something went wronng try again later" })
                 }
             })
         }
     })
 })
- 
+
 module.exports = router
