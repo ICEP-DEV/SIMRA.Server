@@ -360,7 +360,19 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
         }
     })
 })
-
+//get h2s report
+router.get('/get_h2s', (req, res) => {
+    var sql = `SELECT * FROM hydrgensulfide`
+    connection.query(sql, req.params.id, (err, result) => {
+        if (err) { throw err }
+        if (result.length > 0) {
+            res.send({ success: true, result })
+        }
+        else {
+            res.send({ success: false, message: "no history data" })
+        }
+    })
+})
 // province stats sanitary survey
 router.get('/get_survey_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
