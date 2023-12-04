@@ -1,5 +1,5 @@
 var mysql = require('mysql')
-/*
+
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     database: 'simra_db'
 });
 
-*/
+
 /*
 var connection = mysql.createConnection({
     host: 'simra-db.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
@@ -27,7 +27,7 @@ connection.connect((err) => {
         console.log('Connection Failed!' + JSON.stringify(err, undefined, 2));
 });
 */
-
+/*
 const connection = mysql.createPool({
     host: 'simra-db.cwtgw4wh8ldi.eu-west-1.rds.amazonaws.com',
     user: 'admin',
@@ -43,5 +43,5 @@ connection.getConnection((err, con) => {
         console.log(`Database connection failed. Check that its running and that your configuration is correct`);
     else 
     console.log('Connection Established Successfully');
-});
+});*/
 module.exports = connection;
