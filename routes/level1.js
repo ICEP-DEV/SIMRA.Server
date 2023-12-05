@@ -444,6 +444,7 @@ router.get('/get_user_h2s_stats/:start/:end/:id', (req, res) => {
     })
 })
 
+// results per province
 router.get('/get_results_per_province', (req, res) => {
     var sql = `select count(mun.province_id) as province_total, mun.province_id, province_name
     from municipality mun, samplingdata sam, province prov
@@ -463,12 +464,82 @@ router.get('/get_results_per_province', (req, res) => {
     })
 })
 
+
+// results per municipalities
 router.get('/get_results_per_municipalities', (req, res) => {
     var sql = `select count(province_id) as province_total, province_id, muni_name, sam.muni_id, COUNT(sam.muni_id) as muni_count
                 from municipality mun, samplingdata sam
                 where mun.muni_id = sam.muni_id
                 group by sam.muni_id
                 ORDER by muni_name;`
+
+    connection.query(sql, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+})
+
+// h2s results per province and per municipalities
+router.get('/get_h2s_by_province', (req, res) => {
+    var sql = `SELECT COUNT(status) as province_total, risk_type, province_name, prov.province_id
+    FROM hydrogensulfide hyd, samplingdata sam, municipality mun, province prov
+    where hyd.samplingId = sam.samplingId
+    and mun.muni_id = sam.muni_id
+    and prov.province_id = mun.province_id
+    group by  prov.province_id;`
+
+    connection.query(sql, (err, rows) => {
+        if (err) console.log(err)
+        if (rows.length > 0) {
+            var sql_risk = `SELECT COUNT(status) as count_risk, status, risk_type, muni_id
+    FROM hydrogensulfide hyd, samplingdata sam
+    where hyd.samplingId = sam.samplingId
+    group by status, muni_id;`
+
+            connection.query(sql_risk, (err, results) => {
+                if (err) console.log(err)
+                if (results.length > 0) {
+                    var sql_muni = `SELECT prov.province_id, mun.muni_id, COUNT(mun.muni_id) as muni_count, muni_name
+                    FROM hydrogensulfide hyd, samplingdata sam, municipality mun, province prov
+                    where hyd.samplingId = sam.samplingId
+                    and mun.muni_id = sam.muni_id
+                    and prov.province_id = mun.province_id
+                    group by  mun.muni_id;`
+                    connection.query(sql_muni, (err, result) => {
+                        if (err) console.log(err)
+                        if (result.length > 0) {
+                            res.send({ success: true, results, rows, result })
+                        }
+                        else {
+                            res.send({ success: false, message: "could not found the results" })
+                        }
+
+                    })
+
+                }
+                else {
+                    res.send({ success: false, message: "could not found the results" })
+                }
+            })
+        }
+        else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+})
+
+
+// h2s results per municipalities
+router.get('/get_h2s_by_muni', (req, res) => {
+    var sql = `SELECT COUNT(status) as count_risk, status, risk_type, muni_id
+    FROM hydrogensulfide hyd, samplingdata sam
+    where hyd.samplingId = sam.samplingId
+    group by status, muni_id;`
 
     connection.query(sql, (err, results) => {
         if (err) console.log(err)
