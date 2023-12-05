@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2023 at 02:48 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Oct 29, 2023 at 08:11 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,13 +39,133 @@ CREATE TABLE `coordinate` (
 --
 
 INSERT INTO `coordinate` (`coorniadteId`, `longitude`, `latitude`, `samplingId`) VALUES
-(2, '-10.3565545', '-20.3656125', 7),
-(3, '-10.3565545', '-20.3656125', 7),
 (6, '28.2292712', '-25.7478676', 21),
 (7, '28.2292712', '-25.7478676', 22),
 (8, '28.2292712', '-25.7478676', 23),
 (9, '28.2292712', '-25.7478676', 24),
-(10, '28.2292712', '-25.7478676', 25);
+(10, '28.2292712', '-25.7478676', 25),
+(11, '28.2292712', '-25.7478676', 26),
+(12, '28.2292712', '-25.7478676', 27),
+(13, '28.2292712', '-25.7478676', 28),
+(14, '28.2292712', '-25.7478676', 29),
+(15, '28.2292712', '-25.7478676', 30),
+(16, '28.2292712', '-25.7478676', 31),
+(17, '28.2292712', '-25.7478676', 32),
+(18, '28.2292712', '-25.7478676', 33),
+(19, '28.2292712', '-25.7478676', 34),
+(20, '28.2292712', '-25.7478676', 35),
+(21, '28.2292712', '-25.7478676', 36),
+(22, '28.2292712', '-25.7478676', 37),
+(23, '28.2292712', '-25.7478676', 38),
+(24, '28.2292712', '-25.7478676', 39),
+(25, '28.2292712', '-25.7478676', 40),
+(26, '28.2292712', '-25.7478676', 41),
+(27, '28.2292712', '-25.7478676', 42),
+(28, '28.2292712', '-25.7478676', 43),
+(29, '28.2292712', '-25.7478676', 44),
+(30, '28.2292712', '-25.7478676', 45),
+(31, '28.2292712', '-25.7478676', 46),
+(32, '28.2292712', '-25.7478676', 47),
+(33, '28.2292712', '-25.7478676', 48),
+(34, '28.2292712', '-25.7478676', 49),
+(35, '28.2292712', '-25.7478676', 50),
+(36, '28.2292712', '-25.7478676', 51),
+(37, '28.2292712', '-25.7478676', 52),
+(38, '28.2292712', '-25.7478676', 53),
+(39, '28.2292712', '-25.7478676', 54),
+(40, '28.2292712', '-25.7478676', 55),
+(41, '28.2292712', '-25.7478676', 56),
+(42, '28.2292712', '-25.7478676', 57),
+(43, '28.2292712', '-25.7478676', 58),
+(44, '28.2292712', '-25.7478676', 59),
+(45, '28.2292712', '-25.7478676', 60),
+(46, '28.2292712', '-25.7478676', 61),
+(47, '28.2292712', '-25.7478676', 62),
+(48, '28.2292712', '-25.7478676', 63),
+(49, '28.2292712', '-25.7478676', 64),
+(50, '28.2292712', '-25.7478676', 65),
+(51, '28.2292712', '-25.7478676', 66),
+(52, '28.2292712', '-25.7478676', 67),
+(53, '28.2292712', '-25.7478676', 68),
+(54, '28.2292712', '-25.7478676', 69),
+(55, '28.2292712', '-25.7478676', 70),
+(56, '28.2292712', '-25.7478676', 71),
+(57, '28.2292712', '-25.7478676', 72),
+(58, '28.2292712', '-25.7478676', 73),
+(59, '28.2292712', '-25.7478676', 74),
+(60, '28.2292712', '-25.7478676', 75),
+(61, '28.2292712', '-25.7478676', 76),
+(62, '28.2292712', '-25.7478676', 77),
+(63, '28.2292712', '-25.7478676', 78),
+(64, '28.2292712', '-25.7478676', 79),
+(65, '28.2292712', '-25.7478676', 80),
+(66, '28.2292712', '-25.7478676', 80),
+(67, '28.2292712', '-25.7478676', 81),
+(68, '28.2292712', '-25.7478676', 82),
+(69, '28.2292712', '-25.7478676', 83),
+(70, '28.2292712', '-25.7478676', 84),
+(71, '28.2292712', '-25.7478676', 85),
+(72, '28.2292712', '-25.7478676', 86),
+(73, '28.2292712', '-25.7478676', 87),
+(74, '28.2292712', '-25.7478676', 88),
+(75, '28.2292712', '-25.7478676', 89),
+(76, '28.2292712', '-25.7478676', 90),
+(77, '28.2292712', '-25.7478676', 91),
+(78, '28.2292712', '-25.7478676', 92),
+(79, '28.2292712', '-25.7478676', 93),
+(80, '28.2292712', '-25.7478676', 94),
+(81, '28.2292712', '-25.7478676', 95),
+(82, '28.2292712', '-25.7478676', 96);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fib_indicator`
+--
+
+CREATE TABLE `fib_indicator` (
+  `indicator_id` int(11) NOT NULL,
+  `indicator` varchar(255) DEFAULT NULL,
+  `ratio` decimal(10,0) DEFAULT NULL,
+  `count_indicator` int(11) DEFAULT NULL,
+  `estimated_count` decimal(10,0) DEFAULT NULL,
+  `is_customized` tinyint(1) DEFAULT NULL,
+  `samplingId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fib_indicator`
+--
+
+INSERT INTO `fib_indicator` (`indicator_id`, `indicator`, `ratio`, `count_indicator`, `estimated_count`, `is_customized`, `samplingId`) VALUES
+(1, 'Coliforms', 1, 100, 100, 0, 30),
+(2, 'E coli', 1, 200, 200, 0, 31),
+(3, 'E coli', 1, 200, 200, 0, 31),
+(4, 'E coli', 1, 200, 200, 0, 31),
+(5, 'E coli', 1, 200, 200, 0, 31),
+(6, 'E coli', 1, 200, 200, 0, 31),
+(7, 'E coli', 1, 200, 200, 0, 31),
+(8, 'E coli', 1, 200, 200, 0, 31),
+(9, 'E coli', 1, 200, 200, 0, 31),
+(10, 'Giardia', 1, 55, 44, NULL, 78),
+(11, 'Giardia', 1, 55, 44, NULL, 79),
+(12, 'Giardia', 1, 55, 44, NULL, 79),
+(13, 'Giardia', 1, 55, 44, NULL, 81),
+(14, 'Giardia', 1, 55, 44, NULL, 82),
+(15, 'Giardia', 1, 55, 44, NULL, 83),
+(16, 'Giardia', 1, 55, 44, NULL, 84),
+(17, 'Giardia', 1, 55, 44, NULL, 85),
+(18, 'Giardia', 1, 55, 44, NULL, 86),
+(19, 'Giardia', 1, 55, 44, NULL, 87),
+(20, 'Giardia', 1, 55, 44, NULL, 88),
+(21, 'Giardia', 1, 55, 44, NULL, 89),
+(22, 'Giardia', 1, 55, 44, NULL, 90),
+(23, 'Giardia', 1, 55, 44, NULL, 91),
+(24, 'Giardia', 1, 55, 44, NULL, 92),
+(25, 'Giardia', 1, 55, 44, NULL, 93),
+(26, 'Giardia', 1, 55, 44, NULL, 94),
+(27, 'Giardia', 1, 55, 44, NULL, 95),
+(28, 'Giardia', 1, 55, 44, NULL, 96);
 
 -- --------------------------------------------------------
 
@@ -65,12 +185,27 @@ CREATE TABLE `hydrogensulfide` (
 --
 
 INSERT INTO `hydrogensulfide` (`id`, `status`, `samplingId`, `risk_type`) VALUES
-(5, '0', 7, 'negative(No Risk)'),
-(6, '1', 16, 'positive (Risk)'),
-(7, '0', 17, 'Negative (No Risk)'),
-(8, '1', 18, 'positive (Risk)'),
+(8, '1', 18, 'Positive (Risk)'),
 (9, '0', 19, 'Negative (No Risk)'),
-(10, '1', 20, 'positive (Risk)');
+(10, '1', 20, 'Positive (Risk)'),
+(11, NULL, 34, 'Positive (Risk)'),
+(12, '0', 36, 'Negative (No Risk)'),
+(13, '1', 37, 'Positive (Risk)'),
+(14, '1', 38, 'Positive (Risk)'),
+(15, '0', 39, 'Negative (No Risk)'),
+(16, '0', 40, 'Negative (No Risk)'),
+(17, '0', 41, 'Negative (No Risk)'),
+(18, '0', 42, 'Negative (No Risk)'),
+(19, '0', 43, 'Negative (No Risk)'),
+(20, '0', 44, 'Negative (No Risk)'),
+(21, '1', 45, 'Positive (Risk)'),
+(22, '1', 46, 'Positive (Risk)'),
+(23, '0', 47, 'Negative (No Risk)'),
+(24, '0', 64, 'Negative (No Risk)'),
+(25, '1', 65, 'Positive (Risk)'),
+(26, '1', 66, 'Positive (Risk)'),
+(27, '1', 67, 'Positive (Risk)'),
+(28, '0', 68, 'Negative (No Risk)');
 
 -- --------------------------------------------------------
 
@@ -339,6 +474,54 @@ INSERT INTO `province` (`province_id`, `province_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `qmra`
+--
+
+CREATE TABLE `qmra` (
+  `qmra_id` int(11) NOT NULL,
+  `pathogen` varchar(255) DEFAULT NULL,
+  `best_fit_model` varchar(20) DEFAULT NULL,
+  `alpha` decimal(10,5) DEFAULT NULL,
+  `beta` decimal(10,5) DEFAULT NULL,
+  `constant` decimal(10,5) DEFAULT NULL,
+  `n50` decimal(10,5) DEFAULT NULL,
+  `probability_of_infection` decimal(10,5) DEFAULT NULL,
+  `likelihood_of_infection` decimal(10,5) DEFAULT NULL,
+  `duration_type` varchar(20) DEFAULT NULL,
+  `is_customized` tinyint(1) DEFAULT NULL,
+  `indicator_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `qmra`
+--
+
+INSERT INTO `qmra` (`qmra_id`, `pathogen`, `best_fit_model`, `alpha`, `beta`, `constant`, `n50`, `probability_of_infection`, `likelihood_of_infection`, `duration_type`, `is_customized`, `indicator_id`) VALUES
+(1, 'E.coli 0157:H7', 'beta-poisson', 0.00000, 236.00000, NULL, NULL, 0.00000, NULL, 'monthly', 1, 2),
+(2, 'E.coli 0157:H7', 'beta-poisson', 0.00000, 46.00000, NULL, NULL, 0.00000, 0.25500, 'weekly', 0, 8),
+(3, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.48900, 0.02179, 'weekly', 0, 9),
+(4, 'S.Flexneri', NULL, 0.26500, 1480.00000, NULL, NULL, 0.00962, NULL, NULL, 0, 10),
+(5, 'S.Flexneri', NULL, 0.26500, 1480.00000, NULL, NULL, 0.00962, NULL, NULL, 0, 12),
+(6, 'S.Flexneri', NULL, 0.26500, 1480.00000, NULL, NULL, 0.00962, NULL, NULL, 0, 13),
+(7, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00398, NULL, NULL, 0, 14),
+(8, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, NULL, NULL, 0, 15),
+(9, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, NULL, NULL, 0.27026, NULL, NULL, 0, 16),
+(10, 'Giardia lambia', NULL, 0.40000, 45.90000, 0.01990, NULL, 0.66529, NULL, NULL, 0, 17),
+(11, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, 0.01990, NULL, 0.27026, NULL, NULL, 0, 18),
+(12, 'Giardia lambia', NULL, NULL, NULL, 0.01990, NULL, 0.66529, NULL, NULL, 0, 19),
+(13, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, NULL, NULL, 0, 20),
+(14, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, NULL, NULL, 0, 21),
+(15, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00398, NULL, NULL, 0, 22),
+(16, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, NULL, NULL, 0.27026, 188.16764, NULL, 0, 23),
+(17, 'Campylobacter jejuni', NULL, 0.14500, 7.85000, NULL, NULL, 0.26039, 218.82987, NULL, 0, 24),
+(18, 'Giardia lambia', NULL, NULL, NULL, 0.01990, NULL, 0.66529, 1.49254, NULL, 0, 25),
+(19, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, 0.00000, NULL, 0, 26),
+(20, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, NULL, NULL, 0.27026, 188.16764, NULL, 0, 27),
+(21, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, -0.00649, NULL, 0, 28);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `river`
 --
 
@@ -380,16 +563,6 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (5, 1, 'Wet', '2023-09-13 21:26:08', 'KZN254'),
 (6, 1, 'Wet', '2023-09-13 21:28:17', 'KZN238'),
 (7, 1, 'Wet', '2023-09-13 21:29:05', 'LIM366'),
-(8, 1, 'Windy', '2023-09-13 22:48:25', NULL),
-(9, 1, 'Windy', '2023-09-13 22:55:19', NULL),
-(10, 1, 'Windy', '2023-09-13 22:57:58', NULL),
-(11, 1, 'Windy', '2023-09-13 22:59:17', NULL),
-(12, 1, 'Windy', '2023-09-13 23:12:04', NULL),
-(13, 1, 'Windy', '2023-09-13 23:41:18', NULL),
-(14, 1, 'Thunder and Lightning', '2023-09-13 23:45:19', NULL),
-(15, 1, 'cloudy', '2023-09-14 07:10:42', NULL),
-(16, 1, 'cloudy', '2023-09-14 07:12:37', NULL),
-(17, 1, 'cloudy', '2023-09-14 07:14:39', NULL),
 (18, 1, 'cloudy', '2023-09-14 07:16:12', NULL),
 (19, 1, 'cloudy', '2023-09-14 07:17:07', 'LIM334'),
 (20, 1, 'cloudy', '2023-09-14 07:29:08', 'LIM366'),
@@ -397,7 +570,78 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (22, 1, 'Windy', '2023-09-17 21:38:27', 'NC084'),
 (23, 1, 'Windy', '2023-09-17 21:38:56', 'MP301'),
 (24, 1, 'Windy', '2023-09-17 21:53:07', 'MP301'),
-(25, 1, 'Windy', '2023-09-17 21:53:20', 'EC124');
+(25, 1, 'Windy', '2023-09-17 21:53:20', 'EC124'),
+(26, 1, 'Thunder and Lightning', '2023-10-02 01:10:01', 'EKU'),
+(27, 1, 'Thunder and Lightning', '2023-10-02 01:10:15', 'EKU'),
+(28, 1, 'Fog', '2023-10-22 16:38:02', 'ETH'),
+(29, 1, 'Fog', '2023-10-22 16:39:26', 'ETH'),
+(30, 1, 'Fog', '2023-10-22 19:03:17', 'FS161'),
+(31, 1, 'Fog', '2023-10-22 19:05:40', 'FS161'),
+(32, 1, 'Fog', '2023-10-22 19:05:55', 'FS161'),
+(33, 1, 'Rainy', '2023-10-24 23:44:08', 'FS203'),
+(34, 1, 'Rainy', '2023-10-25 00:24:33', 'FS203'),
+(35, 13, 'Windy', '2023-10-25 01:29:14', 'FS184'),
+(36, 1, 'Thunder and Lightning', '2023-10-25 06:48:43', 'EKU'),
+(37, 1, 'Thunder and Lightning', '2023-10-25 06:48:50', 'EKU'),
+(38, 1, 'Thunder and Lightning', '2023-10-25 06:51:10', 'EKU'),
+(39, 1, 'cloudy', '2023-10-25 07:50:51', 'GT422'),
+(40, 1, 'cloudy', '2023-10-25 07:52:31', 'GT422'),
+(41, 1, 'cloudy', '2023-10-25 07:53:07', 'GT422'),
+(42, 1, 'cloudy', '2023-10-25 07:53:26', 'GT422'),
+(43, 1, 'cloudy', '2023-10-25 07:53:48', 'GT422'),
+(44, 1, 'cloudy', '2023-10-25 07:55:43', 'GT422'),
+(45, 1, 'cloudy', '2023-10-25 07:56:03', 'GT422'),
+(46, 1, 'cloudy', '2023-10-25 07:57:28', 'GT422'),
+(47, 1, 'cloudy', '2023-10-25 07:58:42', 'GT422'),
+(48, 13, 'Thunder and Lightning', '2023-10-25 08:15:43', 'GT485'),
+(49, 13, 'Thunder and Lightning', '2023-10-25 08:16:05', 'GT485'),
+(50, 13, 'Thunder and Lightning', '2023-10-25 08:16:33', 'GT485'),
+(51, 13, 'Thunder and Lightning', '2023-10-25 08:18:29', 'GT485'),
+(52, 13, 'Thunder and Lightning', '2023-10-25 08:20:02', 'GT485'),
+(53, 13, 'Thunder and Lightning', '2023-10-25 08:21:32', 'GT485'),
+(54, 13, 'Thunder and Lightning', '2023-10-25 08:21:59', 'GT485'),
+(55, 13, 'Thunder and Lightning', '2023-10-25 08:22:07', 'GT485'),
+(56, 13, 'Thunder and Lightning', '2023-10-25 08:22:36', 'GT485'),
+(57, 13, 'Thunder and Lightning', '2023-10-25 08:23:09', 'GT485'),
+(58, 13, 'Thunder and Lightning', '2023-10-25 08:23:36', 'GT485'),
+(59, 13, 'Thunder and Lightning', '2023-10-25 08:23:54', 'GT485'),
+(60, 13, 'Thunder and Lightning', '2023-10-25 08:32:26', 'GT485'),
+(61, 13, 'Thunder and Lightning', '2023-10-25 08:32:53', 'GT485'),
+(62, 1, 'Windy', '2023-10-25 08:45:47', 'GT423'),
+(63, 1, 'Windy', '2023-10-25 08:46:27', 'GT423'),
+(64, 1, 'Windy', '2023-10-25 08:46:54', 'GT423'),
+(65, 1, 'Windy', '2023-10-25 08:47:19', 'GT423'),
+(66, 13, 'Thunder and Lightning', '2023-10-26 19:37:54', 'WC034'),
+(67, 13, 'Thunder and Lightning', '2023-10-26 19:38:01', 'WC034'),
+(68, 13, 'Thunder and Lightning', '2023-10-26 19:38:05', 'WC034'),
+(69, 13, 'Thunder and Lightning', '2023-10-26 19:38:13', 'WC034'),
+(70, 13, 'Frost and Ice', '2023-10-28 08:29:54', 'FS196'),
+(71, 13, 'Frost and Ice', '2023-10-29 02:20:51', 'FS196'),
+(72, 13, 'Frost and Ice', '2023-10-29 02:20:58', 'FS196'),
+(73, 13, 'Frost and Ice', '2023-10-29 02:21:03', 'FS196'),
+(74, 13, 'Frost and Ice', '2023-10-29 02:21:08', 'FS196'),
+(75, 13, 'Frost and Ice', '2023-10-29 02:27:42', 'FS196'),
+(76, 13, 'Frost and Ice', '2023-10-29 02:29:16', 'FS196'),
+(77, 13, 'Frost and Ice', '2023-10-29 02:29:42', 'FS196'),
+(78, 13, 'Frost and Ice', '2023-10-29 18:51:42', 'FS196'),
+(79, 13, 'Frost and Ice', '2023-10-29 18:53:48', 'FS196'),
+(80, 13, 'Frost and Ice', '2023-10-29 18:54:19', 'FS196'),
+(81, 13, 'Frost and Ice', '2023-10-29 18:54:28', 'FS196'),
+(82, 13, 'Frost and Ice', '2023-10-29 18:54:33', 'FS196'),
+(83, 13, 'Frost and Ice', '2023-10-29 18:54:38', 'FS196'),
+(84, 13, 'Frost and Ice', '2023-10-29 18:54:46', 'FS196'),
+(85, 13, 'Frost and Ice', '2023-10-29 18:54:59', 'FS196'),
+(86, 13, 'Frost and Ice', '2023-10-29 18:58:02', 'FS196'),
+(87, 13, 'Frost and Ice', '2023-10-29 18:58:09', 'FS196'),
+(88, 13, 'Frost and Ice', '2023-10-29 19:09:29', 'FS196'),
+(89, 13, 'Frost and Ice', '2023-10-29 19:47:23', 'FS196'),
+(90, 13, 'Frost and Ice', '2023-10-29 19:47:58', 'FS196'),
+(91, 13, 'Frost and Ice', '2023-10-29 19:49:39', 'FS196'),
+(92, 13, 'Frost and Ice', '2023-10-29 19:51:20', 'FS196'),
+(93, 13, 'Frost and Ice', '2023-10-29 19:52:38', 'FS196'),
+(94, 13, 'Frost and Ice', '2023-10-29 19:53:18', 'FS196'),
+(95, 13, 'Frost and Ice', '2023-10-29 19:54:06', 'FS196'),
+(96, 13, 'Frost and Ice', '2023-10-29 19:54:50', 'FS196');
 
 -- --------------------------------------------------------
 
@@ -417,6 +661,7 @@ CREATE TABLE `sanitaryinpectionquestion` (
   `observerLaundryActivity` tinyint(1) DEFAULT NULL,
   `samplingId` int(11) DEFAULT NULL,
   `risk_type` varchar(100) DEFAULT NULL,
+  `totalYes` int(11) NOT NULL,
   `total_avarage` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -424,18 +669,23 @@ CREATE TABLE `sanitaryinpectionquestion` (
 -- Dumping data for table `sanitaryinpectionquestion`
 --
 
-INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `total_avarage`) VALUES
-(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
-(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', '75'),
-(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', '25'),
-(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', '25'),
-(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', '50'),
-(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', '75'),
-(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', '50'),
-(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', '50'),
-(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', '25'),
-(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', '50'),
-(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', '100');
+INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `totalYes`, `total_avarage`) VALUES
+(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 4, 50),
+(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 4, 50),
+(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0, 0),
+(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 4, 50),
+(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 0, 100),
+(17, 1, 0, 1, 0, 1, 0, 1, 0, 26, 'medium risk', 4, 50),
+(18, 0, 0, 0, 0, 0, 0, 0, 0, 27, 'low risk', 0, 0),
+(19, 1, 0, 1, 1, 1, 1, 1, 1, 28, 'very high risk', 7, 88),
+(20, 1, 0, 1, 1, 1, 1, 1, 1, 29, 'very high risk', 7, 88),
+(21, 1, 0, 0, 0, 0, 0, 0, 0, 30, 'low risk', 1, 13),
+(22, 1, 0, 0, 0, 0, 0, 0, 0, 31, 'low risk', 1, 13),
+(23, 0, 0, 0, 0, 0, 0, 0, 0, 32, 'low risk', 0, 0),
+(24, 1, 0, 1, 0, 0, 0, 1, 1, 33, 'medium risk', 4, 50),
+(25, 1, 0, 1, 0, 1, 0, 1, 0, 62, 'medium risk', 4, 50),
+(26, 1, 1, 1, 1, 1, 1, 1, 1, 63, 'very high risk', 8, 100),
+(27, 1, 1, 0, 0, 1, 0, 1, 1, 69, 'high risk', 5, 63);
 
 -- --------------------------------------------------------
 
@@ -445,6 +695,7 @@ INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `
 
 CREATE TABLE `user` (
   `userId` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `mobileNo` varchar(11) NOT NULL,
   `password` varchar(50) NOT NULL,
   `firstname` varchar(100) NOT NULL,
@@ -457,9 +708,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userId`, `mobileNo`, `password`, `firstname`, `lastname`, `level`, `role`) VALUES
-(1, '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
-(3, '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal');
+INSERT INTO `user` (`userId`, `email`, `mobileNo`, `password`, `firstname`, `lastname`, `level`, `role`) VALUES
+(1, '', '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
+(3, '', '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal'),
+(13, 'nathi@gmail.com', '0147852369', 'Nathi@123', 'James', 'Nathi', 2, 'user'),
+(14, 'manasoedj@gmail.com', '0147852369', 'Manasoedj@12', 'Joel', 'Manasoe', 2, 'user');
 
 -- --------------------------------------------------------
 
@@ -479,12 +732,78 @@ CREATE TABLE `watersource` (
 --
 
 INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VALUES
-(1, 'River', 'hard', 3),
-(4, 'Household Tap Water', 'Hard', 16),
-(5, 'Household Tap Water', 'Easy', 4),
 (6, 'Household Tap Water', 'Easy', 21),
-(7, 'Household Tap Water', 'Easy', 8),
-(8, 'Household Tap Water', 'Easy', 23);
+(8, 'Household Tap Water', 'Easy', 23),
+(9, 'River', 'Hard', 26),
+(10, 'River', 'Hard', 27),
+(11, 'Dam', 'Hard', 28),
+(12, 'Dam', 'Hard', 29),
+(13, 'Spring', 'Hard', 30),
+(14, 'Spring', 'Hard', 31),
+(15, 'Spring', 'Hard', 32),
+(16, 'Borehole', 'Hard', 33),
+(17, 'Borehole', 'Hard', 34),
+(18, 'Borehole', 'Hard', 35),
+(19, 'Housewater Stored Water', 'Hard', 36),
+(20, 'Housewater Stored Water', 'Hard', 37),
+(21, 'Housewater Stored Water', 'Hard', 38),
+(22, 'Household Tap Water', 'Easy', 39),
+(23, 'Household Tap Water', 'Easy', 40),
+(24, 'Household Tap Water', 'Easy', 41),
+(25, 'Household Tap Water', 'Easy', 42),
+(26, 'Household Tap Water', 'Easy', 43),
+(27, 'Household Tap Water', 'Easy', 44),
+(28, 'Household Tap Water', 'Easy', 45),
+(29, 'Household Tap Water', 'Easy', 46),
+(30, 'Household Tap Water', 'Easy', 47),
+(31, 'Wastewater Treatment Plant', 'Hard', 48),
+(32, 'Wastewater Treatment Plant', 'Hard', 49),
+(33, 'Wastewater Treatment Plant', 'Hard', 50),
+(34, 'Wastewater Treatment Plant', 'Hard', 51),
+(35, 'Wastewater Treatment Plant', 'Hard', 52),
+(36, 'Wastewater Treatment Plant', 'Hard', 53),
+(37, 'Wastewater Treatment Plant', 'Hard', 54),
+(38, 'Wastewater Treatment Plant', 'Hard', 55),
+(39, 'Wastewater Treatment Plant', 'Hard', 56),
+(40, 'Wastewater Treatment Plant', 'Hard', 57),
+(41, 'Wastewater Treatment Plant', 'Hard', 58),
+(42, 'Wastewater Treatment Plant', 'Hard', 59),
+(43, 'Wastewater Treatment Plant', 'Hard', 60),
+(44, 'Wastewater Treatment Plant', 'Hard', 61),
+(45, 'Dam', 'Hard', 62),
+(46, 'Dam', 'Hard', 63),
+(47, 'Dam', 'Hard', 64),
+(48, 'Dam', 'Hard', 65),
+(49, 'Spring', 'Easy', 66),
+(50, 'Spring', 'Easy', 67),
+(51, 'Spring', 'Easy', 68),
+(52, 'Spring', 'Easy', 69),
+(53, 'Dam', 'Hard', 70),
+(54, 'Dam', 'Hard', 71),
+(55, 'Dam', 'Hard', 72),
+(56, 'Dam', 'Hard', 73),
+(57, 'Dam', 'Hard', 74),
+(58, 'Dam', 'Hard', 75),
+(59, 'Dam', 'Hard', 76),
+(60, 'Dam', 'Hard', 77),
+(61, 'Dam', 'Hard', 78),
+(62, 'Dam', 'Hard', 79),
+(63, 'Dam', 'Hard', 81),
+(64, 'Dam', 'Hard', 82),
+(65, 'Dam', 'Hard', 83),
+(66, 'Dam', 'Hard', 84),
+(67, 'Dam', 'Hard', 85),
+(68, 'Dam', 'Hard', 86),
+(69, 'Dam', 'Hard', 87),
+(70, 'Dam', 'Hard', 88),
+(71, 'Dam', 'Hard', 89),
+(72, 'Dam', 'Hard', 90),
+(73, 'Dam', 'Hard', 91),
+(74, 'Dam', 'Hard', 92),
+(75, 'Dam', 'Hard', 93),
+(76, 'Dam', 'Hard', 94),
+(77, 'Dam', 'Hard', 95),
+(78, 'Dam', 'Hard', 96);
 
 --
 -- Indexes for dumped tables
@@ -495,6 +814,13 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 --
 ALTER TABLE `coordinate`
   ADD PRIMARY KEY (`coorniadteId`),
+  ADD KEY `samplingId` (`samplingId`);
+
+--
+-- Indexes for table `fib_indicator`
+--
+ALTER TABLE `fib_indicator`
+  ADD PRIMARY KEY (`indicator_id`),
   ADD KEY `samplingId` (`samplingId`);
 
 --
@@ -523,6 +849,13 @@ ALTER TABLE `municipality`
 --
 ALTER TABLE `province`
   ADD PRIMARY KEY (`province_id`);
+
+--
+-- Indexes for table `qmra`
+--
+ALTER TABLE `qmra`
+  ADD PRIMARY KEY (`qmra_id`),
+  ADD KEY `indicator_id` (`indicator_id`);
 
 --
 -- Indexes for table `river`
@@ -567,19 +900,31 @@ ALTER TABLE `watersource`
 -- AUTO_INCREMENT for table `coordinate`
 --
 ALTER TABLE `coordinate`
-  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+
+--
+-- AUTO_INCREMENT for table `fib_indicator`
+--
+ALTER TABLE `fib_indicator`
+  MODIFY `indicator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `hydrogensulfide`
 --
 ALTER TABLE `hydrogensulfide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `microbial`
 --
 ALTER TABLE `microbial`
   MODIFY `microbialId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `qmra`
+--
+ALTER TABLE `qmra`
+  MODIFY `qmra_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `river`
@@ -591,25 +936,25 @@ ALTER TABLE `river`
 -- AUTO_INCREMENT for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `sanitaryinpectionquestion`
 --
 ALTER TABLE `sanitaryinpectionquestion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `watersource`
 --
 ALTER TABLE `watersource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- Constraints for dumped tables
@@ -620,6 +965,12 @@ ALTER TABLE `watersource`
 --
 ALTER TABLE `coordinate`
   ADD CONSTRAINT `coordinate_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `fib_indicator`
+--
+ALTER TABLE `fib_indicator`
+  ADD CONSTRAINT `fib_indicator_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
 
 --
 -- Constraints for table `hydrogensulfide`
@@ -638,6 +989,12 @@ ALTER TABLE `microbial`
 --
 ALTER TABLE `municipality`
   ADD CONSTRAINT `municipality_ibfk_1` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`);
+
+--
+-- Constraints for table `qmra`
+--
+ALTER TABLE `qmra`
+  ADD CONSTRAINT `qmra_ibfk_1` FOREIGN KEY (`indicator_id`) REFERENCES `fib_indicator` (`indicator_id`);
 
 --
 -- Constraints for table `river`
