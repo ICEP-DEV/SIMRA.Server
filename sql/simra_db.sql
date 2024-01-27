@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2023 at 10:42 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Jan 27, 2024 at 05:19 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,20 +34,21 @@ CREATE TABLE `coordinate` (
   `samplingId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `coordinate`
+-- Table structure for table `fib_indicator`
 --
 
-INSERT INTO `coordinate` (`coorniadteId`, `longitude`, `latitude`, `samplingId`) VALUES
-(2, '-10.3565545', '-20.3656125', 7),
-(3, '-10.3565545', '-20.3656125', 7),
-(6, '28.2292712', '-25.7478676', 21),
-(7, '28.2292712', '-25.7478676', 22),
-(8, '28.2292712', '-25.7478676', 23),
-(9, '28.2292712', '-25.7478676', 24),
-(10, '28.2292712', '-25.7478676', 25),
-(11, '28.2292712', '-25.7478676', 26),
-(12, '28.2292712', '-25.7478676', 27);
+CREATE TABLE `fib_indicator` (
+  `indicator_id` int(11) NOT NULL,
+  `indicator` varchar(255) DEFAULT NULL,
+  `ratio` varchar(10) DEFAULT NULL,
+  `count_indicator` int(11) DEFAULT NULL,
+  `estimated_count` double DEFAULT NULL,
+  `is_customized_indicator` tinyint(1) DEFAULT NULL,
+  `qmra_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -62,18 +63,6 @@ CREATE TABLE `hydrogensulfide` (
   `risk_type` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `hydrogensulfide`
---
-
-INSERT INTO `hydrogensulfide` (`id`, `status`, `samplingId`, `risk_type`) VALUES
-(5, '0', 7, 'negative(No Risk)'),
-(6, '1', 16, 'positive (Risk)'),
-(7, '0', 17, 'Negative (No Risk)'),
-(8, '1', 18, 'positive (Risk)'),
-(9, '0', 19, 'Negative (No Risk)'),
-(10, '1', 20, 'positive (Risk)');
-
 -- --------------------------------------------------------
 
 --
@@ -83,6 +72,22 @@ INSERT INTO `hydrogensulfide` (`id`, `status`, `samplingId`, `risk_type`) VALUES
 CREATE TABLE `microbial` (
   `microbialId` int(11) NOT NULL,
   `samplingId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mst`
+--
+
+CREATE TABLE `mst` (
+  `mst_id` int(11) NOT NULL,
+  `count` int(11) DEFAULT NULL,
+  `ratio` varchar(100) DEFAULT NULL,
+  `estimated_count` varchar(10) NOT NULL,
+  `maker` varchar(100) DEFAULT NULL,
+  `is_customized_mst` tinyint(1) NOT NULL,
+  `qmra_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -345,13 +350,31 @@ INSERT INTO `province` (`province_id`, `province_name`) VALUES
 --
 
 CREATE TABLE `qmra` (
-  `qmraId` int(11) NOT NULL,
-  `organism` varchar(255) DEFAULT NULL,
-  `pi` double DEFAULT NULL,
-  `dateCreated` date DEFAULT NULL,
-  `durationType` varchar(100) DEFAULT NULL,
-  `durationNumber` int(11) DEFAULT NULL,
+  `qmra_id` int(11) NOT NULL,
+  `pathogen` varchar(255) DEFAULT NULL,
+  `best_fit_model` varchar(20) DEFAULT NULL,
+  `alpha` double DEFAULT NULL,
+  `beta` double DEFAULT NULL,
+  `constant` double DEFAULT NULL,
+  `n50` double DEFAULT NULL,
+  `probability_of_infection` double DEFAULT NULL,
+  `likelihood_of_infection` double DEFAULT NULL,
+  `duration_type` varchar(20) DEFAULT NULL,
+  `is_customize_Pathogen` tinyint(1) DEFAULT NULL,
   `samplingId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reference_path`
+--
+
+CREATE TABLE `reference_path` (
+  `ref_path_id` int(11) NOT NULL,
+  `count` int(11) DEFAULT NULL,
+  `is_customize_Pathogen` tinyint(1) DEFAULT NULL,
+  `qmra_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -388,37 +411,6 @@ CREATE TABLE `samplingdata` (
   `muni_id` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `samplingdata`
---
-
-INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `sampling_date_created`, `muni_id`) VALUES
-(3, 1, 'sunny', '2023-09-13 13:18:28', 'KZN263'),
-(4, 1, 'sunny', '2023-09-13 13:52:29', 'NC084'),
-(5, 1, 'Wet', '2023-09-13 21:26:08', 'KZN254'),
-(6, 1, 'Wet', '2023-09-13 21:28:17', 'KZN238'),
-(7, 1, 'Wet', '2023-09-13 21:29:05', 'LIM366'),
-(8, 1, 'Windy', '2023-09-13 22:48:25', NULL),
-(9, 1, 'Windy', '2023-09-13 22:55:19', NULL),
-(10, 1, 'Windy', '2023-09-13 22:57:58', NULL),
-(11, 1, 'Windy', '2023-09-13 22:59:17', NULL),
-(12, 1, 'Windy', '2023-09-13 23:12:04', NULL),
-(13, 1, 'Windy', '2023-09-13 23:41:18', NULL),
-(14, 1, 'Thunder and Lightning', '2023-09-13 23:45:19', NULL),
-(15, 1, 'cloudy', '2023-09-14 07:10:42', NULL),
-(16, 1, 'cloudy', '2023-09-14 07:12:37', NULL),
-(17, 1, 'cloudy', '2023-09-14 07:14:39', NULL),
-(18, 1, 'cloudy', '2023-09-14 07:16:12', NULL),
-(19, 1, 'cloudy', '2023-09-14 07:17:07', 'LIM334'),
-(20, 1, 'cloudy', '2023-09-14 07:29:08', 'LIM366'),
-(21, 1, 'cloudy', '2023-09-14 07:29:31', 'MP301'),
-(22, 1, 'Windy', '2023-09-17 21:38:27', 'NC084'),
-(23, 1, 'Windy', '2023-09-17 21:38:56', 'MP301'),
-(24, 1, 'Windy', '2023-09-17 21:53:07', 'MP301'),
-(25, 1, 'Windy', '2023-09-17 21:53:20', 'EC124'),
-(26, 1, 'Thunder and Lightning', '2023-10-02 01:10:01', 'EKU'),
-(27, 1, 'Thunder and Lightning', '2023-10-02 01:10:15', 'EKU');
-
 -- --------------------------------------------------------
 
 --
@@ -441,25 +433,6 @@ CREATE TABLE `sanitaryinpectionquestion` (
   `total_avarage` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `sanitaryinpectionquestion`
---
-
-INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `totalYes`, `total_avarage`) VALUES
-(3, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 6, '75'),
-(4, 0, 1, 1, 1, 1, 0, 1, 1, 7, 'high risk', 6, '75'),
-(6, 0, 0, 0, 0, 0, 0, 0, 0, 9, 'low risk', 0, '0'),
-(7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 'low risk', 0, '0'),
-(9, 1, 0, 1, 0, 1, 0, 1, 0, 12, 'medium risk', 4, '50'),
-(10, 1, 1, 1, 0, 0, 1, 1, 1, 13, 'high risk', 0, '75'),
-(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 4, '50'),
-(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 4, '50'),
-(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0, '0'),
-(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 4, '50'),
-(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 0, '100'),
-(17, 1, 0, 1, 0, 1, 0, 1, 0, 26, 'medium risk', 4, '50'),
-(18, 0, 0, 0, 0, 0, 0, 0, 0, 27, 'low risk', 0, '0');
-
 -- --------------------------------------------------------
 
 --
@@ -468,6 +441,7 @@ INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `
 
 CREATE TABLE `user` (
   `userId` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `mobileNo` varchar(11) NOT NULL,
   `password` varchar(50) NOT NULL,
   `firstname` varchar(100) NOT NULL,
@@ -480,9 +454,14 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userId`, `mobileNo`, `password`, `firstname`, `lastname`, `level`, `role`) VALUES
-(1, '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
-(3, '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal');
+INSERT INTO `user` (`userId`, `email`, `mobileNo`, `password`, `firstname`, `lastname`, `level`, `role`) VALUES
+(1, 'mukwevho@gmail.com', '0123456789', '123zxc', 'Gift', 'Mukwevho', 1, 'user'),
+(3, 'mashaba@gmail.com', '0147896325', '123zxc', 'Noko', 'Mashaba', 0, 'municipal'),
+(13, 'nathi@gmail.com', '0147852369', 'Nathi@123', 'James', 'Nathi', 2, 'user'),
+(14, 'manasoedj@gmail.com', '0147852399', 'Manasoedj@12', 'Joel', 'Manasoe', 2, 'user'),
+(15, 'lamola@gmail.com', '0123698745', 'Lamola123@', 'Lethabo', 'Lamola', 3, 'user'),
+(16, 'ledwaba@gmail.com', '0725569740', 'Ledwaba123@', 'Jack', 'Ledwaba', 3, 'user'),
+(17, 'mathiba@gmail.com', '0159874563', 'Mathiba@123', 'Zakes', 'Mathiba', 3, 'user');
 
 -- --------------------------------------------------------
 
@@ -498,20 +477,6 @@ CREATE TABLE `watersource` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `watersource`
---
-
-INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VALUES
-(1, 'River', 'hard', 3),
-(4, 'Household Tap Water', 'Hard', 16),
-(5, 'Household Tap Water', 'Easy', 4),
-(6, 'Household Tap Water', 'Easy', 21),
-(7, 'Household Tap Water', 'Easy', 8),
-(8, 'Household Tap Water', 'Easy', 23),
-(9, 'River', 'Hard', 26),
-(10, 'River', 'Hard', 27);
-
---
 -- Indexes for dumped tables
 --
 
@@ -521,6 +486,13 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 ALTER TABLE `coordinate`
   ADD PRIMARY KEY (`coorniadteId`),
   ADD KEY `samplingId` (`samplingId`);
+
+--
+-- Indexes for table `fib_indicator`
+--
+ALTER TABLE `fib_indicator`
+  ADD PRIMARY KEY (`indicator_id`),
+  ADD KEY `qmra_id` (`qmra_id`);
 
 --
 -- Indexes for table `hydrogensulfide`
@@ -535,6 +507,13 @@ ALTER TABLE `hydrogensulfide`
 ALTER TABLE `microbial`
   ADD PRIMARY KEY (`microbialId`),
   ADD KEY `samplingId` (`samplingId`);
+
+--
+-- Indexes for table `mst`
+--
+ALTER TABLE `mst`
+  ADD PRIMARY KEY (`mst_id`),
+  ADD KEY `qmra_id` (`qmra_id`);
 
 --
 -- Indexes for table `municipality`
@@ -553,8 +532,15 @@ ALTER TABLE `province`
 -- Indexes for table `qmra`
 --
 ALTER TABLE `qmra`
-  ADD PRIMARY KEY (`qmraId`),
+  ADD PRIMARY KEY (`qmra_id`),
   ADD KEY `samplingId` (`samplingId`);
+
+--
+-- Indexes for table `reference_path`
+--
+ALTER TABLE `reference_path`
+  ADD PRIMARY KEY (`ref_path_id`),
+  ADD KEY `qmra_id` (`qmra_id`);
 
 --
 -- Indexes for table `river`
@@ -599,13 +585,19 @@ ALTER TABLE `watersource`
 -- AUTO_INCREMENT for table `coordinate`
 --
 ALTER TABLE `coordinate`
-  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+
+--
+-- AUTO_INCREMENT for table `fib_indicator`
+--
+ALTER TABLE `fib_indicator`
+  MODIFY `indicator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `hydrogensulfide`
 --
 ALTER TABLE `hydrogensulfide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `microbial`
@@ -614,10 +606,22 @@ ALTER TABLE `microbial`
   MODIFY `microbialId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `mst`
+--
+ALTER TABLE `mst`
+  MODIFY `mst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
 -- AUTO_INCREMENT for table `qmra`
 --
 ALTER TABLE `qmra`
-  MODIFY `qmraId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `qmra_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+--
+-- AUTO_INCREMENT for table `reference_path`
+--
+ALTER TABLE `reference_path`
+  MODIFY `ref_path_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `river`
@@ -629,25 +633,25 @@ ALTER TABLE `river`
 -- AUTO_INCREMENT for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT for table `sanitaryinpectionquestion`
 --
 ALTER TABLE `sanitaryinpectionquestion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `watersource`
 --
 ALTER TABLE `watersource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
 -- Constraints for dumped tables
@@ -658,6 +662,12 @@ ALTER TABLE `watersource`
 --
 ALTER TABLE `coordinate`
   ADD CONSTRAINT `coordinate_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `fib_indicator`
+--
+ALTER TABLE `fib_indicator`
+  ADD CONSTRAINT `fib_indicator_ibfk_1` FOREIGN KEY (`qmra_id`) REFERENCES `qmra` (`qmra_id`);
 
 --
 -- Constraints for table `hydrogensulfide`
@@ -672,6 +682,12 @@ ALTER TABLE `microbial`
   ADD CONSTRAINT `microbial_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
 
 --
+-- Constraints for table `mst`
+--
+ALTER TABLE `mst`
+  ADD CONSTRAINT `mst_ibfk_1` FOREIGN KEY (`qmra_id`) REFERENCES `qmra` (`qmra_id`);
+
+--
 -- Constraints for table `municipality`
 --
 ALTER TABLE `municipality`
@@ -681,7 +697,13 @@ ALTER TABLE `municipality`
 -- Constraints for table `qmra`
 --
 ALTER TABLE `qmra`
-  ADD CONSTRAINT `qmra_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+  ADD CONSTRAINT `qmra_ibfk_2` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+
+--
+-- Constraints for table `reference_path`
+--
+ALTER TABLE `reference_path`
+  ADD CONSTRAINT `reference_path_ibfk_1` FOREIGN KEY (`qmra_id`) REFERENCES `qmra` (`qmra_id`);
 
 --
 -- Constraints for table `river`
