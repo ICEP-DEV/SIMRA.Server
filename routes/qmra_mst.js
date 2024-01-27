@@ -176,7 +176,7 @@ router.post('/reference_pathogens_test', (req, res) => {
     let best_fit_model = req.body.best_fit_model
     let count = req.body.count
 
-
+ 
     switch (pathogen.toLocaleLowerCase()) {
         case 'Campylobacter jejuni'.toLocaleLowerCase():
             totalQmra = calculateBetaPoisson(alpha, beta, count)
