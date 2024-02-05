@@ -23,7 +23,7 @@ router.get('/indicators', (req, res) => {
         {indicator: "Enterococcus", pathogen:[{path_name:'E.coli 0157', ratio:'1:0.1'},
                                         {path_name:'Salmonella', ratio:'1.1:1'},
                                         {path_name:'Campylobacter', ratio:'1:0.1'},
-                                        {path_name:'Vibrio Cholerae', ratio:'1:0.5'},]},
+                                        {path_name:'Vibrio Cholnerae', ratio:'1:0.5'},]},
 
         {indicator: "Clostridium", pathogen:[{path_name:'Cryptosporidium', ratio:'1:0.6'},
                                         {path_name:'Giardia', ratio:'1:0.8'},]},
