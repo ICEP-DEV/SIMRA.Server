@@ -55,29 +55,44 @@ router.post('/add_indicator_qmra', (req, res) => {
     let count_indicator = req.body.count_indicator;
     let estimated_count = req.body.estimated_count;
     let is_customized_indicator = req.body.is_customized_indicator;
-    console.log(pathogen)
-    switch (pathogen.toLocaleLowerCase()) {
-        case 'Campylobacter jejuni'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
-            break;
-        case 'E.coli 0157:H7'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
-            break;
-        case 'Salmonella typhi'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
-            break;
-        case 'S.Flexneri'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
-            break;
-        case 'Vibrio Cholera'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count_indicator)
-            break;
-        case 'Entamoeba coli'.toLocaleLowerCase():
-            totalQmra = calculateEntamoebaColi(alpha, n50, count_indicator)
-            break;
-        case 'Giardia lambia'.toLocaleLowerCase():
-            totalQmra = calculateExponentialForGiardia(constant, count_indicator)
-            break;
+
+    if (is_customize_Pathogen == true) {
+        if (best_fit_model.toLocaleLowerCase() == 'exponential'.toLocaleLowerCase()) {
+            totalQmra = calculateExponentialForGiardia(constant, estimated_count);
+        }
+        else {
+            if (beta != null || beta != undefined) {
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+            }
+            else {
+                totalQmra = calculateEntamoebaColi(alpha, n50, estimated_count)
+            }
+        }
+    }
+    else {
+        switch (pathogen.toLocaleLowerCase()) {
+            case 'Campylobacter jejuni'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'E.coli 0157:H7'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'Salmonella typhi'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'S.Flexneri'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'Vibrio Cholera'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'Entamoeba coli'.toLocaleLowerCase():
+                totalQmra = calculateEntamoebaColi(alpha, n50, estimated_count)
+                break;
+            case 'Giardia lambia'.toLocaleLowerCase():
+                totalQmra = calculateExponentialForGiardia(constant, estimated_count)
+                break;
+        }
     }
 
     var duration_type = req.body.duration_type;
@@ -145,7 +160,7 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     }
     var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
     //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
-    
+
     if (likelihood_of_infection === Infinity || likelihood_of_infection === Number.NEGATIVE_INFINITY) {
         likelihood_of_infection = 0
     }
@@ -176,36 +191,51 @@ router.post('/reference_pathogens_test', (req, res) => {
     let best_fit_model = req.body.best_fit_model
     let count = req.body.count
 
- 
-    switch (pathogen.toLocaleLowerCase()) {
-        case 'Campylobacter jejuni'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'E.coli 0157:H7'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'Salmonella typhi'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'S.Flexneri'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'Vibrio Cholera'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'Entamoeba coli'.toLocaleLowerCase():
-            totalQmra = calculateEntamoebaColi(alpha, n50, count)
-            break;
-        case 'Giardia lambia'.toLocaleLowerCase():
-            totalQmra = calculateExponentialForGiardia(constant, count)
-            break;
+    if (is_customize_Pathogen == true) {
+        if (best_fit_model.toLocaleLowerCase() == 'exponential'.toLocaleLowerCase()) {
+            totalQmra = calculateExponentialForGiardia(constant, count);
+        }
+        else {
+            if (beta != null || beta != undefined) {
+                totalQmra = calculateBetaPoisson(alpha, beta, count)
+            }
+            else {
+                totalQmra = calculateEntamoebaColi(alpha, n50, count)
+            }
+        }
+    }
+    else {
+        switch (pathogen.toLocaleLowerCase()) {
+            case 'Campylobacter jejuni'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, count)
+                break;
+            case 'E.coli 0157:H7'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, count)
+                break;
+            case 'Salmonella typhi'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, count)
+                break;
+            case 'S.Flexneri'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, count)
+                break;
+            case 'Vibrio Cholera'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, count)
+                break;
+            case 'Entamoeba coli'.toLocaleLowerCase():
+                totalQmra = calculateEntamoebaColi(alpha, n50, count)
+                break;
+            case 'Giardia lambia'.toLocaleLowerCase():
+                totalQmra = calculateExponentialForGiardia(constant, count)
+                break;
+        }
     }
 
     var duration_type = req.body.duration_type;
     var likeliOfInfection = null
     var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, samplingId]
     var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
-                                VALUES(?,?,?,?,?,?,?,?,?,?,?)`
+                                    VALUES(?,?,?,?,?,?,?,?,?,?,?)`
+
     connection.query(qmra_sql, qmra_body, (err, results) => {
         if (err) {
             return res.status(200).send("Failed to load data!" + err);
@@ -213,9 +243,9 @@ router.post('/reference_pathogens_test', (req, res) => {
         else {
             if (results.affectedRows > 0) {
                 var qmra_id = results.insertId
-                var fibIndicatorBody = [count,is_customize_Pathogen, qmra_id]
+                var fibIndicatorBody = [count, is_customize_Pathogen, qmra_id]
                 var fib_sql = `INSERT INTO reference_path(count,is_customize_Pathogen,qmra_id)
-                VALUES(?,?,?)`;
+VALUES(?,?,?)`;
                 connection.query(fib_sql, fibIndicatorBody, (error, row) => {
                     if (error) {
                         console.log(error)
@@ -252,29 +282,45 @@ router.post('/mst', (req, res) => {
     let ratio = req.body.ratio
     let maker = req.body.maker
 
-    switch (pathogen.toLocaleLowerCase()) {
-        case 'Campylobacter jejuni'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
-            break;
-        case 'E.coli 0157:H7'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
-            break;
-        case 'Salmonella typhi'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
-            break;
-        case 'S.Flexneri'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
-            break;
-        case 'Vibrio Cholera'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
-            break;
-        case 'Entamoeba coli'.toLocaleLowerCase():
-            totalQmra = calculateEntamoebaColi(alpha, n50, estimated_count)
-            break;
-        case 'Giardia lambia'.toLocaleLowerCase():
-            totalQmra = calculateExponentialForGiardia(constant, estimated_count)
-            break;
+    if (is_customize_Pathogen == true) {
+        if (best_fit_model.toLocaleLowerCase() == 'exponential'.toLocaleLowerCase()) {
+            totalQmra = calculateExponentialForGiardia(constant, estimated_count);
+        }
+        else {
+            if (beta != null || beta != undefined) {
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+            }
+            else {
+                totalQmra = calculateEntamoebaColi(alpha, n50, estimated_count)
+            }
+        }
     }
+    else {
+        switch (pathogen.toLocaleLowerCase()) {
+            case 'Campylobacter jejuni'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'E.coli 0157:H7'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'Salmonella typhi'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'S.Flexneri'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'Vibrio Cholera'.toLocaleLowerCase():
+                totalQmra = calculateBetaPoisson(alpha, beta, estimated_count)
+                break;
+            case 'Entamoeba coli'.toLocaleLowerCase():
+                totalQmra = calculateEntamoebaColi(alpha, n50, estimated_count)
+                break;
+            case 'Giardia lambia'.toLocaleLowerCase():
+                totalQmra = calculateExponentialForGiardia(constant, estimated_count)
+                break;
+        }
+    }
+
 
     var duration_type = req.body.duration_type;
     var likeliOfInfection = null
@@ -480,24 +526,5 @@ router.get('/mst_results/:start/:end/:user_id', (req, res) => {
     })
 })
 
-// test infinite results
-router.get('/infinite', (req, res) => {
-    var maxNumber = Math.pow(10, 1000);
-    var probability_of_infection = 0.99
-    var duration_number = 365
-    console.log(probability_of_infection)
-    console.log(duration_number)
-    //var maxNumber = 1000
-    ///var maxNumber = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
-    message = ''
-    if (maxNumber === Infinity) {
-        message = "Let's call it Infinity!";
-        console.log(maxNumber)
-    }
-    else {
-        message = "Let's call it not Infinity!";
-    }
-    console.log(maxNumber)
-    res.send({ maxNumber, message })
-})
+
 module.exports = router
