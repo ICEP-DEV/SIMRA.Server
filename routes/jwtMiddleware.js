@@ -18,7 +18,6 @@ module.exports =async   (req, res, next) => {
           req.decoded = decoded;
           next();
           console.log(req.decoded)
-          
         }
       });
     } else {
