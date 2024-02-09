@@ -142,21 +142,13 @@ router.post('/get_monthly_reports', (req, res) => {
 
 // get summary report of survey with visual
 router.get('/get_survey_summary_report', async (req, res) => {
-    /*var sql = `select count(risk_type) as count_risk, risk_type
-    from sanitaryinpectionquestion san, samplingdata sam, municipality mun
-    where san.samplingId = sam.samplingId
-    and sam.muni_id = mun.muni_id
-    and province_id = ?
-    and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
-    GROUP By risk_type;`*/
     var sql = `select count(risk_type) as count_risk, risk_type
     from sanitaryinpectionquestion san, samplingdata sam, municipality mun
     where san.samplingId = sam.samplingId
     and sam.muni_id = mun.muni_id
     GROUP By risk_type;`
-    //var summary_params = [req.params.province_id, req.params.date]
 
-    await connection.query(sql,(err, rows) => {
+    await connection.query(sql, (err, rows) => {
         if (rows.length > 0) {
             let isFoundLowRisk = false;
             let isFoundMediumRisk = false;
@@ -225,13 +217,6 @@ router.get('/get_survey_summary_report', async (req, res) => {
 
 // get summary report of h2s with visual
 router.get('/get_h2s_report', async (req, res) => {
-    /*var sql = `select count(risk_type) as count_risk, risk_type, status
-    from hydrogensulfide hyd, samplingdata sam, municipality mun
-    where hyd.samplingId = sam.samplingId
-    and sam.muni_id = mun.muni_id
-    and province_id = ?
-    and DATE_FORMAT(sampling_date_created, "%b-%Y") =  ?
-    GROUP By risk_type;`*/
     var sql = `select count(risk_type) as count_risk, risk_type, status
     from hydrogensulfide hyd, samplingdata sam, municipality mun
     where hyd.samplingId = sam.samplingId
@@ -360,19 +345,7 @@ router.get('/get_userhistory_h2s/:id', (req, res) => {
         }
     })
 })
-//get h2s report
-router.get('/get_h2s', (req, res) => {
-    var sql = `SELECT * FROM hydrgensulfide`
-    connection.query(sql, req.params.id, (err, result) => {
-        if (err) { throw err }
-        if (result.length > 0) {
-            res.send({ success: true, result })
-        }
-        else {
-            res.send({ success: false, message: "no history data" })
-        }
-    })
-})
+
 // province stats sanitary survey
 router.get('/get_survey_stats/:start/:end', (req, res) => {
     var startDate = req.params.start
@@ -467,6 +440,114 @@ router.get('/get_user_h2s_stats/:start/:end/:id', (req, res) => {
         }
         else {
             res.send({ success: false, message: "no history data" })
+        }
+    })
+})
+
+// results per province
+router.get('/get_results_per_province', (req, res) => {
+    var sql = `select count(mun.province_id) as province_total, mun.province_id, province_name
+    from municipality mun, samplingdata sam, province prov
+    where prov.province_id = mun.province_id
+    and mun.muni_id = sam.muni_id
+    group by province_id
+    ORDER by muni_name;`
+
+    connection.query(sql, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+})
+
+
+// results per municipalities
+router.get('/get_results_per_municipalities', (req, res) => {
+    var sql = `select count(province_id) as province_total, province_id, muni_name, sam.muni_id, COUNT(sam.muni_id) as muni_count
+                from municipality mun, samplingdata sam
+                where mun.muni_id = sam.muni_id
+                group by sam.muni_id
+                ORDER by muni_name;`
+
+    connection.query(sql, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+})
+
+// h2s results per province and per municipalities
+router.get('/get_h2s_by_province', (req, res) => {
+    var sql = `SELECT COUNT(status) as province_total, risk_type, province_name, prov.province_id
+    FROM hydrogensulfide hyd, samplingdata sam, municipality mun, province prov
+    where hyd.samplingId = sam.samplingId
+    and mun.muni_id = sam.muni_id
+    and prov.province_id = mun.province_id
+    group by  prov.province_id;`
+
+    connection.query(sql, (err, rows) => {
+        if (err) console.log(err)
+        if (rows.length > 0) {
+            var sql_risk = `SELECT COUNT(status) as count_risk, status, risk_type, muni_id
+    FROM hydrogensulfide hyd, samplingdata sam
+    where hyd.samplingId = sam.samplingId
+    group by status, muni_id;`
+
+            connection.query(sql_risk, (err, results) => {
+                if (err) console.log(err)
+                if (results.length > 0) {
+                    var sql_muni = `SELECT prov.province_id, mun.muni_id, COUNT(mun.muni_id) as muni_count, muni_name
+                    FROM hydrogensulfide hyd, samplingdata sam, municipality mun, province prov
+                    where hyd.samplingId = sam.samplingId
+                    and mun.muni_id = sam.muni_id
+                    and prov.province_id = mun.province_id
+                    group by  mun.muni_id;`
+                    connection.query(sql_muni, (err, result) => {
+                        if (err) console.log(err)
+                        if (result.length > 0) {
+                            res.send({ success: true, results, rows, result })
+                        }
+                        else {
+                            res.send({ success: false, message: "could not found the results" })
+                        }
+
+                    })
+
+                }
+                else {
+                    res.send({ success: false, message: "could not found the results" })
+                }
+            })
+        }
+        else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+})
+
+
+// h2s results per municipalities
+router.get('/get_h2s_by_muni', (req, res) => {
+    var sql = `SELECT COUNT(status) as count_risk, status, risk_type, muni_id
+    FROM hydrogensulfide hyd, samplingdata sam
+    where hyd.samplingId = sam.samplingId
+    group by status, muni_id;`
+
+    connection.query(sql, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        }
+        else {
+            res.send({ success: false, message: "could not found the results" })
         }
     })
 })

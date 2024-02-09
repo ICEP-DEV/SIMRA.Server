@@ -23,6 +23,24 @@ router.post('/login', (req, res) => {
         }
     })
 })
+router.post('/insert_user', (req, res) => {
+   
+    var sql = `INSERT INTO user (userId,email,mobileNo,password,firstname,lastname,level,role)
+    values(?,?,?,?,?,?,?,?)`
+    var bodyParams = [req.body.userId, req.body.email, req.body.mobileNo, req.body.password,req.body.firstname,req.body.lastname,req.body.level,req.body.role]
+
+    connection.query(sql, bodyParams, (err, result) => {
+        if (err) throw err;
+
+        if (result.affectedRows != 0) {
+            var insertedId = result.insertId
+            res.send({ success: true, message: "user data recorded...", insertedId })
+        }
+        else {
+            res.send({ success: false, message: "unable to record user..." })
+        }
+    })
+})
 
 router.post('/registration', (req, res) => {
     var email = req.body.email
@@ -55,7 +73,7 @@ router.post('/registration', (req, res) => {
  
 // Get the users
 router.get('/get_users', (req, res) => {
-    var sql = "select * from user";
+    var sql = "select * from user where not role = 'admin'";
     connection.query(sql, req.params.id, (err, results) => {
         if (err) throw err
 

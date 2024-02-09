@@ -89,19 +89,25 @@ router.put('/updateEventMun/:eventId', upload.single('image'), (req, res) => {
   });
 });
 
-// Delete event
-router.delete('/deleteEvent/:eventId', (req, res) => {
-  const eventId = req.params.eventId;
-
-  let sql = `DELETE FROM EVENTS WHERE id=${eventId}`;
-
-  connection.query(sql, (err, results) => {
-    if (err) {
-      return res.status(400).send(`Failed to delete event with ID ${eventId}! ${err}`);
-    } else {
-      return res.status(200).send(`Event with ID ${eventId} deleted successfully`);
-    }
-  });
+// DELETE user's event by ID
+router.delete('/deleteEventMun/:id', async (req, res) => {
+  const eventId = req.params.id;
+  try {
+    await connection.query('DELETE FROM events WHERE id = ?', eventId, (err, results)=>{
+      if(err) console.log(err)
+      if(results.affectedRows != 0){
+        res.json({ message: 'Event deleted successfully' });
+      }
+      else{
+        res.json({ message: 'Could not delete the event' });
+      }
+      
+    });
+    
+  } catch (error) {
+    console.error('Error deleting event:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // Handle GET request to retrieve an image only by filename

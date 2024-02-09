@@ -244,7 +244,7 @@ router.post('/reference_pathogens_test', (req, res) => {
             if (results.affectedRows > 0) {
                 var qmra_id = results.insertId
                 var fibIndicatorBody = [count, is_customize_Pathogen, qmra_id]
-                var fib_sql = `INSERT INTO reference_pathogen(count,is_customize_Pathogen,qmra_id)
+                var fib_sql = `INSERT INTO reference_path(count,is_customize_Pathogen,qmra_id)
 VALUES(?,?,?)`;
                 connection.query(fib_sql, fibIndicatorBody, (error, row) => {
                     if (error) {
