@@ -7,6 +7,8 @@ router.post('/sampling_data', (req, res) => {
     var sql = `insert into samplingdata(userId,weatherCondition, sampling_date_created, muni_id)
     values(?,?,?,?)`
     var bodyParams = [req.body.userId, req.body.weatherCondition, new Date(), req.body.muni_id]
+    //var bodyParams = [req.body.userId, req.body.weatherCondition, req.body.sampling_date_created, req.body.muni_id]
+
 
     connection.query(sql, bodyParams, (err, result) => {
         if (err) throw err;
@@ -46,8 +48,8 @@ router.post("/coordinates", (req, res) => {
 // hydrogensulfide (H2S)
 router.post("/hydrogensulfide", (req, res) => {
     var risk_type = ""
-    if (req.body.status == false) { risk_type = "Negative (No Risk)" }
-    else { risk_type = "Positive (Risk)" }
+    if (req.body.status == false) { risk_type = "No Risk" }
+    else { risk_type = "Risk" }
     var h2sSql = `insert into hydrogensulfide(status,risk_type, samplingId)
             values(?,?,?);`
     var h2sBody = [req.body.status, risk_type, req.body.samplingId]
@@ -74,10 +76,10 @@ router.post('/sanitary_inspection_survey', (req, res) => {
     totalYes = total_avarage
     total_avarage = (total_avarage / 8) * 100
 
-    if (total_avarage < 26) { risk_type = "low risk" }
-    else if (total_avarage > 25 && total_avarage < 51) { risk_type = "medium risk" }
-    else if (total_avarage > 50 && total_avarage < 76) { risk_type = "high risk" }
-    else { risk_type = "very high risk" }
+    if (total_avarage < 26) { risk_type = "Low Risk" }
+    else if (total_avarage > 25 && total_avarage < 51) { risk_type = "Medium Risk" }
+    else if (total_avarage > 50 && total_avarage < 76) { risk_type = "High Risk" }
+    else { risk_type = "Very High Risk" }
 
     var sql = `insert into sanitaryinpectionquestion(pitLatrine,domesticAnimal,diaperDisposal,wasteWaterRelease,openDefaction,
         unprotectedWaterSource,agriculturalActivity,observerLaundryActivity,samplingId,risk_type,totalYes,total_avarage)

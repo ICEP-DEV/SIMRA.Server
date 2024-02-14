@@ -15,6 +15,7 @@ app.use('/api', require('./routes/user'));
 app.use('/api', require('./routes/level1'));
 app.use('/api', require('./routes/fib'));
 app.use('/api', require('./routes/qmra_mst'));
+app.use('/api', require('./routes/mapping'));
 app.use('/api', require('./routes/updatePassword'));
 app.use('/api', require('./routes/updateProfile'));
 app.use('/api', require('./routes/municipality'));
