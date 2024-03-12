@@ -21,6 +21,7 @@ app.use('/api', require('./routes/updateProfile'));
 app.use('/api', require('./routes/municipality'));
 app.use('/api', require('./routes/h2s_results'));
 app.use('/api', require('./routes/survey_results'));
+app.use('/api', require('./routes/fib_results'));
 
 
 app.use('/', (req, res) =>{

@@ -421,6 +421,8 @@ router.get('/qmra_results', (req, res) => {
     })
 })
 
+
+
 // specic user qmra results
 router.get('/user_qmra_results/:user_id', (req, res) => {
     var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
@@ -462,6 +464,15 @@ router.get('/user_qmra_results/:start/:end/:user_id', (req, res) => {
         }
     })
 })
+///all markers
+router.get('/get_marker', (req, res) => {
+    var sql = "select DISTINCT maker from mst ";
+    connection.query(sql, req.params.id, (err, results) => {
+        if (err) throw err
+
+        res.send({ success: true, results })
+    })
+})
 
 // all mst qmra results
 router.get('/mst_results', (req, res) => {
@@ -481,6 +492,25 @@ router.get('/mst_results', (req, res) => {
         }
     })
 })
+
+// all mst qmra results
+router.get('/mst_average', (req, res) => {
+    const maker = req.body.maker;
+    var sql = `SELECT (Count(mst_id)/100)*100 AS average_mst_id
+               FROM mst
+               WHERE maker = ?`;
+    connection.query(sql, [maker], (err, results) => {
+        if (err) {
+            res.status(500).send({ success: false, message: "Internal server error" });
+            return;
+        }
+        if (results.length > 0) {
+            res.send({ success: true, average_mst_id: results[0].average_mst_id });
+        } else {
+            res.send({ success: false, message: "Cannot find data" });
+        }
+    });
+});
 
 // specific mst qmra results
 router.get('/mst_results/:user_id', (req, res) => {
@@ -525,6 +555,66 @@ router.get('/mst_results/:start/:end/:user_id', (req, res) => {
         }
     })
 })
+//mst_per_province
+router.get('/mst_province', (req, res) => {
+    var sql = `SELECT prov.province_id, COUNT(mun.province_id) as muni_count,mst_id,province_name
+                FROM mst ms, qmra qm, samplingdata sam, municipality mun, province prov
+                where ms.qmra_id = qmn .qmra_id 
+                and qm.samplingId = sam.samplingId
+                and mun.muni_id = sam.muni_id
+                and prov.province_id = mun.province_id
+                group by  mun.province_id;`
+
+    connection.query(sql, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+           
+        } else {
+            res.send({ success: false, message: "could not found the results" })
+           
+        }
+    })
+});
+
+router.get('/mst_municipality/:province_id', (req, res) => {
+    var sql = `SELECT COUNT(mst_id) as count_risk, mun.muni_id, muni_name
+                FROM mst ms,qmra qm, samplingdata sam, municipality mun
+                where ms.qmra_id=qm.qmra_id
+                and qm.samplingId = sam.samplingId
+                and mun.muni_id = sam.muni_id
+                and mun.province_id = ?
+                group by mun.muni_id;`
+
+    connection.query(sql, req.params.province_id, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        } else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+});
+
+router.get('/mst_risk_results/:muni_id', (req, res) => {
+
+    var sql = `SELECT COUNT(estimated_count) as count_risk, estimated_count, mst_id, muni_id
+                FROM mst ms,qmra qm, samplingdata sam
+                where ms.qmra_id=qm.qmra_id
+                and qm.samplingId = sam.samplingId
+                and muni_id = ?
+                group by estimated_count, muni_id;`
+
+    connection.query(sql, req.params.muni_id, (err, results) => {
+        if (err) console.log(err)
+        if (results.length > 0) {
+            res.send({ success: true, results })
+        } else {
+            res.send({ success: false, message: "could not found the results" })
+        }
+    })
+})
+
 
 
 module.exports = router
