@@ -559,7 +559,7 @@ router.get('/mst_results/:start/:end/:user_id', (req, res) => {
 router.get('/mst_province', (req, res) => {
     var sql = `SELECT prov.province_id, COUNT(mun.province_id) as muni_count,mst_id,province_name
                 FROM mst ms, qmra qm, samplingdata sam, municipality mun, province prov
-                where ms.qmra_id = qmn .qmra_id 
+                where ms.qmra_id = qm .qmra_id 
                 and qm.samplingId = sam.samplingId
                 and mun.muni_id = sam.muni_id
                 and prov.province_id = mun.province_id

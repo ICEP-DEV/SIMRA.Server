@@ -113,6 +113,15 @@ router.get('/h2s_risk_results/:muni_id', (req, res) => {
         }
     })
 })
+///get all indicators
+router.get('/get_fib_indicator', (req, res) => {
+    var sql = "select DISTINCT indicator from fib_indicator ";
+    connection.query(sql, req.params.id, (err, results) => {
+        if (err) throw err
+
+        res.send({ success: true, results })
+    })
+})
 
 
 
