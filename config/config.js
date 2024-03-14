@@ -2,10 +2,11 @@ var mysql = require('mysql')
 
 
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'simra_db'
+    host: 'sql8.freemysqlhosting.net',
+    user: 'sql8691324',
+    password: 'ffq7lmGWP6',
+    database: 'sql8691324',
+    port:3306
 });
 
 
