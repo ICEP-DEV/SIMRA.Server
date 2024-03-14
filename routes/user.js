@@ -5,7 +5,11 @@ const router = express.Router();
 router.post('/login', (req, res) => {
     var email = req.body.username
     var sql = `SELECT * FROM user WHERE email =?`
+    var sql = `SELECT * FROM user WHERE email =?`
     connection.query(sql, [email], (err, results) => {
+        if (err){ console.log(err)
+            throw err;
+        }
         if (err){ console.log(err)
             throw err;
         }
@@ -20,6 +24,24 @@ router.post('/login', (req, res) => {
         }
         else {
             res.json({ message: 'wrong username or password', success: false })
+        }
+    })
+})
+router.post('/insert_user', (req, res) => {
+   
+    var sql = `INSERT INTO user (userId,email,mobileNo,password,firstname,lastname,level,role)
+    values(?,?,?,?,?,?,?,?)`
+    var bodyParams = [req.body.userId, req.body.email, req.body.mobileNo, req.body.password,req.body.firstname,req.body.lastname,req.body.level,req.body.role]
+
+    connection.query(sql, bodyParams, (err, result) => {
+        if (err) throw err;
+
+        if (result.affectedRows != 0) {
+            var insertedId = result.insertId
+            res.send({ success: true, message: "user data recorded...", insertedId })
+        }
+        else {
+            res.send({ success: false, message: "unable to record user..." })
         }
     })
 })
@@ -53,4 +75,13 @@ router.post('/registration', (req, res) => {
     })
 })
  
+// Get the users
+router.get('/get_users', (req, res) => {
+    var sql = "select * from user where not role = 'admin'";
+    connection.query(sql, req.params.id, (err, results) => {
+        if (err) throw err
+
+        res.send({ success: true, results })
+    })
+})
 module.exports = router

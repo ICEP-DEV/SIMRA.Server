@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2023 at 10:35 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Feb 13, 2024 at 09:10 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -135,60 +135,33 @@ INSERT INTO `coordinate` (`coorniadteId`, `longitude`, `latitude`, `samplingId`)
 (99, '28.2292712', '-25.7478676', 113),
 (100, '28.2292712', '-25.7478676', 114),
 (101, '28.2292712', '-25.7478676', 115),
-(102, '28.2292712', '-25.7478676', 116),
-(103, '28.2292712', '-25.7478676', 117),
-(104, '28.2292712', '-25.7478676', 118),
-(105, '28.2292712', '-25.7478676', 119),
-(106, '28.2292712', '-25.7478676', 120),
-(107, '28.2292712', '-25.7478676', 121),
-(108, '28.2292712', '-25.7478676', 123),
-(109, '28.2292712', '-25.7478676', 124),
-(110, '28.2292712', '-25.7478676', 125),
-(111, '28.2292712', '-25.7478676', 126),
-(112, '28.2292712', '-25.7478676', 127),
-(113, '28.2292712', '-25.7478676', 128),
-(114, '28.2292712', '-25.7478676', 129),
-(115, '28.2292712', '-25.7478676', 130),
-(116, '28.2292712', '-25.7478676', 131),
-(117, '28.2292712', '-25.7478676', 132),
-(118, '28.2292712', '-25.7478676', 133),
-(119, '28.2292712', '-25.7478676', 134),
-(120, '28.2292712', '-25.7478676', 135),
-(121, '28.2292712', '-25.7478676', 136),
-(122, '28.2292712', '-25.7478676', 137),
-(123, '28.2292712', '-25.7478676', 138),
-(124, '28.2292712', '-25.7478676', 139),
-(125, '28.2292712', '-25.7478676', 140),
-(126, '28.2292712', '-25.7478676', 141),
-(127, '28.2292712', '-25.7478676', 142),
-(128, '28.2292712', '-25.7478676', 143),
-(129, '28.2292712', '-25.7478676', 144),
-(130, '28.2292712', '-25.7478676', 145),
-(131, '28.2292712', '-25.7478676', 146),
-(132, '28.2292712', '-25.7478676', 147),
-(133, '28.2292712', '-25.7478676', 148),
-(134, '28.2292712', '-25.7478676', 149),
-(135, '28.2292712', '-25.7478676', 150),
-(136, '28.2292712', '-25.7478676', 151),
-(137, '28.2292712', '-25.7478676', 152),
-(138, '28.2292712', '-25.7478676', 153),
-(139, '28.2292712', '-25.7478676', 154),
-(140, '28.2292712', '-25.7478676', 155),
-(141, '28.2292712', '-25.7478676', 156),
-(142, '28.2292712', '-25.7478676', 157),
-(143, '28.2292712', '-25.7478676', 158),
-(144, '28.2292712', '-25.7478676', 159),
-(145, '28.2292712', '-25.7478676', 160),
-(146, '28.2292712', '-25.7478676', 161),
-(147, '28.2292712', '-25.7478676', 162),
-(148, '28.2292712', '-25.7478676', 163),
-(149, '28.2292712', '-25.7478676', 164),
-(150, '28.2292712', '-25.7478676', 165),
-(151, '28.2292712', '-25.7478676', 166),
-(152, '', '', 167),
-(153, '', '', 168),
-(154, '', '', 169),
-(155, '28.2292712', '-25.7478676', 170);
+(207, '', '', 222),
+(208, '', '', 223);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `date` datetime NOT NULL,
+  `venue` varchar(200) NOT NULL,
+  `image` varchar(200) NOT NULL,
+  `muni_name` varchar(100) DEFAULT NULL,
+  `muni_id` varchar(10) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `description`, `date`, `venue`, `image`, `muni_name`, `muni_id`, `userId`) VALUES
+(11, 'simple simple simple', '\r\nDate	News Event\r\n18:13 Fri 24th Nov 2023\r\nWV Kambale	Venues for ICT computer-based supplementary exams (Soshanguve south campus)\r\nNote: All the computer-based supplementary exams that were to be wri', '2023-12-30 18:00:00', 'TUT', 'http://localhost:3001/api/uploads/1701348940352.png', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -199,9 +172,9 @@ INSERT INTO `coordinate` (`coorniadteId`, `longitude`, `latitude`, `samplingId`)
 CREATE TABLE `fib_indicator` (
   `indicator_id` int(11) NOT NULL,
   `indicator` varchar(255) DEFAULT NULL,
-  `ratio` decimal(3,2) DEFAULT NULL,
+  `ratio` varchar(10) DEFAULT NULL,
   `count_indicator` int(11) DEFAULT NULL,
-  `estimated_count` decimal(10,2) DEFAULT NULL,
+  `estimated_count` double DEFAULT NULL,
   `is_customized_indicator` tinyint(1) DEFAULT NULL,
   `qmra_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -211,50 +184,49 @@ CREATE TABLE `fib_indicator` (
 --
 
 INSERT INTO `fib_indicator` (`indicator_id`, `indicator`, `ratio`, `count_indicator`, `estimated_count`, `is_customized_indicator`, `qmra_id`) VALUES
-(1, 'Coliforms', 1.00, 100, 100.00, 0, 1),
-(2, 'E coli', 1.00, 200, 200.00, 0, 2),
-(3, 'E coli', 1.00, 200, 200.00, 0, 3),
-(4, 'E coli', 1.00, 200, 200.00, 0, 4),
-(5, 'E coli', 1.00, 200, 200.00, 0, 5),
-(6, 'E coli', 1.00, 200, 200.00, 0, 6),
-(7, 'E coli', 1.00, 200, 200.00, 0, 7),
-(8, 'E coli', 1.00, 200, 200.00, 0, 8),
-(9, 'E coli', 1.00, 200, 200.00, 0, 9),
-(10, 'Giardia', 1.00, 55, 44.00, NULL, 10),
-(11, 'Giardia', 1.00, 55, 44.00, NULL, 11),
-(12, 'Giardia', 1.00, 55, 44.00, NULL, 12),
-(13, 'Giardia', 1.00, 55, 44.00, NULL, 13),
-(14, 'Giardia', 1.00, 55, 44.00, NULL, 14),
-(15, 'Giardia', 1.00, 55, 44.00, NULL, 15),
-(16, 'Giardia', 1.00, 55, 44.00, NULL, 16),
-(17, 'Giardia', 1.00, 55, 44.00, NULL, 17),
-(18, 'Giardia', 1.00, 55, 44.00, NULL, 18),
-(19, 'Giardia', 1.00, 55, 44.00, NULL, 19),
-(20, 'Giardia', 1.00, 55, 44.00, NULL, 20),
-(21, 'Giardia', 1.00, 55, 44.00, NULL, 21),
-(26, 'Giardia', 1.00, 55, 44.00, NULL, NULL),
-(27, 'Giardia', 1.00, 55, 44.00, NULL, NULL),
-(28, 'Giardia', 1.00, 55, 44.00, NULL, NULL),
-(29, 'Giardia', 0.80, 200, 160.00, NULL, 23),
-(30, 'Giardia', 0.80, 200, 160.00, NULL, 24),
-(31, 'Giardia', 0.80, 200, 160.00, NULL, 25),
-(32, 'Giardia', 0.80, 200, 160.00, NULL, 26),
-(33, 'Giardia', 0.80, 200, 160.00, NULL, 27),
-(34, 'Giardia', 0.80, 14, 11.00, NULL, 28),
-(35, 'Giardia', 0.80, 10, 8.00, NULL, 52),
-(36, 'Giardia', 0.80, 10, 8.00, NULL, 53),
-(37, 'Giardia', 0.80, 10, 8.00, NULL, 54),
-(38, 'Giardia', 0.80, 10, 8.00, NULL, 55),
-(39, 'Giardia', 0.80, 10, 8.00, NULL, 56),
-(40, 'Giardia', 0.80, 10, 8.00, NULL, 57),
-(41, 'Giardia', 0.80, 10, 8.00, NULL, 58),
-(42, 'Giardia', 0.80, 10, 8.00, NULL, 59),
-(43, 'Giardia', 0.80, 10, 8.00, NULL, 60),
-(44, 'Cryptosporidium', 1.00, 100, 100.00, NULL, 61),
-(45, 'Cryptosporidium', 1.00, 10, 10.00, NULL, 63),
-(46, 'Cryptosporidium', 1.00, 10, 10.00, NULL, 64),
-(47, 'Giardia', 0.80, 5, 4.00, NULL, 67),
-(48, 'Coliforms', 1.00, 12, 4.80, NULL, 70);
+(1, 'Coliforms', '1.00', 100, 100, 0, 1),
+(2, 'E coli', '1.00', 200, 200, 0, 2),
+(3, 'E coli', '1.00', 200, 200, 0, 3),
+(4, 'E coli', '1.00', 200, 200, 0, 4),
+(5, 'E coli', '1.00', 200, 200, 0, 5),
+(6, 'E coli', '1.00', 200, 200, 0, 6),
+(7, 'E coli', '1.00', 200, 200, 0, 7),
+(8, 'E coli', '1.00', 200, 200, 0, 8),
+(9, 'E coli', '1.00', 200, 200, 0, 9),
+(10, 'Giardia', '1.00', 55, 44, NULL, 10),
+(11, 'Giardia', '1.00', 55, 44, NULL, 11),
+(12, 'Giardia', '1.00', 55, 44, NULL, 12),
+(13, 'Giardia', '1.00', 55, 44, NULL, 13),
+(14, 'Giardia', '1.00', 55, 44, NULL, 14),
+(15, 'Giardia', '1.00', 55, 44, NULL, 15),
+(16, 'Giardia', '1.00', 55, 44, NULL, 16),
+(17, 'Giardia', '1.00', 55, 44, NULL, 17),
+(18, 'Giardia', '1.00', 55, 44, NULL, 18),
+(19, 'Giardia', '1.00', 55, 44, NULL, 19),
+(20, 'Giardia', '1.00', 55, 44, NULL, 20),
+(21, 'Giardia', '1.00', 55, 44, NULL, 21),
+(26, 'Giardia', '1.00', 55, 44, NULL, NULL),
+(27, 'Giardia', '1.00', 55, 44, NULL, NULL),
+(28, 'Giardia', '1.00', 55, 44, NULL, NULL),
+(29, 'Giardia', '0.80', 200, 160, NULL, 23),
+(30, 'Giardia', '0.80', 200, 160, NULL, 24),
+(31, 'Giardia', '0.80', 200, 160, NULL, 25),
+(32, 'Giardia', '0.80', 200, 160, NULL, 26),
+(33, 'Giardia', '0.80', 200, 160, NULL, 27),
+(34, 'Giardia', '0.80', 14, 11, NULL, 28),
+(35, 'Giardia', '0.80', 10, 8, NULL, 52),
+(36, 'Giardia', '0.80', 10, 8, NULL, 53),
+(37, 'Giardia', '0.80', 10, 8, NULL, 54),
+(38, 'Giardia', '0.80', 10, 8, NULL, 55),
+(39, 'Giardia', '0.80', 10, 8, NULL, 56),
+(40, 'Giardia', '0.80', 10, 8, NULL, 57),
+(41, 'Giardia', '0.80', 10, 8, NULL, 58),
+(42, 'Giardia', '0.80', 10, 8, NULL, 59),
+(43, 'Giardia', '0.80', 10, 8, NULL, 60),
+(44, 'Cryptosporidium', '1.00', 100, 100, NULL, 61),
+(45, 'Cryptosporidium', '1.00', 10, 10, NULL, 63),
+(46, 'Cryptosporidium', '1.00', 10, 10, NULL, 64),
+(47, 'Giardia', '0.80', 5, 4, NULL, 67);
 
 -- --------------------------------------------------------
 
@@ -305,7 +277,8 @@ INSERT INTO `hydrogensulfide` (`id`, `status`, `samplingId`, `risk_type`) VALUES
 (36, '1', 152, 'Positive (Risk)'),
 (37, '1', 156, 'Positive (Risk)'),
 (38, '0', 157, 'Negative (No Risk)'),
-(39, '0', 164, 'Negative (No Risk)');
+(39, '0', 164, 'Negative (No Risk)'),
+(44, '1', 222, 'Positive (Risk)');
 
 -- --------------------------------------------------------
 
@@ -327,8 +300,8 @@ CREATE TABLE `microbial` (
 CREATE TABLE `mst` (
   `mst_id` int(11) NOT NULL,
   `count` int(11) DEFAULT NULL,
-  `ratio` decimal(3,2) DEFAULT NULL,
-  `estimated_count` decimal(10,2) NOT NULL,
+  `ratio` varchar(100) DEFAULT NULL,
+  `estimated_count` varchar(10) NOT NULL,
   `maker` varchar(100) DEFAULT NULL,
   `is_customized_mst` tinyint(1) NOT NULL,
   `qmra_id` int(11) DEFAULT NULL
@@ -339,31 +312,31 @@ CREATE TABLE `mst` (
 --
 
 INSERT INTO `mst` (`mst_id`, `count`, `ratio`, `estimated_count`, `maker`, `is_customized_mst`, `qmra_id`) VALUES
-(1, 200, 0.00, 132.00, 'Cow', 0, 31),
-(2, 5, 0.01, 0.05, 'Chicken', 0, 32),
-(3, 10, 0.36, 3.60, 'cat', 1, 33),
-(4, 100, 0.01, 1.00, 'Chicken', 0, 34),
-(5, 100, 0.01, 1.00, 'Chicken', 0, 35),
-(6, 100, 0.01, 1.00, 'Chicken', 0, 36),
-(7, 100, 0.01, 1.00, 'Chicken', 0, 37),
-(8, 5, 0.66, 3.30, 'Cow', 0, 38),
-(9, 5, 0.66, 3.30, 'Cow', 0, 40),
-(10, 5, 0.66, 3.30, 'Cow', 0, 41),
-(11, 5, 0.66, 3.30, 'Cow', 0, 42),
-(12, 5, 0.66, 3.30, 'Cow', 0, 43),
-(13, 5, 0.66, 3.30, 'Cow', 0, 44),
-(14, 5, 0.66, 3.30, 'Cow', 0, 45),
-(15, 100, 0.66, 66.00, 'Cow', 0, 46),
-(16, 100, 0.66, 66.00, 'Cow', 0, 47),
-(17, 100, 0.66, 66.00, 'Cow', 0, 48),
-(18, 100, 0.66, 66.00, 'Cow', 0, 49),
-(19, 100, 0.66, 66.00, 'Cow', 0, 50),
-(20, 100, 0.66, 66.00, 'Cow', 0, 51),
-(21, 100, 0.66, 66.00, 'Cow', 0, 62),
-(22, 10, 0.66, 6.60, 'Cow', 0, 65),
-(23, 3, 0.01, 0.03, 'Chicken', 0, 66),
-(24, 5, 0.66, 3.30, 'Cow', 0, 68),
-(25, 256, 1.00, 2.56, 'Pig-2-Bac', 0, 69);
+(1, 200, '0.00', '132.00', 'Cow', 0, 31),
+(2, 5, '0.01', '0.05', 'Chicken', 0, 32),
+(3, 10, '0.36', '3.60', 'cat', 1, 33),
+(4, 100, '0.01', '1.00', 'Chicken', 0, 34),
+(5, 100, '0.01', '1.00', 'Chicken', 0, 35),
+(6, 100, '0.01', '1.00', 'Chicken', 0, 36),
+(7, 100, '0.01', '1.00', 'Chicken', 0, 37),
+(8, 5, '0.66', '3.30', 'Cow', 0, 38),
+(9, 5, '0.66', '3.30', 'Cow', 0, 40),
+(10, 5, '0.66', '3.30', 'Cow', 0, 41),
+(11, 5, '0.66', '3.30', 'Cow', 0, 42),
+(12, 5, '0.66', '3.30', 'Cow', 0, 43),
+(13, 5, '0.66', '3.30', 'Cow', 0, 44),
+(14, 5, '0.66', '3.30', 'Cow', 0, 45),
+(15, 100, '0.66', '66.00', 'Cow', 0, 46),
+(16, 100, '0.66', '66.00', 'Cow', 0, 47),
+(17, 100, '0.66', '66.00', 'Cow', 0, 48),
+(18, 100, '0.66', '66.00', 'Cow', 0, 49),
+(19, 100, '0.66', '66.00', 'Cow', 0, 50),
+(20, 100, '0.66', '66.00', 'Cow', 0, 51),
+(21, 100, '0.66', '66.00', 'Cow', 0, 62),
+(22, 10, '0.66', '6.60', 'Cow', 0, 65),
+(23, 3, '0.01', '0.03', 'Chicken', 0, 66),
+(24, 5, '0.66', '3.30', 'Cow', 0, 68),
+(30, 214, '1:0.1', '21.4000000', 'BacCan', 0, 90);
 
 -- --------------------------------------------------------
 
@@ -628,12 +601,12 @@ CREATE TABLE `qmra` (
   `qmra_id` int(11) NOT NULL,
   `pathogen` varchar(255) DEFAULT NULL,
   `best_fit_model` varchar(20) DEFAULT NULL,
-  `alpha` decimal(10,5) DEFAULT NULL,
-  `beta` decimal(10,5) DEFAULT NULL,
-  `constant` decimal(10,5) DEFAULT NULL,
-  `n50` decimal(10,5) DEFAULT NULL,
-  `probability_of_infection` decimal(10,5) DEFAULT NULL,
-  `likelihood_of_infection` decimal(10,5) DEFAULT NULL,
+  `alpha` double DEFAULT NULL,
+  `beta` double DEFAULT NULL,
+  `constant` double DEFAULT NULL,
+  `n50` double DEFAULT NULL,
+  `probability_of_infection` double DEFAULT NULL,
+  `likelihood_of_infection` double DEFAULT NULL,
   `duration_type` varchar(20) DEFAULT NULL,
   `is_customize_Pathogen` tinyint(1) DEFAULT NULL,
   `samplingId` int(11) DEFAULT NULL
@@ -644,76 +617,88 @@ CREATE TABLE `qmra` (
 --
 
 INSERT INTO `qmra` (`qmra_id`, `pathogen`, `best_fit_model`, `alpha`, `beta`, `constant`, `n50`, `probability_of_infection`, `likelihood_of_infection`, `duration_type`, `is_customize_Pathogen`, `samplingId`) VALUES
-(1, 'E.coli 0157:H7', 'beta-poisson', 0.00000, 236.00000, NULL, NULL, 0.00000, NULL, 'monthly', 1, 77),
-(2, 'E.coli 0157:H7', 'beta-poisson', 0.00000, 46.00000, NULL, NULL, 0.00000, 0.25500, 'weekly', 0, 78),
-(3, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.48900, 0.02179, 'weekly', 0, 79),
-(4, 'S.Flexneri', NULL, 0.26500, 1480.00000, NULL, NULL, 0.00962, NULL, NULL, 0, 80),
-(5, 'S.Flexneri', NULL, 0.26500, 1480.00000, NULL, NULL, 0.00962, NULL, NULL, 0, 81),
-(6, 'S.Flexneri', NULL, 0.26500, 1480.00000, NULL, NULL, 0.00962, NULL, NULL, 0, 82),
-(7, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00398, NULL, NULL, 0, 83),
-(8, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, NULL, NULL, 0, 84),
-(9, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, NULL, NULL, 0.27026, NULL, NULL, 0, 85),
-(10, 'Giardia lambia', NULL, 0.40000, 45.90000, 0.01990, NULL, 0.66529, NULL, NULL, 0, 87),
-(11, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, 0.01990, NULL, 0.27026, NULL, NULL, 0, 88),
-(12, 'Giardia lambia', NULL, NULL, NULL, 0.01990, NULL, 0.66529, NULL, NULL, 0, 89),
-(13, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, NULL, NULL, 0, 90),
-(14, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, NULL, NULL, 0, 91),
-(15, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00398, NULL, NULL, 0, 92),
-(16, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, NULL, NULL, 0.27026, 188.16764, NULL, 0, 93),
-(17, 'Campylobacter jejuni', NULL, 0.14500, 7.85000, NULL, NULL, 0.26039, 218.82987, NULL, 0, 94),
-(18, 'Giardia lambia', NULL, NULL, NULL, 0.01990, NULL, 0.66529, 1.49254, NULL, 0, 95),
-(19, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, 0.00000, NULL, 0, 96),
-(20, 'E.coli 0157:H7', NULL, 0.40000, 45.90000, NULL, NULL, 0.27026, 188.16764, NULL, 0, 97),
-(21, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -154.04544, -0.00649, NULL, 0, 98),
-(22, 'Salmonella typhi', NULL, 0.21000, 49.78000, NULL, NULL, 0.28732, NULL, NULL, 0, 99),
-(23, 'Salmonella typhi', NULL, 0.21000, 49.78000, NULL, NULL, 0.28732, NULL, NULL, 0, 100),
-(24, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.01396, NULL, NULL, 0, 101),
-(25, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.01396, NULL, NULL, 0, 101),
-(26, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.01396, -38.00000, 'weekly', 0, 102),
-(27, 'Entamoeba coli', NULL, 0.10100, NULL, NULL, 341.00000, -560.16522, 1.00000, 'yearly', 0, 103),
-(28, 'Vibrio Cholera', NULL, 0.16900, 2305.00000, NULL, NULL, 0.00102, 0.00000, 'quartely', 0, 104),
-(29, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 111),
-(30, '1', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.00000, NULL, NULL, 0, 112),
-(31, '2', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.00000, NULL, NULL, 0, 113),
-(32, '1', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.00000, NULL, NULL, 0, 114),
-(33, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 115),
-(34, '6', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, 0.00000, NULL, NULL, 0, 116),
-(35, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 117),
-(36, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 118),
-(37, '2', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.00000, NULL, NULL, 0, 119),
-(38, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 120),
-(39, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 121),
-(40, '0', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.00000, NULL, NULL, 0, 121),
-(41, 'Salmonella typhi', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.01339, NULL, NULL, 0, 123),
-(42, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.02739, NULL, NULL, 0, 124),
-(43, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -9.24273, NULL, NULL, 0, 125),
-(44, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -9.24273, NULL, NULL, 0, 126),
-(45, 'Giardia lambia', 'exponential', 0.10100, NULL, 0.01990, 341.00000, 0.06356, NULL, NULL, 0, 127),
-(46, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.27749, NULL, NULL, 0, 128),
-(47, 'Salmonella typhi', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.16244, NULL, NULL, 0, 129),
-(48, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.29985, NULL, NULL, 0, 130),
-(49, 'S.Flexneri', 'beta-poisson', 0.26500, 1480.00000, NULL, NULL, 0.01150, NULL, NULL, 0, 131),
-(50, 'Vibrio Cholera', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00476, NULL, NULL, 0, 132),
-(51, 'Giardia lambia', 'exponential', 0.16900, 2305.00000, 0.01990, NULL, 0.73110, -99999.99999, 'monthly', 0, 133),
-(52, '1', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.00000, NULL, NULL, 0, 134),
-(53, '2', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.00000, NULL, NULL, 0, 135),
-(54, '5', 'exponential', 0.21000, 49.78000, 0.01990, NULL, 0.00000, NULL, NULL, 0, 136),
-(55, '2', 'beta-poisson', 0.21000, 49.78000, 0.01990, NULL, 0.00000, NULL, NULL, 0, 137),
-(56, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 138),
-(57, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 138),
-(58, '4', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00000, NULL, NULL, 0, 139),
-(59, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -28.00826, NULL, NULL, 0, 140),
-(60, 'Giardia lambia', 'exponential', 0.10100, NULL, 0.01990, 341.00000, 0.18045, -469.00000, 'monthly', 0, 141),
-(61, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.31609, -99999.99999, 'monthly', 0, 153),
-(62, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.27749, -99999.99999, '', 0, 154),
-(63, 'Vibrio Cholera', 'beta-poisson', 0.16900, 2305.00000, NULL, NULL, 0.00073, NULL, NULL, 0, 159),
-(64, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -28.00826, 1.00000, 'yearly', 0, 160),
-(65, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.08468, -99999.99999, 'weekly', 0, 161),
-(66, 'Entamoeba coli', 'beta-poisson', 0.10100, NULL, NULL, 341.00000, -0.08402, 1.00000, 'monthly', 0, 162),
-(67, 'Campylobacter jejuni', 'beta-poisson', 0.14500, 7.85000, NULL, NULL, 0.06897, -8.00000, 'monthly', 0, 165),
-(68, 'Giardia lambia', 'exponential', NULL, NULL, 0.01990, NULL, 0.06356, -99999.99999, 'weekly', 0, 166),
-(69, 'E.coli 0157:H7', 'beta-poisson', 0.40000, 45.90000, NULL, NULL, 0.02148, -1593.00000, 'weekly', 0, 167),
-(70, 'Salmonella typhi', 'beta-poisson', 0.21000, 49.78000, NULL, NULL, 0.04434, -38.00000, 'quartely', 0, 170);
+(1, 'E.coli 0157:H7', 'beta-poisson', 0, 236, NULL, NULL, 0, NULL, 'monthly', 1, 77),
+(2, 'E.coli 0157:H7', 'beta-poisson', 0, 46, NULL, NULL, 0, 0.255, 'weekly', 0, 78),
+(3, 'E.coli 0157:H7', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0.489, 0.02179, 'weekly', 0, 79),
+(4, 'S.Flexneri', NULL, 0.265, 1480, NULL, NULL, 0.00962, NULL, NULL, 0, 80),
+(5, 'S.Flexneri', NULL, 0.265, 1480, NULL, NULL, 0.00962, NULL, NULL, 0, 81),
+(6, 'S.Flexneri', NULL, 0.265, 1480, NULL, NULL, 0.00962, NULL, NULL, 0, 82),
+(7, 'Vibrio Cholera', NULL, 0.169, 2305, NULL, NULL, 0.00398, NULL, NULL, 0, 83),
+(8, 'Entamoeba coli', NULL, 0.101, NULL, NULL, 341, -154.04544, NULL, NULL, 0, 84),
+(9, 'E.coli 0157:H7', NULL, 0.4, 45.9, NULL, NULL, 0.27026, NULL, NULL, 0, 85),
+(10, 'Giardia lambia', NULL, 0.4, 45.9, 0.0199, NULL, 0.66529, NULL, NULL, 0, 87),
+(11, 'E.coli 0157:H7', NULL, 0.4, 45.9, 0.0199, NULL, 0.27026, NULL, NULL, 0, 88),
+(12, 'Giardia lambia', NULL, NULL, NULL, 0.0199, NULL, 0.66529, NULL, NULL, 0, 89),
+(13, 'Entamoeba coli', NULL, 0.101, NULL, NULL, 341, -154.04544, NULL, NULL, 0, 90),
+(14, 'Entamoeba coli', NULL, 0.101, NULL, NULL, 341, -154.04544, NULL, NULL, 0, 91),
+(15, 'Vibrio Cholera', NULL, 0.169, 2305, NULL, NULL, 0.00398, NULL, NULL, 0, 92),
+(16, 'E.coli 0157:H7', NULL, 0.4, 45.9, NULL, NULL, 0.27026, 188.16764, NULL, 0, 93),
+(17, 'Campylobacter jejuni', NULL, 0.145, 7.85, NULL, NULL, 0.26039, 218.82987, NULL, 0, 94),
+(18, 'Giardia lambia', NULL, NULL, NULL, 0.0199, NULL, 0.66529, 1.49254, NULL, 0, 95),
+(19, 'Entamoeba coli', NULL, 0.101, NULL, NULL, 341, -154.04544, 0, NULL, 0, 96),
+(20, 'E.coli 0157:H7', NULL, 0.4, 45.9, NULL, NULL, 0.27026, 188.16764, NULL, 0, 97),
+(21, 'Entamoeba coli', NULL, 0.101, NULL, NULL, 341, -154.04544, -0.00649, NULL, 0, 98),
+(22, 'Salmonella typhi', NULL, 0.21, 49.78, NULL, NULL, 0.28732, NULL, NULL, 0, 99),
+(23, 'Salmonella typhi', NULL, 0.21, 49.78, NULL, NULL, 0.28732, NULL, NULL, 0, 100),
+(24, 'Vibrio Cholera', NULL, 0.169, 2305, NULL, NULL, 0.01396, NULL, NULL, 0, 101),
+(25, 'Vibrio Cholera', NULL, 0.169, 2305, NULL, NULL, 0.01396, NULL, NULL, 0, 101),
+(26, 'Vibrio Cholera', NULL, 0.169, 2305, NULL, NULL, 0.01396, -38, 'weekly', 0, 102),
+(27, 'Entamoeba coli', NULL, 0.101, NULL, NULL, 341, -560.16522, 1, 'yearly', 0, 103),
+(28, 'Vibrio Cholera', NULL, 0.169, 2305, NULL, NULL, 0.00102, 0, 'quartely', 0, 104),
+(29, '0', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0, NULL, NULL, 0, 111),
+(30, '1', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0, NULL, NULL, 0, 112),
+(31, '2', 'beta-poisson', 0.21, 49.78, NULL, NULL, 0, NULL, NULL, 0, 113),
+(32, '1', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0, NULL, NULL, 0, 114),
+(33, '0', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0, NULL, NULL, 0, 115),
+(34, '6', 'beta-poisson', 0.101, NULL, NULL, 341, 0, NULL, NULL, 0, 116),
+(35, '4', 'beta-poisson', 0.169, 2305, NULL, NULL, 0, NULL, NULL, 0, 117),
+(36, '4', 'beta-poisson', 0.169, 2305, NULL, NULL, 0, NULL, NULL, 0, 118),
+(37, '2', 'beta-poisson', 0.21, 49.78, NULL, NULL, 0, NULL, NULL, 0, 119),
+(38, '0', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0, NULL, NULL, 0, 120),
+(39, '0', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0, NULL, NULL, 0, 121),
+(40, '0', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0, NULL, NULL, 0, 121),
+(41, 'Salmonella typhi', 'beta-poisson', 0.21, 49.78, NULL, NULL, 0.01339, NULL, NULL, 0, 123),
+(42, 'E.coli 0157:H7', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0.02739, NULL, NULL, 0, 124),
+(43, 'Entamoeba coli', 'beta-poisson', 0.101, NULL, NULL, 341, -9.24273, NULL, NULL, 0, 125),
+(44, 'Entamoeba coli', 'beta-poisson', 0.101, NULL, NULL, 341, -9.24273, NULL, NULL, 0, 126),
+(45, 'Giardia lambia', 'exponential', 0.101, NULL, 0.0199, 341, 0.06356, NULL, NULL, 0, 127),
+(46, 'Campylobacter jejuni', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0.27749, NULL, NULL, 0, 128),
+(47, 'Salmonella typhi', 'beta-poisson', 0.21, 49.78, NULL, NULL, 0.16244, NULL, NULL, 0, 129),
+(48, 'E.coli 0157:H7', 'beta-poisson', 0.4, 45.9, NULL, NULL, 0.29985, NULL, NULL, 0, 130),
+(49, 'S.Flexneri', 'beta-poisson', 0.265, 1480, NULL, NULL, 0.0115, NULL, NULL, 0, 131),
+(50, 'Vibrio Cholera', 'beta-poisson', 0.169, 2305, NULL, NULL, 0.00476, NULL, NULL, 0, 132),
+(51, 'Giardia lambia', 'exponential', 0.169, 2305, 0.0199, NULL, 0.7311, -99999.99999, 'monthly', 0, 133),
+(52, '1', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0, NULL, NULL, 0, 134),
+(53, '2', 'beta-poisson', 0.21, 49.78, NULL, NULL, 0, NULL, NULL, 0, 135),
+(54, '5', 'exponential', 0.21, 49.78, 0.0199, NULL, 0, NULL, NULL, 0, 136),
+(55, '2', 'beta-poisson', 0.21, 49.78, 0.0199, NULL, 0, NULL, NULL, 0, 137),
+(56, '4', 'beta-poisson', 0.169, 2305, NULL, NULL, 0, NULL, NULL, 0, 138),
+(57, '4', 'beta-poisson', 0.169, 2305, NULL, NULL, 0, NULL, NULL, 0, 138),
+(58, '4', 'beta-poisson', 0.169, 2305, NULL, NULL, 0, NULL, NULL, 0, 139),
+(59, 'Entamoeba coli', 'beta-poisson', 0.101, NULL, NULL, 341, -28.00826, NULL, NULL, 0, 140),
+(60, 'Giardia lambia', 'exponential', 0.101, NULL, 0.0199, 341, 0.18045, -469, 'monthly', 0, 141),
+(61, 'Campylobacter jejuni', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0.31609, -99999.99999, 'monthly', 0, 153),
+(62, 'Campylobacter jejuni', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0.27749, -99999.99999, '', 0, 154),
+(63, 'Vibrio Cholera', 'beta-poisson', 0.169, 2305, NULL, NULL, 0.00073, NULL, NULL, 0, 159),
+(64, 'Entamoeba coli', 'beta-poisson', 0.101, NULL, NULL, 341, -28.00826, 1, 'yearly', 0, 160),
+(65, 'Campylobacter jejuni', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0.08468, -99999.99999, 'weekly', 0, 161),
+(66, 'Entamoeba coli', 'beta-poisson', 0.101, NULL, NULL, 341, -0.08402, 1, 'monthly', 0, 162),
+(67, 'Campylobacter jejuni', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0.06897, -8, 'monthly', 0, 165),
+(68, 'Giardia lambia', 'exponential', NULL, NULL, 0.0199, NULL, 0.06356, -99999.99999, 'weekly', 0, 166),
+(90, 'Campylobacter jejuni', 'beta-poisson', 0.145, 7.85, NULL, NULL, 0.17364273608533454, -322, 'monthly', NULL, 223);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reference_path`
+--
+
+CREATE TABLE `reference_path` (
+  `ref_path_id` int(11) NOT NULL,
+  `count` int(11) DEFAULT NULL,
+  `is_customize_Pathogen` tinyint(1) DEFAULT NULL,
+  `qmra_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -733,7 +718,9 @@ CREATE TABLE `river` (
 
 INSERT INTO `river` (`riverId`, `river_name`, `muni_id`) VALUES
 (1, 'GA-SELATI RIVER', 'LIM335'),
-(2, 'MAKHUTSWI RIVER', 'LIM335');
+(2, 'MAKHUTSWI RIVER', 'LIM335'),
+(4, 'GA-SELATI RIVER', 'LIM335'),
+(5, 'MAKHUTSWI RIVER', 'LIM335');
 
 -- --------------------------------------------------------
 
@@ -759,9 +746,6 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (5, 1, 'Wet', '2023-09-13 21:26:08', 'KZN254'),
 (6, 1, 'Wet', '2023-09-13 21:28:17', 'KZN238'),
 (7, 1, 'Wet', '2023-09-13 21:29:05', 'LIM366'),
-(18, 1, 'cloudy', '2023-09-14 07:16:12', NULL),
-(19, 1, 'cloudy', '2023-09-14 07:17:07', 'LIM334'),
-(20, 1, 'cloudy', '2023-09-14 07:29:08', 'LIM366'),
 (21, 1, 'cloudy', '2023-09-14 07:29:31', 'MP301'),
 (22, 1, 'Windy', '2023-09-17 21:38:27', 'NC084'),
 (23, 1, 'Windy', '2023-09-17 21:38:56', 'MP301'),
@@ -811,27 +795,6 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (67, 13, 'Thunder and Lightning', '2023-10-26 19:38:01', 'WC034'),
 (68, 13, 'Thunder and Lightning', '2023-10-26 19:38:05', 'WC034'),
 (69, 13, 'Thunder and Lightning', '2023-10-26 19:38:13', 'WC034'),
-(70, 13, 'Frost and Ice', '2023-10-28 08:29:54', 'FS196'),
-(71, 13, 'Frost and Ice', '2023-10-29 02:20:51', 'FS196'),
-(72, 13, 'Frost and Ice', '2023-10-29 02:20:58', 'FS196'),
-(73, 13, 'Frost and Ice', '2023-10-29 02:21:03', 'FS196'),
-(74, 13, 'Frost and Ice', '2023-10-29 02:21:08', 'FS196'),
-(75, 13, 'Frost and Ice', '2023-10-29 02:27:42', 'FS196'),
-(76, 13, 'Frost and Ice', '2023-10-29 02:29:16', 'FS196'),
-(77, 13, 'Frost and Ice', '2023-10-29 02:29:42', 'FS196'),
-(78, 13, 'Frost and Ice', '2023-10-29 18:51:42', 'FS196'),
-(79, 13, 'Frost and Ice', '2023-10-29 18:53:48', 'FS196'),
-(80, 13, 'Frost and Ice', '2023-10-29 18:54:19', 'FS196'),
-(81, 13, 'Frost and Ice', '2023-10-29 18:54:28', 'FS196'),
-(82, 13, 'Frost and Ice', '2023-10-29 18:54:33', 'FS196'),
-(83, 13, 'Frost and Ice', '2023-10-29 18:54:38', 'FS196'),
-(84, 13, 'Frost and Ice', '2023-10-29 18:54:46', 'FS196'),
-(85, 13, 'Frost and Ice', '2023-10-29 18:54:59', 'FS196'),
-(86, 13, 'Frost and Ice', '2023-10-29 18:58:02', 'FS196'),
-(87, 13, 'Frost and Ice', '2023-10-29 18:58:09', 'FS196'),
-(88, 13, 'Frost and Ice', '2023-10-29 19:09:29', 'FS196'),
-(89, 13, 'Frost and Ice', '2023-10-29 19:47:23', 'FS196'),
-(90, 13, 'Frost and Ice', '2023-10-29 19:47:58', 'FS196'),
 (91, 13, 'Frost and Ice', '2023-10-29 19:49:39', 'FS196'),
 (92, 13, 'Frost and Ice', '2023-10-29 19:51:20', 'FS196'),
 (93, 13, 'Frost and Ice', '2023-10-29 19:52:38', 'FS196'),
@@ -846,38 +809,6 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (102, 15, 'Rainy', '2023-10-31 06:07:02', 'MAN'),
 (103, 15, 'Rainy', '2023-10-31 06:07:57', 'MAN'),
 (104, 15, 'Rainy', '2023-10-31 06:17:30', 'MAN'),
-(105, 15, 'Rainy', '2023-10-31 22:07:48', 'MAN'),
-(106, 15, 'Rainy', '2023-10-31 22:08:13', 'MAN'),
-(107, 15, 'Rainy', '2023-10-31 22:09:56', 'MAN'),
-(108, 15, 'Rainy', '2023-10-31 22:11:28', 'MAN'),
-(109, 15, 'Rainy', '2023-10-31 22:12:24', 'MAN'),
-(110, 15, 'Rainy', '2023-10-31 22:12:37', 'MAN'),
-(111, 15, 'Rainy', '2023-10-31 22:15:09', 'MAN'),
-(112, 15, 'Rainy', '2023-10-31 22:16:37', 'MAN'),
-(113, 15, 'Rainy', '2023-10-31 22:19:48', 'MAN'),
-(114, 15, 'Rainy', '2023-10-31 22:25:48', 'MAN'),
-(115, 15, 'Rainy', '2023-10-31 22:27:42', 'MAN'),
-(116, 15, 'Rainy', '2023-10-31 22:31:16', 'MAN'),
-(117, 15, 'Rainy', '2023-10-31 22:35:27', 'MAN'),
-(118, 15, 'Rainy', '2023-10-31 22:36:34', 'MAN'),
-(119, 15, 'Rainy', '2023-10-31 22:37:35', 'MAN'),
-(120, 15, 'Rainy', '2023-10-31 22:39:14', 'MAN'),
-(121, 15, 'Rainy', '2023-10-31 22:40:26', 'MAN'),
-(122, 15, 'Rainy', '2023-10-31 22:45:41', 'MAN'),
-(123, 15, 'Rainy', '2023-10-31 22:45:41', 'MAN'),
-(124, 15, 'Rainy', '2023-10-31 22:45:55', 'MAN'),
-(125, 15, 'Rainy', '2023-10-31 22:46:01', 'MAN'),
-(126, 15, 'Rainy', '2023-10-31 22:51:44', 'MAN'),
-(127, 15, 'Rainy', '2023-10-31 22:51:53', 'MAN'),
-(128, 15, 'Rainy', '2023-10-31 22:52:11', 'MAN'),
-(129, 15, 'Rainy', '2023-10-31 22:52:16', 'MAN'),
-(130, 15, 'Rainy', '2023-10-31 22:52:21', 'MAN'),
-(131, 15, 'Rainy', '2023-10-31 22:52:25', 'MAN'),
-(132, 15, 'Rainy', '2023-10-31 22:52:30', 'MAN'),
-(133, 15, 'Rainy', '2023-10-31 22:52:36', 'MAN'),
-(134, 15, 'Rainy', '2023-10-31 23:03:46', 'MAN'),
-(135, 15, 'Rainy', '2023-10-31 23:03:59', 'MAN'),
-(136, 15, 'Rainy', '2023-10-31 23:04:08', 'MAN'),
 (137, 15, 'Rainy', '2023-10-31 23:09:48', 'MAN'),
 (138, 15, 'Rainy', '2023-10-31 23:11:24', 'MAN'),
 (139, 15, 'Rainy', '2023-10-31 23:14:40', 'MAN'),
@@ -908,10 +839,8 @@ INSERT INTO `samplingdata` (`samplingId`, `userId`, `weatherCondition`, `samplin
 (164, 16, 'Windy', '2023-11-01 08:41:52', 'FS194'),
 (165, 16, 'Windy', '2023-11-01 08:44:09', 'FS194'),
 (166, 16, 'Windy', '2023-11-01 08:46:02', 'FS194'),
-(167, 16, 'Wet', '2023-11-06 23:19:55', 'WC025'),
-(168, 16, 'Wet', '2023-11-06 23:22:17', 'WC025'),
-(169, 16, 'Wet', '2023-11-06 23:22:59', 'WC025'),
-(170, 16, 'Wet', '2023-11-06 23:30:53', 'WC025');
+(222, 15, 'Dry', '2024-01-30 15:07:17', 'NC064'),
+(223, 15, 'Dry', '2024-01-30 15:08:01', 'NC064');
 
 -- --------------------------------------------------------
 
@@ -940,28 +869,28 @@ CREATE TABLE `sanitaryinpectionquestion` (
 --
 
 INSERT INTO `sanitaryinpectionquestion` (`id`, `pitLatrine`, `domesticAnimal`, `diaperDisposal`, `wasteWaterRelease`, `openDefaction`, `unprotectedWaterSource`, `agriculturalActivity`, `observerLaundryActivity`, `samplingId`, `risk_type`, `totalYes`, `total_avarage`) VALUES
-(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 4, 50),
-(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 4, 50),
-(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0, 0),
-(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 4, 50),
-(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 0, 100),
-(17, 1, 0, 1, 0, 1, 0, 1, 0, 26, 'medium risk', 4, 50),
-(18, 0, 0, 0, 0, 0, 0, 0, 0, 27, 'low risk', 0, 0),
-(19, 1, 0, 1, 1, 1, 1, 1, 1, 28, 'very high risk', 7, 88),
-(20, 1, 0, 1, 1, 1, 1, 1, 1, 29, 'very high risk', 7, 88),
-(21, 1, 0, 0, 0, 0, 0, 0, 0, 30, 'low risk', 1, 13),
-(22, 1, 0, 0, 0, 0, 0, 0, 0, 31, 'low risk', 1, 13),
-(23, 0, 0, 0, 0, 0, 0, 0, 0, 32, 'low risk', 0, 0),
-(24, 1, 0, 1, 0, 0, 0, 1, 1, 33, 'medium risk', 4, 50),
-(25, 1, 0, 1, 0, 1, 0, 1, 0, 62, 'medium risk', 4, 50),
-(26, 1, 1, 1, 1, 1, 1, 1, 1, 63, 'very high risk', 8, 100),
-(27, 1, 1, 0, 0, 1, 0, 1, 1, 69, 'high risk', 5, 63),
-(28, 1, 1, 1, 1, 1, 0, 0, 0, 142, 'high risk', 5, 63),
-(29, 1, 1, 0, 0, 0, 0, 0, 1, 143, 'medium risk', 3, 38),
-(30, 1, 1, 1, 1, 1, 1, 0, 1, 151, 'very high risk', 7, 88),
-(31, 0, 0, 0, 0, 0, 0, 0, 0, 155, 'low risk', 0, 0),
-(32, 1, 0, 1, 0, 1, 0, 0, 1, 158, 'medium risk', 4, 50),
-(33, 1, 0, 1, 0, 1, 0, 1, 0, 163, 'medium risk', 4, 50);
+(12, 1, 0, 1, 0, 1, 0, 1, 0, 21, 'medium risk', 4, '50'),
+(13, 1, 0, 1, 1, 0, 0, 0, 1, 22, 'medium risk', 4, '50'),
+(14, 0, 0, 0, 0, 0, 0, 0, 0, 23, 'low risk', 0, '0'),
+(15, 0, 1, 0, 1, 1, 0, 0, 1, 24, 'medium risk', 4, '50'),
+(16, 1, 1, 1, 1, 1, 1, 1, 1, 25, 'very high risk', 0, '100'),
+(17, 1, 0, 1, 0, 1, 0, 1, 0, 26, 'medium risk', 4, '50'),
+(18, 0, 0, 0, 0, 0, 0, 0, 0, 27, 'low risk', 0, '0'),
+(19, 1, 0, 1, 1, 1, 1, 1, 1, 28, 'very high risk', 7, '88'),
+(20, 1, 0, 1, 1, 1, 1, 1, 1, 29, 'very high risk', 7, '88'),
+(21, 1, 0, 0, 0, 0, 0, 0, 0, 30, 'low risk', 1, '13'),
+(22, 1, 0, 0, 0, 0, 0, 0, 0, 31, 'low risk', 1, '13'),
+(23, 0, 0, 0, 0, 0, 0, 0, 0, 32, 'low risk', 0, '0'),
+(24, 1, 0, 1, 0, 0, 0, 1, 1, 33, 'medium risk', 4, '50'),
+(25, 1, 0, 1, 0, 1, 0, 1, 0, 62, 'medium risk', 4, '50'),
+(26, 1, 1, 1, 1, 1, 1, 1, 1, 63, 'very high risk', 8, '100'),
+(27, 1, 1, 0, 0, 1, 0, 1, 1, 69, 'high risk', 5, '63'),
+(28, 1, 1, 1, 1, 1, 0, 0, 0, 142, 'high risk', 5, '63'),
+(29, 1, 1, 0, 0, 0, 0, 0, 1, 143, 'medium risk', 3, '38'),
+(30, 1, 1, 1, 1, 1, 1, 0, 1, 151, 'very high risk', 7, '88'),
+(31, 0, 0, 0, 0, 0, 0, 0, 0, 155, 'low risk', 0, '0'),
+(32, 1, 0, 1, 0, 1, 0, 0, 1, 158, 'medium risk', 4, '50'),
+(33, 1, 0, 1, 0, 1, 0, 1, 0, 163, 'medium risk', 4, '50');
 
 -- --------------------------------------------------------
 
@@ -991,7 +920,7 @@ INSERT INTO `user` (`userId`, `email`, `mobileNo`, `password`, `firstname`, `las
 (14, 'manasoedj@gmail.com', '0147852399', 'Manasoedj@12', 'Joel', 'Manasoe', 2, 'user'),
 (15, 'lamola@gmail.com', '0123698745', 'Lamola123@', 'Lethabo', 'Lamola', 3, 'user'),
 (16, 'ledwaba@gmail.com', '0725569740', 'Ledwaba123@', 'Jack', 'Ledwaba', 3, 'user'),
-(17, 'mathiba@gmail.com', '0159874563', 'Mathiba@123', 'Zakes', 'Mathiba', 3, 'user');
+(17, 'mathiba@gmail.com', '0159874563', 'Mathiba@123', 'Zakes', 'Mathiba', 0, 'admin');
 
 -- --------------------------------------------------------
 
@@ -1085,77 +1014,8 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 (78, 'Dam', 'Hard', 96),
 (79, 'River', 'Easy', 97),
 (80, 'River', 'Hard', 98),
-(81, 'River', 'Hard', 99),
-(82, 'River', 'Hard', 100),
-(83, 'River', 'Hard', 101),
-(84, 'River', 'Hard', 102),
-(85, 'River', 'Hard', 103),
-(86, 'River', 'Hard', 104),
-(87, 'River', 'Hard', 105),
-(88, 'River', 'Hard', 106),
-(89, 'River', 'Hard', 107),
-(90, 'River', 'Hard', 108),
-(91, 'River', 'Hard', 109),
-(92, 'River', 'Hard', 110),
-(93, 'River', 'Hard', 111),
-(94, 'River', 'Hard', 112),
-(95, 'River', 'Hard', 113),
-(96, 'River', 'Hard', 114),
-(97, 'River', 'Hard', 115),
-(98, 'River', 'Hard', 116),
-(99, 'River', 'Hard', 117),
-(100, 'River', 'Hard', 118),
-(101, 'River', 'Hard', 119),
-(102, 'River', 'Hard', 120),
-(103, 'River', 'Hard', 121),
-(104, 'River', 'Hard', 123),
-(105, 'River', 'Hard', 124),
-(106, 'River', 'Hard', 125),
-(107, 'River', 'Hard', 126),
-(108, 'River', 'Hard', 127),
-(109, 'River', 'Hard', 128),
-(110, 'River', 'Hard', 129),
-(111, 'River', 'Hard', 130),
-(112, 'River', 'Hard', 131),
-(113, 'River', 'Hard', 132),
-(114, 'River', 'Hard', 133),
-(115, 'River', 'Hard', 134),
-(116, 'River', 'Hard', 135),
-(117, 'River', 'Hard', 136),
-(118, 'River', 'Hard', 137),
-(119, 'River', 'Hard', 138),
-(120, 'River', 'Hard', 139),
-(121, 'River', 'Hard', 140),
-(122, 'River', 'Hard', 141),
-(123, 'Dam', 'Hard', 142),
-(124, 'Dam', 'Hard', 143),
-(125, 'Dam', 'Hard', 144),
-(126, 'Dam', 'Hard', 145),
-(127, 'Dam', 'Hard', 146),
-(128, 'Dam', 'Hard', 147),
-(129, 'Dam', 'Hard', 148),
-(130, 'Dam', 'Hard', 149),
-(131, 'Dam', 'Hard', 150),
-(132, 'Dam', 'Hard', 151),
-(133, 'Dam', 'Hard', 152),
-(134, 'Dam', 'Hard', 153),
-(135, 'Dam', 'Hard', 154),
-(136, 'Dam', 'Easy', 155),
-(137, 'Dam', 'Easy', 156),
-(138, 'Dam', 'Easy', 157),
-(139, 'Dam', 'Easy', 158),
-(140, 'Spring', 'Hard', 159),
-(141, 'Spring', 'Hard', 160),
-(142, 'River', 'Hard', 161),
-(143, 'River', 'Hard', 162),
-(144, 'River', 'Easy', 163),
-(145, 'River', 'Easy', 164),
-(146, 'River', 'Easy', 165),
-(147, 'River', 'Easy', 166),
-(148, 'Household Tap Water', 'Hard', 167),
-(149, 'Household Tap Water', 'Hard', 168),
-(150, 'Household Tap Water', 'Hard', 169),
-(151, 'Household Tap Water', 'Hard', 170);
+(203, 'Borehole', 'Easy', 222),
+(204, 'Borehole', 'Easy', 223);
 
 --
 -- Indexes for dumped tables
@@ -1167,6 +1027,13 @@ INSERT INTO `watersource` (`id`, `type`, `waterAccessability`, `samplingId`) VAL
 ALTER TABLE `coordinate`
   ADD PRIMARY KEY (`coorniadteId`),
   ADD KEY `samplingId` (`samplingId`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD UNIQUE KEY `muni_id` (`muni_id`),
+  ADD KEY `userId` (`userId`);
 
 --
 -- Indexes for table `fib_indicator`
@@ -1217,6 +1084,13 @@ ALTER TABLE `qmra`
   ADD KEY `samplingId` (`samplingId`);
 
 --
+-- Indexes for table `reference_path`
+--
+ALTER TABLE `reference_path`
+  ADD PRIMARY KEY (`ref_path_id`),
+  ADD KEY `qmra_id` (`qmra_id`);
+
+--
 -- Indexes for table `river`
 --
 ALTER TABLE `river`
@@ -1259,19 +1133,19 @@ ALTER TABLE `watersource`
 -- AUTO_INCREMENT for table `coordinate`
 --
 ALTER TABLE `coordinate`
-  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `coorniadteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT for table `fib_indicator`
 --
 ALTER TABLE `fib_indicator`
-  MODIFY `indicator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `indicator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `hydrogensulfide`
 --
 ALTER TABLE `hydrogensulfide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `microbial`
@@ -1283,31 +1157,37 @@ ALTER TABLE `microbial`
 -- AUTO_INCREMENT for table `mst`
 --
 ALTER TABLE `mst`
-  MODIFY `mst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `mst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `qmra`
 --
 ALTER TABLE `qmra`
-  MODIFY `qmra_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `qmra_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `reference_path`
+--
+ALTER TABLE `reference_path`
+  MODIFY `ref_path_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `river`
 --
 ALTER TABLE `river`
-  MODIFY `riverId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `riverId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `samplingdata`
 --
 ALTER TABLE `samplingdata`
-  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+  MODIFY `samplingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
 
 --
 -- AUTO_INCREMENT for table `sanitaryinpectionquestion`
 --
 ALTER TABLE `sanitaryinpectionquestion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -1319,78 +1199,18 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `watersource`
 --
 ALTER TABLE `watersource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `coordinate`
+-- Constraints for table `events`
 --
-ALTER TABLE `coordinate`
-  ADD CONSTRAINT `coordinate_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
-
---
--- Constraints for table `fib_indicator`
---
-ALTER TABLE `fib_indicator`
-  ADD CONSTRAINT `fib_indicator_ibfk_1` FOREIGN KEY (`qmra_id`) REFERENCES `qmra` (`qmra_id`);
-
---
--- Constraints for table `hydrogensulfide`
---
-ALTER TABLE `hydrogensulfide`
-  ADD CONSTRAINT `hydrogensulfide_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
-
---
--- Constraints for table `microbial`
---
-ALTER TABLE `microbial`
-  ADD CONSTRAINT `microbial_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
-
---
--- Constraints for table `mst`
---
-ALTER TABLE `mst`
-  ADD CONSTRAINT `mst_ibfk_1` FOREIGN KEY (`qmra_id`) REFERENCES `qmra` (`qmra_id`);
-
---
--- Constraints for table `municipality`
---
-ALTER TABLE `municipality`
-  ADD CONSTRAINT `municipality_ibfk_1` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`);
-
---
--- Constraints for table `qmra`
---
-ALTER TABLE `qmra`
-  ADD CONSTRAINT `qmra_ibfk_2` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
-
---
--- Constraints for table `river`
---
-ALTER TABLE `river`
-  ADD CONSTRAINT `river_ibfk_1` FOREIGN KEY (`muni_id`) REFERENCES `municipality` (`muni_id`);
-
---
--- Constraints for table `samplingdata`
---
-ALTER TABLE `samplingdata`
-  ADD CONSTRAINT `samplingdata_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
-  ADD CONSTRAINT `samplingdata_ibfk_2` FOREIGN KEY (`muni_id`) REFERENCES `municipality` (`muni_id`);
-
---
--- Constraints for table `sanitaryinpectionquestion`
---
-ALTER TABLE `sanitaryinpectionquestion`
-  ADD CONSTRAINT `sam_san` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
-
---
--- Constraints for table `watersource`
---
-ALTER TABLE `watersource`
-  ADD CONSTRAINT `watersource_ibfk_1` FOREIGN KEY (`samplingId`) REFERENCES `samplingdata` (`samplingId`);
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  ADD CONSTRAINT `events_ibfk_2` FOREIGN KEY (`muni_id`) REFERENCES `municipality` (`muni_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
