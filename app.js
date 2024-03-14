@@ -6,7 +6,6 @@ const Connection = require('./config/config')
 
 const app = express();
 app.use(cors());
-app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json()); 
 
@@ -23,7 +22,6 @@ app.use('/api', require('./routes/municipality'));
 app.use('/api', require('./routes/h2s_results'));
 app.use('/api', require('./routes/survey_results'));
 app.use('/api', require('./routes/fib_results'));
-app.use('/api', require('./routes/mapping'));
 
 
 app.use('/', (req, res) =>{

@@ -161,7 +161,6 @@ router.put('/likelihood_test/:qmra_id', (req, res) => {
     var likelihood_of_infection = Math.round(1 - Math.pow((1 - probability_of_infection), -duration_number))
     //var likelihood_of_infection = ((1 - (1 - probability_of_infection)) ** (-duration_number)).toFixed(2)
 
-
     if (likelihood_of_infection === Infinity || likelihood_of_infection === Number.NEGATIVE_INFINITY) {
         likelihood_of_infection = 0
     }
@@ -247,77 +246,6 @@ router.post('/reference_pathogens_test', (req, res) => {
                 var fibIndicatorBody = [count, is_customize_Pathogen, qmra_id]
                 var fib_sql = `INSERT INTO reference_path(count,is_customize_Pathogen,qmra_id)
 VALUES(?,?,?)`;
-                connection.query(fib_sql, fibIndicatorBody, (error, row) => {
-                    if (error) {
-                        console.log(error)
-                        throw err
-                    };
-                    if (row.affectedRows > 0) {
-                        res.send({ success: true, totalQmra, qmra_id })
-                    }
-                })
-            }
-            else {
-                res.status(200).json({ success: false, message: "Something went wrong try again later" });
-            }
-
-        }
-    });
-
-})
-
-router.post('/reference_pathogens_test', (req, res) => {
-    let is_customize_Pathogen = req.body.is_customize_Pathogen;
-    let pathogen = req.body.pathogen;
-    let n50 = req.body.n50;
-    let constant = req.body.constant;
-    let alpha = req.body.alpha;
-    let beta = req.body.beta;
-    let totalQmra = 0;
-    var samplingId = req.body.samplingId;
-    let best_fit_model = req.body.best_fit_model
-    let count = req.body.count
-
- 
-    switch (pathogen.toLocaleLowerCase()) {
-        case 'Campylobacter jejuni'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'E.coli 0157:H7'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'Salmonella typhi'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'S.Flexneri'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'Vibrio Cholera'.toLocaleLowerCase():
-            totalQmra = calculateBetaPoisson(alpha, beta, count)
-            break;
-        case 'Entamoeba coli'.toLocaleLowerCase():
-            totalQmra = calculateEntamoebaColi(alpha, n50, count)
-            break;
-        case 'Giardia lambia'.toLocaleLowerCase():
-            totalQmra = calculateExponentialForGiardia(constant, count)
-            break;
-    }
-
-    var duration_type = req.body.duration_type;
-    var likeliOfInfection = null
-    var qmra_body = [pathogen, best_fit_model, alpha, beta, constant, n50, totalQmra, likeliOfInfection, duration_type, is_customize_Pathogen, samplingId]
-    var qmra_sql = `INSERT INTO qmra(pathogen,best_fit_model,alpha,beta,constant,n50,probability_of_infection,likelihood_of_infection,duration_type,is_customize_Pathogen,samplingId)
-                                VALUES(?,?,?,?,?,?,?,?,?,?,?)`
-    connection.query(qmra_sql, qmra_body, (err, results) => {
-        if (err) {
-            return res.status(200).send("Failed to load data!" + err);
-        }
-        else {
-            if (results.affectedRows > 0) {
-                var qmra_id = results.insertId
-                var fibIndicatorBody = [count,is_customize_Pathogen, qmra_id]
-                var fib_sql = `INSERT INTO reference_path(count,is_customize_Pathogen,qmra_id)
-                VALUES(?,?,?)`;
                 connection.query(fib_sql, fibIndicatorBody, (error, row) => {
                     if (error) {
                         console.log(error)

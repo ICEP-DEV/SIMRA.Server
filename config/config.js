@@ -1,6 +1,5 @@
 var mysql = require('mysql')
 
-
 var connection = mysql.createConnection({
     host: 'sql8.freemysqlhosting.net',
     user: 'sql8691324',
@@ -8,7 +7,6 @@ var connection = mysql.createConnection({
     database: 'sql8691324',
     port:3306
 });
-
 
 /*
 var connection = mysql.createConnection({
@@ -19,7 +17,6 @@ var connection = mysql.createConnection({
     port: 3306
 });
 */
-
 connection.connect((err) => {
     if (!err)
         console.log('Connection Established Successfully');

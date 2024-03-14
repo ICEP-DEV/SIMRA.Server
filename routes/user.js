@@ -5,11 +5,7 @@ const router = express.Router();
 router.post('/login', (req, res) => {
     var email = req.body.username
     var sql = `SELECT * FROM user WHERE email =?`
-    var sql = `SELECT * FROM user WHERE email =?`
     connection.query(sql, [email], (err, results) => {
-        if (err){ console.log(err)
-            throw err;
-        }
         if (err){ console.log(err)
             throw err;
         }
