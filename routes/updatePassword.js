@@ -10,8 +10,6 @@ app.use(bodyparser.json());
 
 const connection = require("../config/config");
 
-
-
 router.put('/updatePassword',jwtMiddleware,(req, res)=>{
     const user = req.decoded;
 

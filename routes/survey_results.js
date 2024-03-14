@@ -59,6 +59,4 @@ router.get('/survey_risk_results/:muni_id', (req, res) => {
     })
 })
 
-
-
 module.exports = router

@@ -5,8 +5,6 @@ const router = express.Router();
 const app=express();
 const connection = require("../config/config");
 
-
-
 router.post('/register',(req, res)=>{
     const params = req.body;
     let sql ="'INSERT INTO user SET ?', params";
