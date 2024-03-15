@@ -404,7 +404,7 @@ router.get('/qmra_group', (req, res) => {
 
 // all qmra results
 router.get('/qmra_results', (req, res) => {
-    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen ,wat.type, wat.waterAccessability, mun.muni_id, muni_name
                 from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
@@ -425,7 +425,7 @@ router.get('/qmra_results', (req, res) => {
 
 // specic user qmra results
 router.get('/user_qmra_results/:user_id', (req, res) => {
-    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen ,wat.type, wat.waterAccessability, mun.muni_id, muni_name
                 from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
@@ -444,7 +444,7 @@ router.get('/user_qmra_results/:user_id', (req, res) => {
 })
 
 router.get('/user_qmra_results/:start/:end/:user_id', (req, res) => {
-    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, indicator, ratio, estimated_count, is_customized_indicator, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen ,wat.type, wat.waterAccessability, mun.muni_id, muni_name
                 from samplingdata sam, fib_indicator fib, qmra qmr, watersource wat, municipality mun
                 where mun.muni_id = sam.muni_id
                 and wat.samplingId = sam.samplingId
@@ -476,7 +476,7 @@ router.get('/get_marker', (req, res) => {
 
 // all mst qmra results
 router.get('/mst_results', (req, res) => {
-    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen ,wat.type, wat.waterAccessability, mun.muni_id, muni_name
     from samplingdata sam, mst ms, qmra qmr, watersource wat, municipality mun
     where mun.muni_id = sam.muni_id
     and wat.samplingId = sam.samplingId
@@ -514,7 +514,7 @@ router.get('/mst_average', (req, res) => {
 
 // specific mst qmra results
 router.get('/mst_results/:user_id', (req, res) => {
-    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday, DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen ,wat.type, wat.waterAccessability, mun.muni_id, muni_name
     from samplingdata sam, mst ms, qmra qmr, watersource wat, municipality mun
     where mun.muni_id = sam.muni_id
     and wat.samplingId = sam.samplingId
@@ -535,7 +535,7 @@ router.get('/mst_results/:user_id', (req, res) => {
 // get results by specific dates
 router.get('/mst_results/:start/:end/:user_id', (req, res) => {
 
-    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday,DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen , type, waterAccessability, mun.muni_id, muni_name
+    var sql = `select province_id, DATE_FORMAT(sampling_date_created,'%W')  as weekday,DATE_FORMAT(sampling_date_created,'%d/%m/%Y') as sample_date, weatherCondition, maker, ratio, estimated_count, is_customized_mst, pathogen,best_fit_model, alpha, beta, constant, n50, probability_of_infection, likelihood_of_infection, duration_type,is_customize_Pathogen ,wat.type, wat.waterAccessability, mun.muni_id, muni_name
     from samplingdata sam, mst ms, qmra qmr, watersource wat, municipality mun
     where mun.muni_id = sam.muni_id
     and wat.samplingId = sam.samplingId
